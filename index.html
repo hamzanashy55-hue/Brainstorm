@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiet Spot | سكينة - التطبيق البسيط والعملي للمذاكرة</title>
+    <title>Quiet Spot | سكينة - التطبيق الاحترافي المتوازن</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Tailwind CSS CDN -->
@@ -19,11 +19,12 @@
                 extend: {
                     colors: {
                         brand: {
+                            dark: '#163328',
                             primary: '#2E5E4E',
                             light: '#457C69',
                             cream: '#FAF8F5',
-                            accent: '#B86F4E',
-                            rose: '#E9D0C6'
+                            rose: '#E9D0C6',
+                            accent: '#B86F4E'
                         }
                     },
                     fontFamily: {
@@ -45,20 +46,33 @@
             margin: 0;
             padding: 0;
         }
-        h1, h2, h3, h4, .font-cairo { font-family: 'Cairo', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-cairo { font-family: 'Cairo', sans-serif; }
 
         .app-container {
             max-width: 430px;
-            height: 850px;
+            height: 890px;
             border-radius: 44px;
-            border: 10px solid #1E293B;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border: 12px solid #1E293B;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
             position: relative;
             overflow: hidden;
-            margin: 20px auto;
+            margin: 15px auto;
             background-color: #FAF8F5;
             display: flex;
             flex-direction: column;
+        }
+
+        .mobile-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            height: 22px;
+            background-color: #1E293B;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            z-index: 50;
         }
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -70,30 +84,37 @@
     <!-- MAIN APP CONTAINER -->
     <div id="appContainer" class="app-container">
         
-        <!-- HEADER -->
-        <header id="mainHeader" class="hidden bg-brand-cream px-5 pt-8 pb-3 border-b border-slate-200 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-9 h-9 rounded-xl bg-brand-primary text-white flex items-center justify-center text-sm font-bold">
+        <!-- Mobile Notch -->
+        <div class="mobile-notch"></div>
+
+        <!-- MAIN HEADER -->
+        <header id="mainHeader" class="hidden bg-brand-cream/95 backdrop-blur-md px-5 pt-7 pb-3 border-b border-slate-200/80 flex items-center justify-between z-10">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-brand-primary text-white flex items-center justify-center text-sm font-bold shadow-sm">
                     <i class="fa-solid fa-couch"></i>
                 </div>
                 <div>
-                    <span class="text-[10px] text-slate-400 block leading-tight">موقعك الحالي</span>
-                    <span class="text-xs font-bold text-brand-primary font-cairo">القاهرة، مصر</span>
+                    <span class="text-[9px] text-slate-400 font-bold block leading-tight">الموقع الحالي</span>
+                    <span class="text-xs font-extrabold text-brand-primary font-cairo">القاهرة، مصر</span>
                 </div>
             </div>
-            <button onclick="navigateTo('screenFavorites')" class="w-9 h-9 rounded-xl bg-white border border-slate-200 text-rose-500 flex items-center justify-center shadow-sm">
-                <i class="fa-solid fa-heart"></i>
-            </button>
+
+            <div class="flex items-center gap-2">
+                <button onclick="toggleModal('modalNotifications')" class="relative w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center text-xs shadow-sm hover:bg-slate-50">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-brand-accent text-white rounded-full text-[8px] font-bold flex items-center justify-center">2</span>
+                </button>
+            </div>
         </header>
 
         <!-- VIEWPORT -->
         <main class="flex-grow overflow-y-auto hide-scrollbar relative">
 
-            <!-- 1. CLEAN ONBOARDING / WELCOME SCREEN -->
+            <!-- 1. SPLASH / ONBOARDING SCREEN -->
             <div id="screenSplash" class="app-screen inset-0 bg-brand-cream p-6 flex flex-col justify-between text-center min-h-full">
-                <div class="pt-8">
-                    <span class="bg-brand-rose text-brand-primary px-3 py-1 rounded-full font-bold text-xs">
-                        🌱 دليل الكافيهات ومساحات العمل
+                <div class="pt-6">
+                    <span class="bg-brand-rose/60 text-brand-primary px-3 py-1 rounded-full font-bold text-xs">
+                        ✨ دليلك لأفضل أماكن المذاكرة
                     </span>
                 </div>
 
@@ -103,48 +124,156 @@
                     </div>
 
                     <div class="space-y-2">
-                        <h1 class="text-3xl font-extrabold text-brand-primary font-cairo">Quiet Spot</h1>
+                        <h1 class="text-3xl font-black text-brand-primary font-cairo">Quiet Spot</h1>
                         <p class="text-brand-accent font-bold text-lg">هنخرج فين تذاكر النهاردة؟</p>
                     </div>
 
                     <p class="text-xs text-slate-600 leading-relaxed max-w-xs mx-auto">
-                        اعرف نسبة الهدوء والزحمة وأماكن القهاوي والمكتبات الهادئة بكل سهولة وبدون إزعاج.
+                        اعرف نسبة الهدوء والزحمة، سرعة الإنترنت، واحجز غرف المذاكرة بكل سهولة قبل ما تنزل.
                     </p>
                 </div>
 
-                <div class="w-full pb-4">
-                    <button onclick="navigateTo('screenHome')" class="w-full py-4 bg-brand-primary text-white rounded-2xl font-bold text-base shadow-lg hover:bg-brand-light transition flex items-center justify-center gap-2">
-                        <span>ابدأ تصفح الأماكن</span>
+                <div class="w-full space-y-2.5 pb-4">
+                    <button onclick="navigateTo('screenHome')" class="w-full py-3.5 bg-brand-primary text-white rounded-2xl font-bold text-sm shadow-lg hover:bg-brand-dark transition flex items-center justify-center gap-2">
+                        <span>ابدأ الاستكشاف</span>
                         <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button onclick="navigateTo('screenAuth')" class="w-full py-3 bg-white border border-brand-primary/20 text-brand-primary rounded-2xl font-bold text-xs hover:bg-brand-rose/20 transition">
+                        تسجيل الدخول / إنشاء حساب
                     </button>
                 </div>
             </div>
 
-            <!-- 2. HOME SCREEN (Simple Explorer) -->
-            <div id="screenHome" class="app-screen hidden p-4 space-y-4 pb-20">
+            <!-- 2. AUTH SCREEN -->
+            <div id="screenAuth" class="app-screen hidden p-6 flex flex-col justify-between min-h-full">
+                <div class="pt-6 text-center space-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-primary text-white mx-auto flex items-center justify-center text-2xl shadow-lg">
+                        <i class="fa-solid fa-couch"></i>
+                    </div>
+                    <h2 class="text-xl font-black text-brand-primary font-cairo">تسجيل الدخول</h2>
+                    <p class="text-xs text-slate-500">سجّل دخولك لحفظ الأماكن المفضلة ومتابعة الحجوزات</p>
+                </div>
+
+                <div class="space-y-3 my-auto">
+                    <button onclick="loginUser('Google')" class="w-full py-3 px-4 bg-white border border-slate-200 rounded-2xl font-bold text-xs text-slate-700 flex items-center justify-center gap-2 shadow-sm hover:bg-slate-50">
+                        <i class="fa-brands fa-google text-red-500"></i> تسجيل الدخول بـ Google
+                    </button>
+                    <button onclick="loginUser('Apple')" class="w-full py-3 px-4 bg-slate-900 text-white rounded-2xl font-bold text-xs flex items-center justify-center gap-2 shadow-md">
+                        <i class="fa-brands fa-apple"></i> تسجيل الدخول بـ Apple
+                    </button>
+
+                    <div class="flex items-center my-3">
+                        <div class="flex-grow border-t border-slate-200"></div>
+                        <span class="px-2 text-[10px] text-slate-400 font-bold">أو البريد</span>
+                        <div class="flex-grow border-t border-slate-200"></div>
+                    </div>
+
+                    <input type="email" placeholder="البريد الإلكتروني" class="w-full p-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary">
+                    <input type="password" placeholder="كلمة المرور" class="w-full p-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary">
+                    <button onclick="loginUser('Email')" class="w-full py-3 bg-brand-primary text-white rounded-2xl font-bold text-xs shadow-md hover:bg-brand-dark">دخول</button>
+                </div>
+
+                <div class="text-center pb-2">
+                    <button onclick="navigateTo('screenHome')" class="text-xs font-bold text-brand-accent hover:underline">الاستمرار كزائر ←</button>
+                </div>
+            </div>
+
+            <!-- 3. HOME SCREEN -->
+            <div id="screenHome" class="app-screen hidden p-4 space-y-4 pb-24">
                 
                 <!-- Search Bar -->
-                <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-slate-400 text-xs"></i>
-                    <input type="text" id="searchInput" oninput="renderPlaces()" placeholder="ابحث باسم الكافيه أو المنطقة..." class="w-full pl-3 pr-10 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary shadow-sm">
+                <div class="flex items-center gap-2">
+                    <div class="relative flex-grow">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input type="text" id="searchInput" oninput="renderPlaces()" placeholder="ابحث عن مكان، منطقة أو كافيه..." class="w-full pl-3 pr-9 py-2.5 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary shadow-sm">
+                    </div>
+                    <button onclick="toggleModal('modalFilter')" class="px-3.5 py-2.5 bg-brand-primary text-white rounded-2xl text-xs font-bold flex items-center gap-1 shadow-md">
+                        <i class="fa-solid fa-sliders"></i> فلتر
+                    </button>
                 </div>
 
                 <!-- Categories -->
                 <div class="flex items-center gap-2 overflow-x-auto pb-1 hide-scrollbar text-xs font-bold">
-                    <button onclick="filterCat('all', this)" class="cat-btn px-4 py-2 rounded-xl bg-brand-primary text-white shadow-sm flex-shrink-0">الكل</button>
-                    <button onclick="filterCat('cafe', this)" class="cat-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 flex-shrink-0">كافيهات هادئة</button>
-                    <button onclick="filterCat('library', this)" class="cat-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 flex-shrink-0">مكتبات</button>
-                    <button onclick="filterCat('coworking', this)" class="cat-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 flex-shrink-0">مساحات عمل</button>
+                    <button onclick="filterCategory('all', this)" class="cat-btn px-3.5 py-2 rounded-xl bg-brand-primary text-white shadow-sm flex-shrink-0">الكل</button>
+                    <button onclick="filterCategory('cafe', this)" class="cat-btn px-3.5 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 flex-shrink-0">كافيهات هادئة</button>
+                    <button onclick="filterCategory('library', this)" class="cat-btn px-3.5 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 flex-shrink-0">مكتبات</button>
+                    <button onclick="filterCategory('coworking', this)" class="cat-btn px-3.5 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 flex-shrink-0">مساحات عمل</button>
                 </div>
 
-                <!-- Places List Container -->
-                <div id="placesList" class="space-y-3">
-                    <!-- Dynamic Cards -->
+                <!-- AI Quick Banner -->
+                <div class="bg-gradient-to-r from-brand-primary to-brand-dark text-white p-3.5 rounded-2xl shadow-md space-y-1">
+                    <span class="bg-brand-accent/30 text-brand-rose text-[9px] font-bold px-2 py-0.5 rounded-full border border-brand-accent/40">
+                        <i class="fa-solid fa-robot"></i> ترشيح ذكي
+                    </span>
+                    <h3 class="font-bold text-xs font-cairo">Calm Corner — الدقي</h3>
+                    <p class="text-[10px] text-slate-200">الهدوء 92% • زحمة 15% • واي فاي 85 Mbps</p>
+                    <button onclick="openDetails(2)" class="mt-1 px-3 py-1 bg-white text-brand-primary rounded-xl text-[10px] font-bold">التفاصيل والحجز</button>
+                </div>
+
+                <!-- Places List -->
+                <div class="space-y-3">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo">أقرب الأماكن المتاحة</h3>
+                    <div id="placesList" class="space-y-3"></div>
                 </div>
             </div>
 
-            <!-- 3. PLACE DETAILS SCREEN -->
-            <div id="screenDetails" class="app-screen hidden p-4 space-y-4 pb-20">
+            <!-- 4. MAP SCREEN -->
+            <div id="screenMap" class="app-screen hidden p-4 space-y-3 pb-24">
+                <h2 class="font-extrabold text-sm text-brand-primary font-cairo">خريطة أماكن المذاكرة والهدوء</h2>
+                <div class="w-full h-80 bg-emerald-900/10 border-2 border-brand-primary/20 rounded-3xl relative overflow-hidden shadow-inner flex items-center justify-center" style="background-image: radial-gradient(#2E5E4E 1px, transparent 1px); background-size: 18px 18px;">
+                    <div class="absolute top-10 right-10 bg-brand-primary text-white px-3 py-1 rounded-xl text-xs font-bold shadow-lg">
+                        ★ 4.6 | Study Hub (85% هدوء)
+                    </div>
+                    <div class="absolute bottom-12 left-10 bg-brand-primary text-white px-3 py-1 rounded-xl text-xs font-bold shadow-lg">
+                        ★ 4.7 | Calm Corner (92% هدوء)
+                    </div>
+                    <span class="text-xs text-slate-500 bg-white/80 p-2 rounded-xl">اضغط على أي مكان لرؤية تفاصيله</span>
+                </div>
+            </div>
+
+            <!-- 5. TIMER & STUDY SESSION -->
+            <div id="screenTimer" class="app-screen hidden p-4 space-y-4 text-center pb-24">
+                <span class="bg-brand-primary/10 text-brand-primary font-bold text-xs px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-stopwatch"></i> جلسة بومودورو للتركيز
+                </span>
+                
+                <div class="w-48 h-48 mx-auto rounded-full border-8 border-brand-primary/20 bg-white shadow-xl flex flex-col items-center justify-center relative">
+                    <span id="timerDisplay" class="text-4xl font-black text-brand-primary font-mono tracking-wider">25:00</span>
+                    <span id="timerStatus" class="text-xs font-bold text-brand-accent mt-1">جاهز للبدء؟</span>
+                </div>
+
+                <div class="flex justify-center gap-3">
+                    <button onclick="startTimer()" class="px-6 py-2.5 bg-brand-primary text-white rounded-xl text-xs font-bold shadow-md">بدء</button>
+                    <button onclick="resetTimer()" class="px-6 py-2.5 bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">إعادة</button>
+                </div>
+            </div>
+
+            <!-- 6. FAVORITES -->
+            <div id="screenFavorites" class="app-screen hidden p-4 space-y-3 pb-24">
+                <h2 class="font-extrabold text-sm text-brand-primary font-cairo">الأماكن المفضلة المحفوظة</h2>
+                <div id="favList" class="space-y-3"></div>
+            </div>
+
+            <!-- 7. PROFILE -->
+            <div id="screenProfile" class="app-screen hidden p-4 space-y-4 pb-24 text-center">
+                <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm space-y-2">
+                    <div class="w-16 h-16 rounded-full bg-brand-primary text-white mx-auto flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-brand-primary font-cairo">أحمد محمد</h3>
+                    <span class="text-[10px] bg-brand-rose text-brand-primary px-2.5 py-0.5 rounded-full font-bold">طالب جامعي • Lv. 5</span>
+
+                    <div class="grid grid-cols-2 gap-2 pt-2 border-t text-xs font-bold">
+                        <div><span class="text-brand-primary block text-sm">1,250</span> إجمالي النقاط</div>
+                        <div><span class="text-brand-accent block text-sm">34 ساعة</span> ساعات التركيز</div>
+                    </div>
+                </div>
+
+                <button onclick="navigateTo('screenAuth')" class="w-full py-3 bg-rose-50 text-rose-600 rounded-2xl font-bold text-xs">تسجيل الخروج</button>
+            </div>
+
+            <!-- 8. PLACE DETAILS SCREEN -->
+            <div id="screenDetails" class="app-screen hidden p-4 space-y-4 pb-24">
                 <div class="flex items-center justify-between">
                     <button onclick="navigateTo('screenHome')" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center">
                         <i class="fa-solid fa-arrow-right"></i>
@@ -161,188 +290,47 @@
 
                 <div class="space-y-1 text-right">
                     <div class="flex items-center justify-between">
-                        <h2 id="detName" class="text-xl font-bold text-brand-primary font-cairo"></h2>
+                        <h2 id="detName" class="text-lg font-bold text-brand-primary font-cairo"></h2>
                         <span id="detRating" class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-lg"></span>
                     </div>
                     <p id="detAddress" class="text-xs text-slate-500"></p>
                 </div>
 
-                <!-- Simple Stats -->
-                <div class="grid grid-cols-2 gap-3 text-center text-xs font-bold">
-                    <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-2xl">
-                        <span class="text-[10px] text-slate-500 block">مستوى الهدوء</span>
-                        <span id="detQuiet" class="text-emerald-700 text-sm"></span>
+                <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
+                    <div class="bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl">
+                        <span class="text-[9px] text-slate-500 block">الهدوء</span>
+                        <span id="detQuiet" class="text-emerald-700 text-xs"></span>
                     </div>
-                    <div class="bg-amber-50 border border-amber-200 p-3 rounded-2xl">
-                        <span class="text-[10px] text-slate-500 block">نسبة الزحمة</span>
-                        <span id="detCrowd" class="text-amber-700 text-sm"></span>
+                    <div class="bg-amber-50 border border-amber-200 p-2.5 rounded-xl">
+                        <span class="text-[9px] text-slate-500 block">الزحمة</span>
+                        <span id="detCrowd" class="text-amber-700 text-xs"></span>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 p-2.5 rounded-xl">
+                        <span class="text-[9px] text-slate-500 block">الإنترنت</span>
+                        <span id="detWifi" class="text-blue-700 text-xs"></span>
                     </div>
                 </div>
 
-                <div class="bg-white p-3 rounded-2xl border border-slate-200 text-xs space-y-2 text-right">
-                    <span class="font-bold text-brand-primary block">مميزات المكان:</span>
-                    <div class="flex flex-wrap gap-2 text-[11px] font-bold text-slate-700">
-                        <span class="px-2.5 py-1 bg-slate-50 rounded-lg">✓ واي فاي سريع</span>
-                        <span class="px-2.5 py-1 bg-slate-50 rounded-lg">✓ فيش كهرباء</span>
-                        <span class="px-2.5 py-1 bg-slate-50 rounded-lg">✓ تكييف ممتاز</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. FAVORITES SCREEN -->
-            <div id="screenFavorites" class="app-screen hidden p-4 space-y-4 pb-20">
-                <div class="flex items-center justify-between">
-                    <h2 class="font-bold text-base text-brand-primary font-cairo">الأماكن المفضلة</h2>
-                    <button onclick="navigateTo('screenHome')" class="text-xs text-brand-accent font-bold">العودة للرئيسية</button>
-                </div>
-                <div id="favListContainer" class="space-y-3">
-                    <!-- Favs -->
-                </div>
+                <button onclick="alert('تم حجز الطاولة بنجاح!')" class="w-full py-3 bg-brand-primary text-white rounded-2xl font-bold text-xs shadow-md">
+                    حجز طاولة أو غرفة مذاكرة
+                </button>
             </div>
 
         </main>
 
-        <!-- SIMPLE BOTTOM NAV -->
-        <nav id="bottomNav" class="hidden bg-white border-t border-slate-200 absolute bottom-0 left-0 right-0 py-3 px-6 flex items-center justify-around text-slate-400 text-xs font-bold">
-            <button onclick="navigateTo('screenHome')" class="flex flex-col items-center gap-1 text-brand-primary">
-                <i class="fa-solid fa-house text-base"></i>
-                <span>الرئيسية</span>
+        <!-- BOTTOM NAV -->
+        <nav id="bottomNav" class="hidden bg-white/95 backdrop-blur-md border-t border-slate-200 absolute bottom-0 left-0 right-0 py-2.5 px-3 flex items-center justify-around text-slate-400 text-xs font-bold z-10">
+            <button onclick="navigateTo('screenHome')" id="navHome" class="nav-btn flex flex-col items-center gap-0.5 text-brand-primary">
+                <i class="fa-solid fa-house text-base"></i> الرئيسية
             </button>
-            <button onclick="navigateTo('screenFavorites')" class="flex flex-col items-center gap-1 hover:text-brand-primary">
-                <i class="fa-solid fa-heart text-base"></i>
-                <span>المفضلة</span>
+            <button onclick="navigateTo('screenMap')" id="navMap" class="nav-btn flex flex-col items-center gap-0.5 hover:text-brand-primary">
+                <i class="fa-solid fa-map-location-dot text-base"></i> الخريطة
             </button>
-        </nav>
-
-    </div>
-
-    <!-- SIMPLE APP ENGINE -->
-    <script>
-        let places = [
-            { id: 1, name: "The Study Hub", category: "coworking", address: "الزمالك • القاهرة", rating: 4.6, quietness: "85% (هادئ)", crowd: "30%", image: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=600&q=80", isFav: true },
-            { id: 2, name: "Calm Corner", category: "cafe", address: "الدقي • الجيزة", rating: 4.7, quietness: "92% (هدوء تام)", crowd: "15%", image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80", isFav: true },
-            { id: 3, name: "مكتبة المعرفة العامة", category: "library", address: "شارع الجامعة • الجيزة", rating: 4.8, quietness: "95% (هدوء مكتبة)", crowd: "20%", image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=600&q=80", isFav: false }
-        ];
-
-        let activeCat = 'all';
-
-        function navigateTo(screenId) {
-            document.querySelectorAll('.app-screen').forEach(s => s.classList.add('hidden'));
-            document.getElementById(screenId).classList.remove('hidden');
-
-            const header = document.getElementById('mainHeader');
-            const bottomNav = document.getElementById('bottomNav');
-
-            if (screenId === 'screenSplash') {
-                header.classList.add('hidden');
-                bottomNav.classList.add('hidden');
-            } else {
-                header.classList.remove('hidden');
-                bottomNav.classList.remove('hidden');
-            }
-
-            if (screenId === 'screenHome') renderPlaces();
-            if (screenId === 'screenFavorites') renderFavorites();
-        }
-
-        function renderPlaces() {
-            const container = document.getElementById('placesList');
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-
-            let filtered = places.filter(p => {
-                let matchesCat = (activeCat === 'all' || p.category === activeCat);
-                let matchesSearch = p.name.toLowerCase().includes(query) || p.address.toLowerCase().includes(query);
-                return matchesCat && matchesSearch;
-            });
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">لا توجد نتائج مطابقة.</p>`;
-                return;
-            }
-
-            container.innerHTML = filtered.map(p => `
-                <div onclick="openDetails(${p.id})" class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3 cursor-pointer hover:border-brand-primary transition">
-                    <img src="${p.image}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0">
-                    <div class="flex-grow space-y-1 text-right">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-bold text-xs text-brand-primary font-cairo">${p.name}</h4>
-                            <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded">★ ${p.rating}</span>
-                        </div>
-                        <p class="text-[11px] text-slate-500">${p.address}</p>
-                        <div class="flex items-center justify-between text-[10px] font-bold pt-1">
-                            <span class="text-emerald-700">الهدوء: ${p.quietness}</span>
-                            <button onclick="event.stopPropagation(); toggleFav(${p.id});" class="text-rose-500 text-sm">
-                                <i class="${p.isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function filterCat(cat, btn) {
-            activeCat = cat;
-            document.querySelectorAll('.cat-btn').forEach(b => {
-                b.className = "cat-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 flex-shrink-0";
-            });
-            btn.className = "cat-btn px-4 py-2 rounded-xl bg-brand-primary text-white shadow-sm flex-shrink-0";
-            renderPlaces();
-        }
-
-        function openDetails(id) {
-            const p = places.find(item => item.id === id);
-            if (!p) return;
-
-            document.getElementById('detName').textContent = p.name;
-            document.getElementById('detAddress').textContent = p.address;
-            document.getElementById('detRating').textContent = `★ ${p.rating}`;
-            document.getElementById('detQuiet').textContent = p.quietness;
-            document.getElementById('detCrowd').textContent = p.crowd;
-            document.getElementById('detImg').src = p.image;
-
-            const favBtn = document.getElementById('detFavBtn');
-            favBtn.innerHTML = `<i class="${p.isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>`;
-            favBtn.onclick = () => { toggleFav(p.id); openDetails(p.id); };
-
-            navigateTo('screenDetails');
-        }
-
-        function toggleFav(id) {
-            const p = places.find(item => item.id === id);
-            if (p) {
-                p.isFav = !p.isFav;
-                renderPlaces();
-                if(!document.getElementById('screenFavorites').classList.contains('hidden')) {
-                    renderFavorites();
-                }
-            }
-        }
-
-        function renderFavorites() {
-            const container = document.getElementById('favListContainer');
-            const favs = places.filter(p => p.isFav);
-
-            if (favs.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">لا توجد أماكن في المفضلة.</p>`;
-                return;
-            }
-
-            container.innerHTML = favs.map(p => `
-                <div onclick="openDetails(${p.id})" class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between cursor-pointer">
-                    <div class="flex items-center gap-3">
-                        <img src="${p.image}" class="w-12 h-12 rounded-xl object-cover">
-                        <div class="text-right">
-                            <h4 class="font-bold text-xs text-brand-primary">${p.name}</h4>
-                            <span class="text-[10px] text-slate-400">${p.address}</span>
-                        </div>
-                    </div>
-                    <button onclick="event.stopPropagation(); toggleFav(${p.id});" class="text-rose-500 text-xs font-bold px-2">حذف</button>
-                </div>
-            `).join('');
-        }
-    </script>
-</body>
-</html>
-```eof
-
-هذه النسخة أصبحت **أبسط وأكثر تركيزاً وعملية 100%**، تشتمل فقط على شاشة ترحيب أنيقة، قائمة الأماكن الرئيسية مع البحث والتصنيف، شاشة التفاصيل البساطة لنسبة الهدوء والزحمة، وقائمة المفضلة المباشرة بدون أي تعقيدات زائدة!
+            <button onclick="navigateTo('screenTimer')" id="navTimer" class="flex flex-col items-center justify-center w-10 h-10 rounded-full bg-brand-primary text-white -mt-4 shadow-md">
+                <i class="fa-solid fa-stopwatch text-sm"></i>
+            </button>
+            <button onclick="navigateTo('screenFavorites')" id="navFavorites" class="nav-btn flex flex-col items-center gap-0.5 hover:text-brand-primary">
+                <i class="fa-solid fa-heart text-base"></i> المفضلة
+            </button>
+            <button onclick="navigateTo('screenProfile')" id="navProfile" class="nav-btn flex flex-col items-center gap-0.5 hover:text-brand-primary">
+                <i class="fa-solid fa-user text-
