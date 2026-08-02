@@ -1,418 +1,331 @@
-بناءً على العرض التقديمي (Pitch Deck) الممتاز الذي أرفقته لمشروع **"Study Spot"**، قمت بتصميم وبرمجة صفحة هبوط (Landing Page) احترافية وعصرية متوافقة مع شاشات الكمبيوتر والموبايل. 
-
-هذا الموقع سيعرض فكرتك بشكل جذاب للمستثمرين أو المستخدمين المحتملين.
-
-### كيف تستخدم هذا الكود؟
-1. افتح برنامج Notepad (أو أي محرر نصوص مثل VS Code).
-2. انسخ الكود الموجود بالأسفل بالكامل والصقه في الملف.
-3. احفظ الملف باسم `index.html`.
-4. افتح الملف باستخدام أي متصفح (مثل Google Chrome) لترى النتيجة.
-
----
-
-### كود الموقع (HTML + CSS + JS)
-
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Spot | دليلك لأفضل مكان للمذاكرة والعمل</title>
-    <!-- استدعاء خطوط جوجل (Cairo) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- استدعاء أيقونات FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Quiet Spot — معرض دراسة حالة واجهات وتجربة المستخدم</title>
     
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            darkGreen: '#1A332B',
+                            primary: '#2E5E4E',
+                            lightGreen: '#457C69',
+                            cream: '#FAF8F5',
+                            softRose: '#E9D0C6',
+                            accent: '#B86F4E',
+                            darkText: '#1E293B',
+                            mutedText: '#64748B'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* الألوان الأساسية للمشروع مستوحاة من العرض التقديمي */
-        :root {
-            --primary-color: #269382; /* لون الأزرار والعناصر (أخضر مزرق) */
-            --secondary-color: #e27d60; /* لون ثانوي (برتقالي هادئ) */
-            --bg-color: #fcfbf9; /* لون الخلفية (أوف وايت) */
-            --text-dark: #333333;
-            --text-gray: #666666;
-            --white: #ffffff;
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #F8F6F0;
+            color: #1E293B;
+            scroll-behavior: smooth;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Cairo', sans-serif;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        /* تصميم شريط التنقل */
-        header {
-            background-color: var(--white);
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--text-dark);
-            text-decoration: none;
-        }
-        
-        .logo span {
-            color: var(--primary-color);
-        }
-
-        .cta-btn {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 10px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-        }
-
-        .cta-btn:hover {
-            background-color: #1e7568;
-            transform: translateY(-2px);
-        }
-
-        /* القسم الرئيسي (Hero Section) */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 80px 5%;
-            min-height: 80vh;
-        }
-
-        .hero-text {
-            flex: 1;
-            padding-left: 50px;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            margin-bottom: 30px;
-        }
-
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-
-        /* صورة تخيلية للموبايل */
-        .mockup {
-            width: 300px;
-            height: 600px;
-            background-color: #fff;
-            border: 12px solid #333;
-            border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        /* Phone Screen Cropping System for 10 Screens */
+        .phone-mockup-frame {
+            width: 290px;
+            height: 590px;
+            border: 10px solid #2E5E4E;
+            border-radius: 44px;
+            box-shadow: 0 25px 50px -12px rgba(46, 94, 78, 0.35), 0 0 0 4px #1A332B;
             position: relative;
-            margin: auto;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background: #FFFFFF;
         }
 
-        .mockup h3 {
-            color: var(--primary-color);
-            margin-top: 20px;
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 22px;
+            background-color: #2E5E4E;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            z-index: 30;
         }
 
-        /* قسم المشكلة */
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            color: var(--text-dark);
-        }
-
-        .problems, .features, .target-audience {
-            padding: 80px 5%;
-        }
-
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: var(--white);
-            padding: 40px 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-        }
-
-        .card i {
-            font-size: 40px;
-            color: var(--secondary-color);
-            margin-bottom: 20px;
-            background: #fff0ec;
-            width: 80px;
-            height: 80px;
-            line-height: 80px;
-            border-radius: 50%;
-        }
-
-        .features .card i {
-            color: var(--primary-color);
-            background: #e6f4f2;
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .card p {
-            color: var(--text-gray);
-            font-size: 1rem;
-        }
-
-        /* قسم المقارنة */
-        .comparison {
-            background-color: var(--white);
-            padding: 80px 5%;
-        }
-
-        table {
+        .screen-container {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-            background: #fff;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            border-radius: 10px;
+            height: 100%;
+            position: relative;
             overflow: hidden;
         }
 
-        th, td {
-            padding: 20px;
-            text-align: right;
-            border-bottom: 1px solid #eee;
+        .screen-img {
+            position: absolute;
+            width: 1980px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: none;
         }
 
-        th {
-            background-color: var(--primary-color);
-            color: var(--white);
-            font-size: 1.2rem;
-        }
-        
-        th:nth-child(2) {
-            background-color: #ea4335; /* لون جوجل ماب للتوضيح */
-        }
-        th:nth-child(3) {
-            background-color: #333; 
-        }
+        /* Precise CSS Screen Offsets based on 1000246790_2.jpg */
+        .pos-screen-1 { top: -15px; right: -315px; }    /* Splash Screen */
+        .pos-screen-2 { top: -15px; right: -620px; }    /* Login / Sign Up */
+        .pos-screen-3 { top: -15px; right: -930px; }    /* Home */
+        .pos-screen-4 { top: -15px; right: -1245px; }   /* Search & Filter */
+        .pos-screen-5 { top: -15px; right: -1560px; }   /* Map View */
 
-        .highlight {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
+        .pos-screen-6 { top: -390px; right: -315px; }   /* Place Details */
+        .pos-screen-7 { top: -390px; right: -620px; }   /* Details (More) */
+        .pos-screen-8 { top: -390px; right: -930px; }   /* Reviews */
+        .pos-screen-9 { top: -390px; right: -1245px; }  /* Favorites */
+        .pos-screen-10 { top: -390px; right: -1560px; } /* Profile */
 
-        /* الفوتر */
-        footer {
-            background-color: var(--text-dark);
-            color: var(--white);
-            text-align: center;
-            padding: 30px 5%;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        /* التصميم المتجاوب للموبايل */
-        @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding-top: 40px;
-            }
-            .hero-text {
-                padding-left: 0;
-                margin-bottom: 50px;
-            }
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-            th { text-align: center; }
-            td { text-align: center; border-bottom: 2px solid #eee; }
+        ::-webkit-scrollbar-track {
+            background: #FAF8F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2E5E4E;
+            border-radius: 4px;
         }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <!-- شريط التنقل -->
-    <header>
-        <a href="#" class="logo">Study <span>Spot</span></a>
-        <a href="#download" class="cta-btn">انضم لقائمة الانتظار</a>
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-brand-softRose/40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center text-xl font-bold shadow-md">
+                    <i class="fa-solid fa-couch"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-black text-brand-primary tracking-tight">Quiet Spot</span>
+                    <span class="text-xs block text-brand-accent font-semibold -mt-1">Case Study Showcase</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-8 font-semibold text-brand-darkText">
+                <a href="#hero" class="hover:text-brand-primary transition-colors">الرئيسية</a>
+                <a href="#screens" class="hover:text-brand-primary transition-colors">شاشات التطبيق</a>
+                <a href="#branding" class="hover:text-brand-primary transition-colors">الهوية البصرية</a>
+                <a href="#features" class="hover:text-brand-primary transition-colors">المميزات الذكية</a>
+                <a href="#prototype" class="hover:text-brand-primary transition-colors">محاكي التفاعل</a>
+            </nav>
+
+            <a href="#screens" class="bg-brand-primary hover:bg-brand-darkGreen text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md transition-all hover:scale-105">
+                <i class="fa-solid fa-mobile-screen ml-1.5"></i> استكشف 10 شاشات
+            </a>
+        </div>
     </header>
 
-    <!-- القسم الرئيسي -->
-    <section class="hero">
-        <div class="hero-text">
-            <h1>دليلك الذكي لأفضل مكان للمذاكرة والعمل</h1>
-            <p>تطبيق متكامل يساعد الطلبة والمستقلين على اكتشاف مساحات العمل الهادئة والمناسبة لاحتياجاتهم بأقل وقت وجهد.</p>
-            <a href="#features" class="cta-btn" style="background-color: var(--text-dark);">اكتشف المميزات</a>
-        </div>
-        <div class="hero-image">
-            <div class="mockup">
-                <i class="fa-solid fa-map-location-dot" style="font-size: 60px; color: var(--primary-color);"></i>
-                <h3>Study Spot</h3>
-                <p style="font-size: 12px; color: #888; margin-top:10px;">واجهة التطبيق هنا</p>
-            </div>
-        </div>
-    </section>
+    <!-- Hero Section -->
+    <section id="hero" class="relative py-16 lg:py-24 overflow-hidden bg-gradient-to-b from-[#FAF8F5] via-[#F3EFE6] to-[#FAF8F5]">
+        <div class="absolute -top-20 -right-20 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 -left-20 w-96 h-96 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <!-- قسم المشكلة -->
-    <section class="problems">
-        <h2 class="section-title">لماذا صممنا Study Spot؟ <span style="color:var(--secondary-color)">(المشكلة)</span></h2>
-        <div class="cards-container">
-            <div class="card">
-                <i class="fa-solid fa-magnifying-glass-location"></i>
-                <h3>البحث اليومي المجهد</h3>
-                <p>كل يوم آلاف الطلبة والـ Freelancers يبحثون عن مكان هادئ ليذاكروا أو يعملوا فيه.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                <h3>ضياع الوقت والجهد</h3>
-                <p>يواجهون مشكلة عدم معرفة المكان المناسب قبل الذهاب إليه، مما يضيع الكثير من الوقت.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-volume-high"></i>
-                <h3>عدم ملاءمة المكان</h3>
-                <p>قد يصلون ليجدوا المكان مزدحماً، مزعجاً، أو بشبكة إنترنت ضعيفة تمنعهم من إنجاز مهامهم.</p>
-            </div>
-        </div>
-    </section>
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 space-y-6 text-right">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-softRose/50 border border-brand-accent/30 text-brand-primary font-bold text-sm">
+                    <i class="fa-solid fa-sparkles text-brand-accent"></i>
+                    <span>تطبيق هاتف محمول مخصص للطلاب وأصحاب العمل الحر</span>
+                </div>
 
-    <!-- قسم الحل (المميزات) -->
-    <section class="features" id="features">
-        <h2 class="section-title">كيف نسهل حياتك؟ <span style="color:var(--primary-color)">(الحل)</span></h2>
-        <div class="cards-container">
-            <div class="card">
-                <i class="fa-solid fa-wifi"></i>
-                <h3>معلومات دقيقة وموثوقة</h3>
-                <p>نوفر معلومات حقيقية عن مستوى الهدوء، جودة الإنترنت، وتوفر مقابس الكهرباء في كل مكان.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-money-bill-wave"></i>
-                <h3>التفاصيل العملية</h3>
-                <p>معرفة الأسعار، ساعات العمل المتوفرة، والخدمات المتاحة قبل أن تتحرك من منزلك.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-star"></i>
-                <h3>تقييمات مجتمع حقيقي</h3>
-                <p>تقييمات موثوقة من مستخدمين حقيقيين ذهبوا للعمل والمذاكرة، لمساعدتك في اتخاذ القرار.</p>
-            </div>
-        </div>
-    </section>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-primary leading-tight">
+                    Quiet Spot <br>
+                    <span class="text-brand-accent text-3xl sm:text-4xl font-bold">"هنخرج فين تذاكر النهاردة؟"</span>
+                </h1>
 
-    <!-- قسم السوق المستهدف -->
-    <section class="target-audience" style="background-color: #f4f9f8;">
-        <h2 class="section-title">لمن هذا التطبيق؟</h2>
-        <div class="cards-container">
-            <div class="card" style="box-shadow: none;">
-                <i class="fa-solid fa-user-graduate" style="color: #4a90e2; background: #e9f2fb;"></i>
-                <h3>الطلاب (Students)</h3>
-                <p>يبحثون دائماً عن بيئة مناسبة للاستذكار والمشاريع الدراسية بعيداً عن مشتتات المنزل.</p>
+                <p class="text-lg sm:text-xl text-brand-mutedText leading-relaxed max-w-2xl">
+                    منصة ذكية تساعد المستخدمين على اختيار أنسب الكافيهات ومساحات العمل للهادفة للمذاكرة والتركيز، مع عرض حي ومباشر لنسبة الزحمة والهدوء والمرافق المتاحة.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-4 pt-4">
+                    <a href="#screens" class="bg-brand-primary text-white hover:bg-brand-darkGreen px-8 py-3.5 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-eye ml-2"></i> تصفح الشاشات تفاعلياً
+                    </a>
+                    <a href="#branding" class="bg-white text-brand-primary hover:bg-brand-softRose/30 border border-brand-primary/20 px-7 py-3.5 rounded-2xl font-bold text-lg shadow-sm transition-all">
+                        <i class="fa-solid fa-palette ml-2"></i> نظام التصميم الهيكلي
+                    </a>
+                </div>
+
+                <!-- Stats Badges -->
+                <div class="grid grid-cols-3 gap-4 pt-8 border-t border-brand-primary/10">
+                    <div>
+                        <span class="block text-3xl font-black text-brand-primary">10</span>
+                        <span class="text-sm font-semibold text-brand-mutedText">شاشات تفاعلية مصممة</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl font-black text-brand-accent">100%</span>
+                        <span class="text-sm font-semibold text-brand-mutedText">تجربة مستخدم مريحة للعين</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl font-black text-brand-primary">7+</span>
+                        <span class="text-sm font-semibold text-brand-mutedText">خواص ذكية ومباشرة</span>
+                    </div>
+                </div>
             </div>
-            <div class="card" style="box-shadow: none;">
-                <i class="fa-solid fa-laptop-code" style="color: #9b59b6; background: #f4eaf9;"></i>
-                <h3>المستقلين (Freelancers)</h3>
-                <p>يتطلب عملهم أماكن بإنترنت قوي وجو يشجع على الإنتاجية والإبداع.</p>
-            </div>
-            <div class="card" style="box-shadow: none;">
-                <i class="fa-solid fa-briefcase" style="color: #e67e22; background: #fdf2e8;"></i>
-                <h3>العاملون عن بُعد</h3>
-                <p>يحتاجون لتغيير روتين العمل من المنزل في مكان هادئ ومجهز بكل سبل الراحة.</p>
+
+            <!-- Hero Interactive Phone Display -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative group">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-primary to-brand-accent rounded-[50px] opacity-20 group-hover:opacity-40 blur-xl transition duration-500"></div>
+                    
+                    <div class="phone-mockup-frame">
+                        <div class="phone-notch"></div>
+                        <div class="screen-container">
+                            <img src="1000246790_2.jpg" alt="Quiet Spot Hero Screen" class="screen-img pos-screen-3" id="heroPhoneImg">
+                        </div>
+                    </div>
+
+                    <!-- Floating Indicator Card -->
+                    <div class="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-brand-softRose/60 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-signal"></i>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold text-gray-500">مؤشر حي</span>
+                            <span class="block text-sm font-bold text-brand-primary">نسبة الهدوء 85%</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- قسم المنافسين -->
-    <section class="comparison">
-        <h2 class="section-title">بماذا نتميز عن غيرنا؟</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>وجه المقارنة</th>
-                    <th>خرائط جوجل (Google Maps)</th>
-                    <th>تطبيق Study Spot (مشروعنا)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>نطاق العرض</strong></td>
-                    <td>يعرض كل الأماكن بشكل عام دون تخصيص</td>
-                    <td class="highlight">متخصص حصرياً في أماكن المذاكرة والعمل</td>
-                </tr>
-                <tr>
-                    <td><strong>مستوى الهدوء والضوضاء</strong></td>
-                    <td>غير متوفر بدقة</td>
-                    <td class="highlight">يوفر تفاصيل دقيقة عن مستوى الهدوء</td>
-                </tr>
-                <tr>
-                    <td><strong>الإنترنت والكهرباء</strong></td>
-                    <td>معلومات عامة وغير مضمونة</td>
-                    <td class="highlight">يقيس جودة الـ Wi-Fi وتوفر فيش الكهرباء</td>
-                </tr>
-                <tr>
-                    <td><strong>طبيعة التقييمات</strong></td>
-                    <td>تقييمات عامة لجميع الزوار (طعام، خدمة..)</td>
-                    <td class="highlight">تقييمات من أشخاص ذهبوا للعمل والمذاكرة فعلياً</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    <!-- Interactive Screens Explorer Section -->
+    <section id="screens" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-accent font-bold text-sm tracking-widest uppercase">شاشات التطبيق بالتفصيل</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-primary mt-2">استعراض الشاشات العشره للواجهات (UI/UX)</h2>
+                <p class="text-brand-mutedText mt-3 text-lg">اضغط على أي شاشة للاطلاع عليها مباشرة في محاكي الهاتف ومعرفة أهم خصائصها وتجربة المستخدم الخاصة بها.</p>
+            </div>
 
-    <!-- الخاتمة والفوتر -->
-    <footer>
-        <h3 style="margin-bottom: 15px;">"في النهاية، إحنا مش بنقدم مجرد تطبيق بيدل على أماكن، لكن بنقدم تجربة تساعد المستخدم يوفر وقته ويركز أكثر"</h3>
-        <p>جميع الحقوق محفوظة لمشروع Study Spot &copy; 2023</p>
-    </footer>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Left: Interactive Navigation Tabs (10 Screens) -->
+                <div class="lg:col-span-7 space-y-3" id="screenTabsList">
+                    <!-- Screen Item 1 -->
+                    <button onclick="switchScreen(1, this)" class="screen-tab-btn active w-full text-right p-4 rounded-2xl border-2 border-brand-primary bg-brand-cream shadow-sm flex items-start gap-4 transition-all">
+                        <div class="tab-icon w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">1</div>
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-lg text-brand-primary">شاشة البداية (Splash Screen)</h3>
+                                <span class="text-xs bg-brand-softRose text-brand-primary font-bold px-2.5 py-1 rounded-md">الانطباع الأول</span>
+                            </div>
+                            <p class="text-sm text-brand-mutedText mt-1">تأكيد الهوية والشعار اللفظي: "هنخرج فين تذاكر النهاردة؟" برسم مريح وعصري.</p>
+                        </div>
+                    </button>
 
-</body>
-</html>
-```
+                    <!-- Screen Item 2 -->
+                    <button onclick="switchScreen(2, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
+                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">2</div>
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-lg text-gray-800">تسجيل الدخول (Login / Sign Up)</h3>
+                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">سهولة الوصول</span>
+                            </div>
+                            <p class="text-sm text-brand-mutedText mt-1">دعم التسجيل السريع بنقرة واحدة بحسابات Google وApple للوصول الفوري.</p>
+                        </div>
+                    </button>
 
-### مميزات هذا الموقع:
-1. **تصميم يعكس هويتك:** استخدمت ألوان قريبة جداً من روح الصور التي رفعتها (الأخضر المزرق والألوان الهادئة).
-2. **شامل لكل المعلومات:** قمت بتحويل النصوص من الـ Pitch Deck الخاص بك (المشكلة، الحل، السوق المستهدف، مقارنة المنافسين) إلى أقسام جذابة ومقروءة على الويب.
-3. **متجاوب 100% (Responsive):** الموقع يعمل بشكل ممتاز ومرتب على شاشات الموبايل والكمبيوتر.
-4. **Mockup للهاتف:** وضعت رسمة "برمجية" مبسطة لشكل الموبايل في أول صفحة لتخيل شكل التطبيق، لاحقاً يمكنك استبدالها بصورة حقيقية لشاشات تطبيقك الفعلي.
+                    <!-- Screen Item 3 -->
+                    <button onclick="switchScreen(3, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
+                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">3</div>
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-lg text-gray-800">الشاشة الرئيسية (Home Screen)</h3>
+                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">مركز الاستكشاف</span>
+                            </div>
+                            <p class="text-sm text-brand-mutedText mt-1">عرض بطاقات الأماكن المحيطة، مسافة الوصول بالدقائق، والتقييم اللحظي.</p>
+                        </div>
+                    </button>
 
-إذا أردت أي تعديل على الألوان، إضافة صور معينة، أو ربط زر "انضم لقائمة الانتظار" بنموذج جوجل (Google Form) لجمع إيميلات المهتمين، أخبرني فوراً!
+                    <!-- Screen Item 4 -->
+                    <button onclick="switchScreen(4, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
+                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">4</div>
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-lg text-gray-800">البحث والفلترة الذكية (Search & Filters)</h3>
+                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">تخصيص دقيق</span>
+                            </div>
+                            <p class="text-sm text-brand-mutedText mt-1">تحديد خيارات مثل: زحمة قليلة، ثقبة هنية، واي فاي سريع، وجود فيش كهرباء.</p>
+                        </div>
+                    </button>
+
+                    <!-- Screen Item 5 -->
+                    <button onclick="switchScreen(5, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
+                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">5</div>
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-lg text-gray-800">عرض الخريطة التفاعلية (Map View)</h3>
+                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">تصفح مكاني</span>
+                            </div>
+                            <p class="text-sm text-brand-mutedText mt-1">دبابيس مخصصة تظهر التقييم المباشر على الخريطة مع نافذة معاينة سريعة.</p>
+                        </div>
+                    </button>
+
+                    <!-- Screen Item 6 -->
+                    <button onclick="switchScreen(6, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
+                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">6</div>
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-lg text-gray-800">تفاصيل المكان الرئيسية (Place Details)</h3>
+                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">معلومات كاملة</span>
+                            </div>
+                            <p class="text-sm text-brand-mutedText mt-1">عرض نسب الهدوء والزحمة، السرعة الفعلية للنت، وأزرار الاتجاهات والحجز.</p>
+                        </div>
+                    </button>
+
+                    <!-- Screen Item 7 -->
+                    <button onclick="switchScreen(7, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
+                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">7</div>
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-lg text-gray-800">المرافق والمعلومات (More Info)</h3>
+                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">تفاصيل إضافية</span>
+                            </div>
+                            <p class="text-sm text-brand-mutedText mt-1">ساعات العمل الرسمية، قائمة المنيو والأسعار، المصلى وتوفر مواقف السيارات.</p>
+                        </div>
+                    </button>
+
+                    <!-- Screen Item 8 -->
+                    <button onclick="switchScreen(8, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
+                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">8</div>
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-lg text-gray-800">التقييمات والمراجعات (Reviews & Ratings)</h3>
+                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">شفافية عالية</span>
+                            </div>
+                            <p class="text-sm text-brand-mutedText mt-1">تفكيك التقييم لدرجات النظافة، الهدوء، المعاملة، الأسعار وتعليقات صور الزوار.</p>
+                        </div>
+                    </button>
+
+                    <!-- Screen Item 9 -->
+                    <button onclick="switchScreen(9, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all
