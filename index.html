@@ -1,729 +1,730 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudySpot — مكانك الهادئ للمذاكرة والشغل</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Almarai:wght@300;400;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#14162a;
-    --ink-soft:#1d2140;
-    --ink-softer:#262a4d;
-    --paper:#f6f1e4;
-    --paper-dim:#efe6d1;
-    --amber:#e3a542;
-    --amber-deep:#c9852a;
-    --teal:#3d8f7d;
-    --teal-deep:#2c6b5d;
-    --rose:#c1594f;
-    --ivory:#f3eee1;
-    --line:rgba(243,238,225,0.14);
-    --line-dark:rgba(20,22,42,0.1);
-    --note-1:#f2d98a;
-    --note-2:#f0b8ab;
-    --note-3:#a9d8c8;
-    --note-4:#c9c3ea;
-    --shadow: 0 18px 40px -18px rgba(0,0,0,0.45);
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--ink);
-    color:var(--ivory);
-    font-family:'Almarai', sans-serif;
-    line-height:1.75;
-    overflow-x:hidden;
-  }
-  h1,h2,h3,h4{
-    font-family:'El Messiri', serif;
-    margin:0;
-    font-weight:700;
-    letter-spacing:.2px;
-  }
-  .eyebrow{
-    font-family:'Tajawal',sans-serif;
-    font-size:.78rem;
-    letter-spacing:.14em;
-    color:var(--amber);
-    text-transform:uppercase;
-    display:flex;
-    align-items:center;
-    gap:.6rem;
-    margin-bottom:1rem;
-  }
-  .eyebrow::before{
-    content:"";
-    width:26px;height:1px;
-    background:var(--amber);
-    display:inline-block;
-  }
-  .wrap{max-width:1180px; margin:0 auto; padding:0 6vw;}
-  section{position:relative; padding:6.5rem 0;}
-  img{max-width:100%; display:block;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Spot — Pitch Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f1e8;
+      --bg-soft: #faf6f0;
+      --card: #ffffff;
+      --text: #2a2118;
+      --muted: #6b5e52;
+      --accent: #e07a4d;
+      --accent-soft: #f3d5c4;
+      --teal: #1f7a6c;
+      --teal-soft: #d8efe9;
+      --red: #e2554a;
+      --orange: #ef8b3a;
+      --green: #2a9d7a;
+      --shadow: 0 10px 40px rgba(80, 50, 20, 0.08);
+      --radius: 22px;
+      --radius-sm: 16px;
+    }
 
-  /* ---------- NAV ---------- */
-  nav{
-    position:sticky; top:0; z-index:50;
-    background:rgba(20,22,42,0.86);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  nav .wrap{
-    display:flex; align-items:center; justify-content:space-between;
-    padding-top:1rem; padding-bottom:1rem;
-  }
-  .brand{
-    font-family:'El Messiri',serif; font-weight:700; font-size:1.25rem;
-    display:flex; align-items:center; gap:.5rem; color:var(--ivory);
-  }
-  .brand span{color:var(--amber);}
-  .navlinks{display:flex; gap:1.8rem; font-size:.92rem;}
-  .navlinks a{color:var(--ivory); opacity:.72; text-decoration:none; transition:opacity .2s;}
-  .navlinks a:hover{opacity:1; color:var(--amber);}
-  @media(max-width:760px){ .navlinks{display:none;} }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Cairo", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    padding-top:5.5rem;
-    padding-bottom:4rem;
-    position:relative;
-    overflow:hidden;
-    background:
-      radial-gradient(720px 420px at 82% 8%, rgba(227,165,66,0.20), transparent 70%),
-      linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
-  }
-  .lamp-glow{
-    position:absolute; top:-160px; left:52%;
-    width:640px; height:640px;
-    background:radial-gradient(circle, rgba(227,165,66,0.35) 0%, rgba(227,165,66,0.06) 45%, transparent 70%);
-    filter:blur(6px);
-    animation:flicker 6s ease-in-out infinite;
-    pointer-events:none;
-  }
-  @keyframes flicker{
-    0%,100%{opacity:1; transform:scale(1);}
-    50%{opacity:.85; transform:scale(1.03);}
-  }
-  .hero-grid{
-    display:grid; grid-template-columns:1.15fr .85fr; gap:3rem; align-items:center;
-  }
-  @media(max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
-  .hero h1{
-    font-size:clamp(2.5rem,5vw,4rem);
-    line-height:1.18;
-    color:var(--ivory);
-  }
-  .hero h1 em{
-    font-style:normal; color:var(--amber);
-  }
-  .hero p.lede{
-    margin-top:1.4rem; font-size:1.15rem; color:rgba(243,238,225,0.78); max-width:44ch;
-  }
-  .hero-cta{
-    margin-top:2.2rem; display:flex; gap:1rem; flex-wrap:wrap;
-  }
-  .btn{
-    display:inline-flex; align-items:center; gap:.5rem;
-    padding:.85rem 1.7rem; border-radius:999px;
-    font-family:'Tajawal',sans-serif; font-weight:700; font-size:.95rem;
-    text-decoration:none; border:1px solid transparent; cursor:pointer;
-    transition:transform .2s ease, box-shadow .2s ease;
-  }
-  .btn-amber{ background:linear-gradient(135deg,var(--amber),var(--amber-deep)); color:var(--ink);}
-  .btn-ghost{ border-color:var(--line); color:var(--ivory);}
-  .btn:hover{ transform:translateY(-2px); }
+    /* soft blobs */
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      z-index: -1;
+      pointer-events: none;
+    }
+    body::before { background: #f0c9a8; top: -80px; right: -100px; }
+    body::after { background: #c8e6dc; bottom: 10%; left: -120px; }
 
-  .desk-card{
-    background:var(--paper);
-    color:var(--ink);
-    border-radius:22px;
-    padding:1.8rem;
-    box-shadow:var(--shadow);
-    transform:rotate(1.4deg);
-    position:relative;
-  }
-  .desk-card .tag{
-    font-family:'Tajawal',sans-serif; font-size:.72rem; font-weight:700;
-    background:var(--ink); color:var(--ivory); padding:.3rem .7rem; border-radius:999px;
-    display:inline-block; margin-bottom:.9rem;
-  }
-  .desk-card h3{font-size:1.3rem; margin-bottom:.5rem;}
-  .desk-card p{font-size:.92rem; color:#4a4634; margin:.2rem 0;}
-  .desk-card .row{display:flex; align-items:center; justify-content:space-between; margin-top:1rem; padding-top:1rem; border-top:1px dashed rgba(20,22,42,0.18);}
-  .desk-card .stat{font-family:'El Messiri',serif; font-weight:700; color:var(--teal-deep); font-size:1.6rem;}
+    .container { width: min(1120px, 92%); margin: 0 auto; }
 
-  /* ---------- SECTION HEADS ---------- */
-  .sec-head{ max-width:64ch; margin-bottom:3rem; }
-  .sec-head h2{ font-size:clamp(1.8rem,3.4vw,2.6rem); color:var(--ivory);}
-  .sec-head p{ margin-top:.9rem; color:rgba(243,238,225,0.68); font-size:1.02rem;}
-  section.light{ background:var(--paper); color:var(--ink); }
-  section.light .sec-head h2{ color:var(--ink); }
-  section.light .sec-head p{ color:#5a5540; }
-  section.light .eyebrow{ color:var(--amber-deep); }
-  section.light .eyebrow::before{ background:var(--amber-deep); }
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(247, 241, 232, 0.85);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; gap: 16px;
+    }
+    .logo {
+      font-weight: 800; font-size: 1.25rem; color: var(--text);
+      display: flex; align-items: center; gap: 8px; text-decoration: none;
+    }
+    .logo span {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), #f0a06a);
+      display: grid; place-items: center; color: white; font-size: 0.95rem;
+    }
+    .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted); font-weight: 600;
+      font-size: 0.9rem; padding: 8px 12px; border-radius: 999px;
+      transition: 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      background: white; color: var(--accent); box-shadow: var(--shadow);
+    }
+    .menu-btn {
+      display: none; border: 0; background: white; border-radius: 12px;
+      width: 44px; height: 44px; font-size: 1.2rem; cursor: pointer;
+      box-shadow: var(--shadow);
+    }
 
-  /* ---------- STATS ---------- */
-  .stat-grid{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:1.3rem;
-  }
-  @media(max-width:900px){ .stat-grid{grid-template-columns:1fr 1fr;} }
-  @media(max-width:560px){ .stat-grid{grid-template-columns:1fr;} }
-  .stat-card{
-    background:var(--ink-soft); border:1px solid var(--line);
-    border-radius:18px; padding:1.8rem 1.5rem;
-    transition:transform .25s ease, border-color .25s ease;
-  }
-  .stat-card:hover{ transform:translateY(-6px); border-color:var(--amber); }
-  .stat-card .num{
-    font-family:'El Messiri',serif; font-size:2.6rem; font-weight:700; color:var(--amber);
-    line-height:1;
-  }
-  .stat-card p{ margin:.9rem 0 .6rem; font-size:.9rem; color:rgba(243,238,225,0.8);}
-  .stat-card .src{ font-size:.74rem; color:rgba(243,238,225,0.45); font-family:'Tajawal',sans-serif;}
+    /* SECTIONS */
+    section { padding: 72px 0; }
+    .section-head {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 28px; justify-content: flex-start;
+    }
+    .section-head h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800;
+    }
+    .pill-num {
+      width: 8px; height: 28px; border-radius: 8px;
+      background: linear-gradient(180deg, var(--accent), #f0a06a);
+    }
 
-  /* ---------- FOCUS GROUP ---------- */
-  .fg-grid{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem;
-  }
-  @media(max-width:900px){ .fg-grid{grid-template-columns:1fr 1fr;} }
-  @media(max-width:600px){ .fg-grid{grid-template-columns:1fr;} }
-  .fg-card{
-    background:var(--ivory); border-radius:14px; padding:1.4rem;
-    border-inline-start:4px solid var(--rose);
-  }
-  .fg-card h4{ font-size:1.05rem; margin-bottom:.5rem; color:var(--ink);}
-  .fg-card p{ font-size:.88rem; color:#59543f; margin:0;}
-  .fg-quote{
-    margin-top:2rem; background:var(--ink); color:var(--ivory);
-    border-radius:16px; padding:2rem 2.2rem; font-size:1rem; line-height:2;
-    border-inline-start:4px solid var(--amber);
-  }
-  .fg-quote b{ color:var(--amber); }
+    /* HERO */
+    .hero { padding: 48px 0 24px; }
+    .hero-card {
+      background: var(--card);
+      border: 1px solid rgba(180,140,100,0.15);
+      border-radius: 28px;
+      padding: clamp(28px, 5vw, 56px);
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #f8e6d8; color: var(--accent);
+      padding: 8px 16px; border-radius: 999px;
+      font-weight: 700; font-size: 0.92rem; margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 800; letter-spacing: -0.5px; margin-bottom: 10px;
+    }
+    .hero .tagline {
+      color: var(--accent); font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+      font-weight: 700; margin-bottom: 14px;
+    }
+    .hero p.desc {
+      color: var(--muted); max-width: 640px; margin: 0 auto 28px;
+      font-size: 1.05rem;
+    }
+    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      border: 0; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 999px; font-weight: 700;
+      font-family: inherit; font-size: 0.98rem; transition: 0.2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #ef9458);
+      color: white; box-shadow: 0 8px 24px rgba(224,122,77,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-ghost {
+      background: white; color: var(--text);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .btn-ghost:hover { background: var(--bg-soft); }
 
-  /* ---------- PERSONAS (sticky notes) ---------- */
-  .persona-grid{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:1.6rem;
-  }
-  @media(max-width:1000px){ .persona-grid{grid-template-columns:1fr 1fr;} }
-  @media(max-width:560px){ .persona-grid{grid-template-columns:1fr;} }
-  .persona{
-    border-radius:6px; padding:1.5rem 1.3rem 1.8rem;
-    color:var(--ink); position:relative;
-    box-shadow:0 14px 26px -14px rgba(0,0,0,0.5);
-  }
-  .persona::before{
-    content:""; position:absolute; top:-10px; left:50%; transform:translateX(-50%) rotate(-3deg);
-    width:46px; height:16px; background:rgba(20,22,42,0.18); border-radius:2px;
-  }
-  .persona:nth-child(1){ background:var(--note-1); transform:rotate(-1.6deg); }
-  .persona:nth-child(2){ background:var(--note-3); transform:rotate(1.2deg); }
-  .persona:nth-child(3){ background:var(--note-2); transform:rotate(-1deg); }
-  .persona:nth-child(4){ background:var(--note-4); transform:rotate(1.8deg); }
-  .persona:hover{ transform:rotate(0deg) translateY(-4px); transition:.25s; }
-  .persona .name{ font-family:'El Messiri',serif; font-weight:700; font-size:1.15rem;}
-  .persona .role{ font-size:.8rem; opacity:.7; margin-bottom:.9rem;}
-  .persona dl{ margin:0; }
-  .persona dt{ font-family:'Tajawal',sans-serif; font-weight:700; font-size:.74rem; margin-top:.8rem; opacity:.75;}
-  .persona dd{ margin:.2rem 0 0; font-size:.85rem; }
+    /* GRID CARDS */
+    .grid-3 {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .grid-2 {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
+    }
+    .grid-4 {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(180,140,100,0.12);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(80,50,20,0.12); }
+    .icon {
+      width: 46px; height: 46px; border-radius: 14px;
+      display: grid; place-items: center; color: white;
+      font-size: 1.2rem; margin-bottom: 14px;
+    }
+    .icon.teal { background: linear-gradient(135deg, #1f7a6c, #2fa58f); }
+    .icon.red { background: linear-gradient(135deg, #e2554a, #f07860); }
+    .icon.orange { background: linear-gradient(135deg, #ef8b3a, #f5a85f); }
+    .icon.green { background: linear-gradient(135deg, #2a9d7a, #45b892); }
+    .icon.dark { background: linear-gradient(135deg, #3d342c, #5a4d42); }
+    .card h3 { font-size: 1.15rem; margin-bottom: 8px; font-weight: 800; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
 
-  /* ---------- EMPATHY MAP ---------- */
-  .em-grid{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem;
-  }
-  @media(max-width:900px){ .em-grid{grid-template-columns:1fr 1fr;} }
-  @media(max-width:560px){ .em-grid{grid-template-columns:1fr;} }
-  .em-card{ background:var(--ink-soft); border:1px solid var(--line); border-radius:16px; padding:1.5rem;}
-  .em-card h4{ font-size:1.02rem; margin-bottom:.9rem; display:flex; align-items:center; gap:.5rem;}
-  .em-card ul{ margin:0; padding-inline-start:1.1rem; font-size:.88rem; color:rgba(243,238,225,0.78);}
-  .em-card li{ margin-bottom:.5rem;}
-  .em-card.gains{ border-top:3px solid var(--teal); }
-  .em-card.pains{ border-top:3px solid var(--rose); }
-  .em-card.neutral{ border-top:3px solid var(--amber); }
+    /* SOLUTION */
+    .split {
+      display: grid; grid-template-columns: 1.05fr 1fr; gap: 28px; align-items: center;
+    }
+    .photo {
+      width: 100%; border-radius: 24px; object-fit: cover;
+      box-shadow: var(--shadow); min-height: 380px; background: #e8ddd0;
+    }
+    .feature-list { list-style: none; margin-top: 18px; display: grid; gap: 14px; }
+    .feature-list li {
+      display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start;
+    }
+    .check {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--teal-soft); color: var(--teal);
+      display: grid; place-items: center; font-size: 0.85rem; font-weight: 800;
+      margin-top: 3px;
+    }
+    .feature-list strong { display: block; font-weight: 800; }
+    .feature-list span { color: var(--muted); font-size: 0.95rem; }
+    .accent-title { color: var(--accent); font-weight: 800; font-size: 1.2rem; margin-bottom: 8px; }
 
-  /* ---------- POV ---------- */
-  .pov-list{ display:flex; flex-direction:column; gap:.8rem; }
-  .pov-item{
-    background:var(--ivory); border-radius:14px; overflow:hidden;
-    border:1px solid var(--line-dark);
-  }
-  .pov-q{
-    display:flex; align-items:center; gap:1rem; padding:1.1rem 1.4rem;
-    cursor:pointer; background:transparent; width:100%; border:none; text-align:right;
-    font-family:'Almarai',sans-serif; color:var(--ink); font-size:1rem; font-weight:700;
-  }
-  .pov-q .n{
-    font-family:'El Messiri',serif; color:var(--amber-deep); font-size:1.1rem; flex-shrink:0;
-    width:2.2rem; height:2.2rem; border-radius:50%; background:var(--paper-dim);
-    display:flex; align-items:center; justify-content:center;
-  }
-  .pov-q .arrow{ margin-inline-start:auto; transition:transform .25s ease; opacity:.5;}
-  .pov-item.open .arrow{ transform:rotate(180deg); }
-  .pov-body{
-    max-height:0; overflow:hidden; transition:max-height .35s ease;
-    padding:0 1.4rem;
-  }
-  .pov-item.open .pov-body{ padding:0 1.4rem 1.3rem; }
-  .pov-chips{ display:flex; flex-wrap:wrap; gap:.5rem; }
-  .pov-chips span{
-    background:var(--paper-dim); border:1px solid rgba(20,22,42,0.1);
-    padding:.4rem .8rem; border-radius:999px; font-size:.82rem; color:#4a4634;
-  }
+    /* MARKET highlight */
+    .market-box {
+      background: linear-gradient(135deg, #1f7a6c, #2a9d7a);
+      color: white; border-radius: var(--radius); padding: 28px;
+      box-shadow: 0 16px 40px rgba(31,122,108,0.25);
+    }
+    .market-box h3 { font-size: 1.35rem; margin-bottom: 10px; }
+    .market-box p { opacity: 0.92; }
+    .market-item {
+      display: grid; grid-template-columns: 40px 1fr; gap: 12px;
+      align-items: start; margin-bottom: 16px;
+    }
+    .market-item .mi {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: white; display: grid; place-items: center; font-size: 1.1rem;
+    }
+    .market-item h4 { font-weight: 800; margin-bottom: 2px; }
+    .market-item p { color: var(--muted); font-size: 0.92rem; }
 
-  /* ---------- SOLUTION ---------- */
-  .sol-wrap{ display:grid; grid-template-columns:.9fr 1.1fr; gap:3rem; align-items:start;}
-  @media(max-width:900px){ .sol-wrap{grid-template-columns:1fr;} }
-  .sol-list{ display:flex; flex-direction:column; gap:1.1rem;}
-  .sol-list li{ list-style:none; display:flex; gap:1rem; align-items:flex-start;}
-  .sol-list .ico{
-    width:38px; height:38px; border-radius:10px; background:var(--teal); color:#fff;
-    display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.05rem;
-  }
-  .sol-list p{ margin:0; font-size:.92rem; color:rgba(243,238,225,0.82);}
-  .sol-list b{ display:block; color:var(--ivory); font-family:'El Messiri',serif; font-size:1.02rem; margin-bottom:.15rem;}
+    /* JOURNEY */
+    .steps { display: grid; gap: 16px; }
+    .step {
+      display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: start;
+    }
+    .step-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: #f8e6d8; color: var(--accent);
+      display: grid; place-items: center; font-size: 1.1rem;
+    }
+    .step h4 { font-weight: 800; }
+    .step p { color: var(--muted); font-size: 0.95rem; }
 
-  .phone-mock{
-    background:var(--ink-softer); border-radius:28px; padding:1.6rem;
-    border:1px solid var(--line);
-  }
-  .phone-mock .hd{ display:flex; justify-content:space-between; align-items:center; font-family:'Tajawal',sans-serif; font-size:.85rem; margin-bottom:1rem; color:rgba(243,238,225,0.7);}
-  .place-row{ background:var(--ink-soft); border-radius:12px; padding:.9rem 1rem; display:flex; justify-content:space-between; align-items:center; margin-bottom:.7rem;}
-  .place-row .pname{ font-weight:700; font-size:.92rem;}
-  .place-row .pmeta{ font-size:.75rem; color:rgba(243,238,225,0.55);}
-  .badge-quiet{ background:rgba(61,143,125,0.18); color:var(--teal); font-size:.7rem; padding:.25rem .6rem; border-radius:999px; font-family:'Tajawal',sans-serif;}
+    /* TABLE */
+    .table-wrap {
+      overflow-x: auto; border-radius: var(--radius);
+      box-shadow: var(--shadow); border: 1px solid rgba(180,140,100,0.12);
+      background: white;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { padding: 16px 18px; text-align: right; font-size: 0.95rem; }
+    th {
+      color: white; font-weight: 800;
+    }
+    th:nth-child(1) { background: #d9654a; width: 22%; }
+    th:nth-child(2) { background: #d9654a; }
+    th:nth-child(3) { background: var(--teal); }
+    tr:nth-child(even) td { background: #fbf8f4; }
+    td:first-child { font-weight: 700; color: var(--text); }
+    td strong { color: var(--teal); }
 
-  /* ---------- PROTOTYPE ---------- */
-  .proto-strip{
-    display:grid; grid-template-columns:repeat(5,1fr); gap:1rem;
-  }
-  @media(max-width:1000px){ .proto-strip{grid-template-columns:repeat(2,1fr);} }
-  @media(max-width:560px){ .proto-strip{grid-template-columns:1fr;} }
-  .proto-card{ background:var(--ivory); border-radius:16px; padding:1.3rem; color:var(--ink); text-align:center;}
-  .proto-card .step{
-    width:36px; height:36px; border-radius:50%; background:var(--ink); color:var(--amber);
-    display:flex; align-items:center; justify-content:center; margin:0 auto .8rem; font-family:'El Messiri',serif; font-weight:700;
-  }
-  .proto-card h4{ font-size:.95rem; margin-bottom:.4rem;}
-  .proto-card p{ font-size:.78rem; color:#5a5540; margin:0;}
+    /* QUOTE */
+    .quote-card {
+      background: white; border-radius: var(--radius);
+      padding: clamp(24px, 4vw, 40px);
+      box-shadow: var(--shadow); text-align: center;
+      border: 1px solid rgba(180,140,100,0.12);
+      max-width: 820px; margin: 0 auto;
+    }
+    .quote-card .q {
+      font-size: 2rem; color: var(--accent); line-height: 1; margin-bottom: 10px;
+    }
+    .quote-card p { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+    .quote-card .sub { color: var(--accent); font-weight: 600; font-size: 1rem; }
 
-  /* ---------- TEAM ---------- */
-  .team-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
-  @media(max-width:760px){ .team-grid{grid-template-columns:1fr 1fr;} }
-  .team-card{
-    background:var(--ink-soft); border:1px solid var(--line); border-radius:12px;
-    padding:.9rem 1.1rem; font-size:.88rem; display:flex; align-items:center; gap:.6rem;
-  }
-  .team-card .dot{ width:8px; height:8px; border-radius:50%; background:var(--teal); flex-shrink:0;}
+    .thanks {
+      background: white; border-radius: var(--radius);
+      padding: 40px 24px; text-align: center; box-shadow: var(--shadow);
+      border: 1px solid rgba(180,140,100,0.12); margin-top: 28px;
+    }
+    .thanks .qmark {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: #f8e6d8; color: var(--accent);
+      display: grid; place-items: center; margin: 0 auto 14px;
+      font-weight: 800; font-size: 1.3rem;
+    }
+    .thanks h2 { font-size: 2rem; margin-bottom: 8px; }
+    .thanks p { color: var(--teal); font-weight: 700; font-size: 1.1rem; }
+    .thanks small { display: block; margin-top: 10px; color: var(--muted); }
 
-  footer{
-    text-align:center; padding:3.5rem 0 2.5rem; background:var(--ink);
-    border-top:1px solid var(--line); color:rgba(243,238,225,0.5); font-size:.85rem;
-  }
-  footer .brand{ justify-content:center; margin-bottom:.6rem;}
+    footer {
+      padding: 28px 0 40px; text-align: center; color: var(--muted); font-size: 0.9rem;
+    }
 
-  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
-  .reveal.show{ opacity:1; transform:translateY(0);}
-</style>
+    /* reveal animation */
+    .reveal {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.show { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .grid-3, .grid-4, .split, .grid-2 { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column; position: absolute;
+        top: 70px; right: 4%; left: 4%; background: white;
+        padding: 12px; border-radius: 16px; box-shadow: var(--shadow);
+      }
+      .menu-btn { display: grid; place-items: center; }
+      .photo { min-height: 260px; }
+    }
+    @media (max-width: 560px) {
+      .grid-4 { grid-template-columns: 1fr; }
+      section { padding: 56px 0; }
+    }
+  </style>
 </head>
 <body>
-
-<nav>
-  <div class="wrap">
-    <div class="brand">✳️ Study<span>Spot</span></div>
-    <div class="navlinks">
-      <a href="#problem">المشكلة</a>
-      <a href="#personas">المستخدمين</a>
-      <a href="#empathy">التعاطف</a>
-      <a href="#pov">وجهة النظر</a>
-      <a href="#solution">الحل</a>
-      <a href="#prototype">النموذج</a>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<header class="hero">
-  <div class="lamp-glow"></div>
-  <div class="wrap hero-grid">
-    <div>
-      <p class="eyebrow">Design Thinking · Empathy &amp; Research Phase</p>
-      <h1>مش كل حد بيلاقي <em>مكان هادئ</em><br>يذاكر أو يشتغل فيه</h1>
-      <p class="lede">دراسة وتحليل مشكلة "صعوبة إيجاد مكان هادئ للمذاكرة والعمل" للطلاب والموظفين — من الإحصائيات والمقابلات، للشخصيات، لخريطة التعاطف، وصولاً لفكرة الحل.</p>
-      <div class="hero-cta">
-        <a href="#problem" class="btn btn-amber">استكشف البحث ↓</a>
-        <a href="#solution" class="btn btn-ghost">شوف الحل</a>
+  <nav>
+    <div class="container nav-inner">
+      <a class="logo" href="#top"><span>☕</span> Study Spot</a>
+      <button class="menu-btn" id="menuBtn" aria-label="menu">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#problem">المشكلة</a>
+        <a href="#solution">الحل</a>
+        <a href="#market">السوق</a>
+        <a href="#product">المنتج</a>
+        <a href="#traction">الإثبات</a>
+        <a href="#team">الفريق</a>
+        <a href="#competition">المنافسون</a>
+        <a href="#revenue">نموذج الربح</a>
+        <a href="#invest">الاستثمار</a>
       </div>
     </div>
-    <div class="desk-card">
-      <span class="tag">Focus Group · اقتباس حقيقي</span>
-      <h3>"مش عارف أركز خالص"</h3>
-      <p>البيت مليان دوشة، الكافيهات مزعجة، والـ Coworking غالي. كل ده بيأثر على التركيز والإنتاجية.</p>
-      <div class="row">
-        <span>نسبة الطلاب المتأثرين بالتشتت بالمنزل</span>
-        <span class="stat">74%</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="container">
+      <div class="hero-card reveal">
+        <div class="badge">☕ عرض التقديم للمشروع (Pitch Deck)</div>
+        <h1>Study Spot</h1>
+        <div class="tagline">دليلك الذكي لأفضل مكان للمذاكرة والعمل</div>
+        <p class="desc">
+          تطبيق متكامل يساعد الطلبة والمستقلين على اكتشاف مساحات العمل الهادئة والمناسبة
+          لاحتياجاتهم بأقل وقت وجهد.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#solution">اكتشف الحل</a>
+          <a class="btn btn-ghost" href="#product">رحلة المستخدم</a>
+        </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- STATS -->
-<section id="problem">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">الإحصائيات والدراسات الواقعية</p>
-      <h2>المشكلة موثّقة، مش مجرد إحساس</h2>
-      <p>أربع نتائج من دراسات ومصادر موثوقة بتأكد إن أزمة "مفيش مكان هادئ" منتشرة بين الطلاب والعاملين عن بُعد على حد سواء.</p>
-    </div>
-    <div class="stat-grid">
-      <div class="stat-card reveal">
-        <div class="num">68%</div>
-        <p>من العاملين عن بُعد يشكون من غياب أماكن عمل مناسبة بأسعار معقولة.</p>
-        <div class="src">المصدر: Buffer State of Remote Work Report</div>
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="pill-num"></div>
+        <h2>1. المشكلة (Problem)</h2>
       </div>
-      <div class="stat-card reveal">
-        <div class="num">74%</div>
-        <p>من الطلاب يعانون من التشتت والضوضاء العائلية أثناء المذاكرة في المنزل.</p>
-        <div class="src">المصدر: National Center for Education Statistics (NCES)</div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="num">62%</div>
-        <p>من الطلاب يضطرون لقطع مذاكرتهم بسبب إغلاق المكتبات العامة في وقت مبكر.</p>
-        <div class="src">المصدر: American Library Association (ALA)</div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="num">85%</div>
-        <p>من الكافيهات غير مجهزة كبيئة تركيز بسبب الضوضاء العالية والأغاني المستمرة.</p>
-        <div class="src">المصدر: Journal of Environmental Psychology</div>
+      <div class="grid-3">
+        <article class="card reveal">
+          <div class="icon orange">🔍</div>
+          <h3>البحث اليومي المجهد</h3>
+          <p>كل يوم آلاف الطلبة والـ Freelancers بيدوروا على مكان هادي يذاكروا أو يشتغلوا فيه.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon red">⏱️</div>
+          <h3>ضياع الوقت والجهد</h3>
+          <p>بيواجهوا مشكلة إنهم ميعرفوش أي مكان مناسب قبل ما يروحوا، وده بيضيع وقت ومجهود كبير.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon teal">🔊</div>
+          <h3>عدم ملاءمة المكان</h3>
+          <p>في الآخر ممكن يلاقوا المكان زحمة جداً، أو صوته عالي، أو إن شبكة الإنترنت فيه ضعيفة وتمنعهم من الشغل.</p>
+        </article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOCUS GROUP -->
-<section class="light">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">Focus Group Insights</p>
-      <h2>نتائج جلسة النقاش</h2>
-      <p>لما قعدنا مع الطلاب والموظفين، ظهرت ست مشاكل متكررة على لسانهم.</p>
-    </div>
-    <div class="fg-grid">
-      <div class="fg-card reveal"><h4>🏠 دوشة البيت</h4><p>صعوبة التركيز في المنزل بسبب الضوضاء العائلية، تشتيت الإخوات، والمسؤوليات المنزلية المستمرة.</p></div>
-      <div class="fg-card reveal"><h4>☕ مشاكل الكافيهات</h4><p>الكافيهات زحمة وصوت الموسيقى عالي، بالإضافة للضغط المستمر لطلب المشروبات والتكلفة.</p></div>
-      <div class="fg-card reveal"><h4>🕐 قيود المكتبات</h4><p>المكتبات بتقفل بدري جداً، مواعيدها غير مرنة مع أوقات الامتحانات، ومواقعها بعيد لبعض الطلاب.</p></div>
-      <div class="fg-card reveal"><h4>🚫 غياب المعلومات</h4><p>عدم وجود طريقة لمعرفة حالة المكان (هل هادئ أم ممتلئ) قبل الذهاب، فيضيع الوقت.</p></div>
-      <div class="fg-card reveal"><h4>💼 التأثير على الإنتاجية</h4><p>صعوبة الوصول لمكان هادئ يقلل إنجاز المذاكرة ويخلي العمل أبطأ وأصعب.</p></div>
-      <div class="fg-card reveal"><h4>💰 غلاء الـ Coworking</h4><p>أماكن الـ Coworking Spaces أسعارها مرتفعة ومكلفة بالنسبة للطلاب وأصحاب العمل الحر.</p></div>
-    </div>
-    <div class="fg-quote reveal">
-      <b>ملخص البحث:</b> المشكلة دي مش بتواجه الطلبة بس، لكنها كمان بتواجه الموظفين وأصحاب الشغل الحر. مع انتشار الشغل عن بُعد، ناس كتير محتاجة مكان هادي تشتغل منه. البيت ممكن يكون مليان دوشة، والكافيهات مش دايمًا مناسبة بسبب الزحمة أو الموسيقى، وأماكن الـ Coworking أسعارها أحيانًا بتكون مرتفعة. كل ده بيأثر على التركيز والإنتاجية، ويخلي إنجاز الشغل أصعب. علشان كده بنفكر في حل يساعد أي شخص يلاقي مكان هادئ، قريب، وسعره مناسب يشتغل أو يذاكر فيه.
-    </div>
-  </div>
-</section>
-
-<!-- PERSONAS -->
-<section id="personas">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">Target Personas · 4 Personas</p>
-      <h2>مين بيدور على مكان هادئ؟</h2>
-      <p>أربع شخصيات مختلفة في السن والمرحلة، لكن كلهم بيواجهوا نفس أزمة "مفيش مكان أذاكر أو أشتغل فيه".</p>
-    </div>
-    <div class="persona-grid">
-      <div class="persona reveal">
-        <div class="name">محمد، 27 سنة</div>
-        <div class="role">موظف بشركة</div>
-        <dl>
-          <dt>🎯 الهدف</dt><dd>تطوير نفسه بالالتحاق بكورسات بعد ساعات العمل.</dd>
-          <dt>⚠️ المعاناة</dt><dd>الإرهاق بعد الشغل، وإغلاق أماكن المذاكرة في أوقات مبكرة.</dd>
-          <dt>✨ الاحتياج</dt><dd>مكان مريح، مرن في مواعيده، وإنترنت سريع.</dd>
-        </dl>
+  <!-- SOLUTION -->
+  <section id="solution" style="background: linear-gradient(180deg, transparent, rgba(255,255,255,0.35), transparent);">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="pill-num"></div>
+        <h2>2. الحل (Solution)</h2>
       </div>
-      <div class="persona reveal">
-        <div class="name">مريم، 24 سنة</div>
-        <div class="role">Freelance Designer</div>
-        <dl>
-          <dt>🎯 الهدف</dt><dd>الموازنة بين تسليم الشغلات وتطوير مهاراتها الفنية.</dd>
-          <dt>⚠️ المعاناة</dt><dd>الإزعاج بالبيت، ضعف النت، وصعوبة التركيز لفترات طويلة.</dd>
-          <dt>✨ الاحتياج</dt><dd>Quiet workspace، إنترنت قوي، وكراسي مريحة للعمل.</dd>
-        </dl>
-      </div>
-      <div class="persona reveal">
-        <div class="name">سلمى، 20 سنة</div>
-        <div class="role">طالبة كلية العلوم</div>
-        <dl>
-          <dt>🎯 الهدف</dt><dd>التوازن بين المحاضرات والـ Labs والمذاكرة المكثفة.</dd>
-          <dt>⚠️ المعاناة</dt><dd>زحمة مكتبة الكلية وضياع الوقت في البحث عن مكان هادئ.</dd>
-          <dt>✨ الاحتياج</dt><dd>مكان قريب من الجامعة، Wi-Fi، Power outlets، وبيئة هادئة.</dd>
-        </dl>
-      </div>
-      <div class="persona reveal">
-        <div class="name">يوسف، 17 سنة</div>
-        <div class="role">طالب ثانوية عامة</div>
-        <dl>
-          <dt>🎯 الهدف</dt><dd>يحقق أفضل Performance ومجموع عالي في الامتحانات.</dd>
-          <dt>⚠️ المعاناة</dt><dd>الصوت العالي بالبيت، كثرة المقاطعات، وغياب التركيز.</dd>
-          <dt>✨ الاحتياج</dt><dd>مكان هادئ، إضاءة مناسبة، ومكتب مريح للمذاكرة.</dd>
-        </dl>
+      <div class="split">
+        <div class="reveal">
+          <img class="photo" src="https://images.squarespace-cdn.com/content/v1/5e74d0b0ec99d437dda01b4d/c513cb45-49f7-4210-93fa-4d3bc8b1b260/IMG_2412.jpg" alt="Study space" onerror="this.style.background='#e8ddd0'; this.src=''; this.alt='صورة مساحة عمل';" />
+        </div>
+        <div class="reveal">
+          <div class="accent-title">تطبيق Study Spot</div>
+          <p style="color: var(--muted); margin-bottom: 8px;">
+            علشان كده صممنا تطبيق Study Spot، وهو تطبيق بيساعد المستخدم يلاقي أفضل مكان للمذاكرة أو الشغل حسب احتياجاته في أقل وقت.
+          </p>
+          <ul class="feature-list">
+            <li>
+              <div class="check">✓</div>
+              <div>
+                <strong>معلومات دقيقة</strong>
+                <span>بيوفر معلومات عن مستوى الهدوء وجودة الإنترنت.</span>
+              </div>
+            </li>
+            <li>
+              <div class="check">✓</div>
+              <div>
+                <strong>التفاصيل العملية</strong>
+                <span>معرفة الأسعار وساعات العمل المتوفرة.</span>
+              </div>
+            </li>
+            <li>
+              <div class="check">✓</div>
+              <div>
+                <strong>تقييمات موثوقة</strong>
+                <span>تقييمات حقيقية من المستخدمين لمساعدتك في اتخاذ القرار.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- EMPATHY MAP -->
-<section class="light" id="empathy">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">Empathy Map Canvas</p>
-      <h2>خريطة التعاطف</h2>
-      <p>تجميع لما يسمعه، يشوفه، يحسه، يقوله، ويحتاجه المستخدم النموذجي وهو بيدوّر على مكان يذاكر فيه.</p>
-    </div>
-    <div class="em-grid">
-      <div class="em-card neutral reveal">
-        <h4>🔊 يسمع (Hear)</h4>
-        <ul><li>أصوات العربيات والشارع.</li><li>صوت التلفزيون في البيت.</li><li>كلام الناس والأغاني بالكافيهات.</li></ul>
+  <!-- MARKET -->
+  <section id="market">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="pill-num"></div>
+        <h2>3. السوق المستهدف (Market)</h2>
       </div>
-      <div class="em-card neutral reveal">
-        <h4>👁️ يشوف (See)</h4>
-        <ul><li>أماكن زحمة وغير مجهزة.</li><li>ناس بتتكلم بصوت عالي.</li><li>كافيهات مليانة ومزعجة.</li></ul>
-      </div>
-      <div class="em-card neutral reveal">
-        <h4>🧠 يحس ويشعر (Feel)</h4>
-        <ul><li>عايز يركز في المذاكرة والعمل.</li><li>خايف يضيع الوقت قبل الامتحانات.</li><li>متوتر من الدوشة وعدم الإنجاز.</li></ul>
-      </div>
-      <div class="em-card gains reveal">
-        <h4>✅ الاحتياجات (Gains)</h4>
-        <ul><li>مكان هادئ بسعر مناسب.</li><li>واي فاي سريع وكهرباء للشحن.</li><li>موقع قريب من الجامعة أو البيت.</li></ul>
-      </div>
-      <div class="em-card pains reveal">
-        <h4>⚠️ المعاناة (Pains)</h4>
-        <ul><li>ضياع الوقت في التنقل والبحث.</li><li>قلة التركيز والتوتر النفسي.</li><li>انخفاض الإنتاجية والتكلفة العالية.</li></ul>
-      </div>
-      <div class="em-card neutral reveal">
-        <h4>💬 يقول ويعمل (Say &amp; Do)</h4>
-        <ul><li>يقول: "مش عارف أركز خالص".</li><li>يغيّر مكان المذاكرة باستمرار.</li><li>يلبس سماعات عشان يعزل الصوت.</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- POV -->
-<section class="light" id="pov">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">Point of View — كيف يمكننا أن...</p>
-      <h2>10 أسئلة قادت الأفكار</h2>
-      <p>من خريطة التعاطف، طلعنا بعشر أسئلة "كيف يمكننا" (How Might We) وجّهت جلسة العصف الذهني. اضغط على أي سؤال عشان تشوف أفكار الحلول المقترحة.</p>
-    </div>
-    <div class="pov-list">
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">1</span> كيف يمكننا أن نجعل تجربة البحث عن مكان للمذاكرة أقل إرهاقاً؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>منصة واحدة تجمع كل أماكن المذاكرة بتفاصيلها</span>
-          <span>ذكاء اصطناعي يقترح أفضل مكان حسب وقتك وعاداتك</span>
-          <span>مساعد ذكي يقترح لك الأماكن المناسبة</span>
-          <span>روبوت دردشة للإجابة عن الاستفسارات والحجز</span>
-        </div></div>
-      </div>
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">2</span> كيف يمكننا أن نساعد المستخدم في اتخاذ قرار سريع عند اختيار مكان؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>فلتر حسب توفر المقاعد والشواحن</span>
-          <span>فلتر حسب سرعة وجودة الإنترنت</span>
-          <span>فلتر حسب المسافة والوقت المستغرق للوصول</span>
-          <span>مقارنة شاملة بين الأماكن في جدول واحد</span>
-          <span>عرض نسبة الإشغال الحالية لحظياً</span>
-        </div></div>
-      </div>
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">3</span> كيف يمكننا أن نوفر معلومات كافية عن أماكن المذاكرة قبل الذهاب إليها؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>خريطة تفاعلية تعرض مستوى الهدوء الحالي لحظياً</span>
-          <span>تقييمات ومراجعات حقيقية من الطلاب</span>
-          <span>إحصائيات مفصلة عن الهدوء، النظافة، والإنترنت</span>
-          <span>معرفة أوقات الازدحام المتوقعة وتجنبها</span>
-        </div></div>
-      </div>
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">4</span> كيف يمكننا أن نقلل احتمالية ذهاب المستخدم لمكان لا يناسب احتياجاته؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>مقارنة شاملة بين الأماكن في جدول واحد</span>
-          <span>تقييمات ومراجعات حقيقية من الطلاب</span>
-          <span>تنبيه إذا ارتفع مستوى الضوضاء عن الحد المريح</span>
-          <span>تقييم النظافة وصيانة المكان بانتظام</span>
-        </div></div>
-      </div>
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">5</span> كيف يمكننا أن نساعد المستخدم في إيجاد مكان يناسب طبيعة مذاكرته؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>Study Pods عازلة للصوت للمذاكرة الفردية</span>
-          <span>مناطق مخصصة داخل المولات والمراكز التجارية</span>
-          <span>غرف اجتماعات للمشاريع والعمل الجماعي</span>
-          <span>مؤقت Pomodoro داخل التطبيق لتنظيم الجلسات</span>
-          <span>موسيقى هادئة أو أصوات بيضاء اختيارية</span>
-        </div></div>
-      </div>
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">6</span> كيف يمكننا أن نجعل تجربة المذاكرة خارج المنزل أكثر راحة وفعالية؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>خدمة طلب مشروبات وطعام جاهز أثناء المذاكرة</span>
-          <span>توفير خزائن آمنة لحفظ المقتنيات الشخصية</span>
-          <span>مؤقت Pomodoro لتنظيم جلسات المذاكرة</span>
-          <span>تنبيه عند ارتفاع مستوى الضوضاء عن الحد المريح</span>
-        </div></div>
-      </div>
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">7</span> كيف يمكننا أن نساعد المستخدم في المقارنة بين أماكن المذاكرة بسهولة؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>مقارنة شاملة بين الأماكن في جدول واحد</span>
-          <span>تقييمات ومراجعات حقيقية من الطلاب</span>
-          <span>إحصائيات مفصلة عن الهدوء والإنترنت والإضاءة</span>
-        </div></div>
-      </div>
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">8</span> كيف يمكننا أن نوفر تجربة مخصصة تناسب احتياجات كل مستخدم؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>ذكاء اصطناعي يقترح أفضل مكان حسب وقتك وعاداتك</span>
-          <span>تنبيه عند توفر مقعد مناسب حسب تفضيلاتك</span>
-          <span>تقارير أسبوعية عن عادات المذاكرة وتقدمك</span>
-          <span>قائمة "المفضلة" لحفظ الأماكن والرجوع لها بسرعة</span>
-        </div></div>
-      </div>
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">9</span> كيف يمكننا أن نجعل العثور على مكان مناسب يتم بثقة أكبر؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>تقييمات ومراجعات حقيقية من الطلاب</span>
-          <span>تقييم الأمان وتوفر الحراسة في كل مكان</span>
-          <span>تقييم النظافة وصيانة المكان بانتظام</span>
-          <span>إمكانية الإبلاغ عن أي مشكلة في أي مكان</span>
-        </div></div>
-      </div>
-
-      <div class="pov-item reveal">
-        <button class="pov-q"><span class="n">10</span> كيف يمكننا أن نضمن إيجاد مكان مناسب دون إهدار الوقت أو المجهود؟ <span class="arrow">⌄</span></button>
-        <div class="pov-body"><div class="pov-chips">
-          <span>نظام حجز فوري للمقاعد قبل الوصول</span>
-          <span>حجز المكان قبل أيام أو قبل أسبوع</span>
-          <span>استخدام الواقع المعزز (AR) للوصول بسهولة</span>
-          <span>عرض نسبة الإشغال الحالية في كل مكان لحظياً</span>
-        </div></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- SOLUTION -->
-<section id="solution">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">الحل المقترح</p>
-      <h2>إزاي نخلي تجربة البحث عن مكان للمذاكرة أسهل وأفضل؟</h2>
-      <p>فكّرنا في كل التحديات اللي واجهتنا في البحث، لنقدّم حلاً ذكياً وشاملاً باسم StudySpot.</p>
-    </div>
-    <div class="sol-wrap">
-      <ul class="sol-list">
-        <li class="reveal"><div class="ico">📍</div><p><b>ترشيح ذكي</b>يرشّح أقرب الأماكن الهادئة للمذاكرة حسب موقعك ووقتك.</p></li>
-        <li class="reveal"><div class="ico">📶</div><p><b>ازدحام لحظي</b>يعرض نسبة الازدحام في كل مكان في الوقت الحقيقي.</p></li>
-        <li class="reveal"><div class="ico">🗓️</div><p><b>حجز مسبق</b>يوفر إمكانية حجز مقعد أو غرفة قبل الذهاب.</p></li>
-        <li class="reveal"><div class="ico">⚖️</div><p><b>مقارنة تفصيلية</b>يعرض السعر، سرعة الإنترنت، وعدد الساعات المتاحة لكل مكان.</p></li>
-        <li class="reveal"><div class="ico">🗺️</div><p><b>خريطة تفاعلية</b>تعرض أماكن المذاكرة القريبة منك بلمح البصر.</p></li>
-        <li class="reveal"><div class="ico">🎁</div><p><b>تفضيلات وخصومات</b>تنبيهات لأوقات أقل ازدحاماً، وخصم 15% على أماكن الـ Coworking.</p></li>
-      </ul>
-      <div class="phone-mock reveal">
-        <div class="hd"><span>📍 القاهرة، مصر</span><span>4.8 ★ (230 تقييم)</span></div>
-        <div class="place-row"><div><div class="pname">مكتبة زاوية هادئة</div><div class="pmeta">وايفاي سريع · مفتوح لـ 10:00م</div></div><span class="badge-quiet">هادئ 20%</span></div>
-        <div class="place-row"><div><div class="pname">Calm Corner Café</div><div class="pmeta">كافيه · 1.6 كم</div></div><span class="badge-quiet">متوسط 50%</span></div>
-        <div class="place-row"><div><div class="pname">Focus Space Coworking</div><div class="pmeta">مكتب مشترك · 2.1 كم</div></div><span class="badge-quiet">هادئ جداً</span></div>
+      <div class="split">
+        <div class="market-box reveal">
+          <div style="font-size: 1.8rem; margin-bottom: 10px;">👥</div>
+          <h3>توسع مستمر في السوق</h3>
+          <p>
+            الفئة المستهدفة مش الطلبة بس، لكن كمان الـ Freelancers والـ Remote Workers،
+            وأي شخص محتاج مكان هادي يركز فيه بأعلى كفاءة.
+          </p>
+        </div>
+        <div class="reveal">
+          <div class="market-item">
+            <div class="mi">🎓</div>
+            <div>
+              <h4>الطلاب (Students)</h4>
+              <p>يبحثون دائماً عن بيئة مناسبة للاستذكار والمشاريع الدراسية.</p>
+            </div>
+          </div>
+          <div class="market-item">
+            <div class="mi">💻</div>
+            <div>
+              <h4>المستقلين (Freelancers)</h4>
+              <p>يتطلب عملهم أماكن بإنترنت قوي وجو يشجع على الإنتاجية.</p>
+            </div>
+          </div>
+          <div class="market-item">
+            <div class="mi">💼</div>
+            <div>
+              <h4>العاملون عن بُعد (Remote Workers)</h4>
+              <p>يحتاجون لتغيير روتين العمل في مكان هادئ ومجهز.</p>
+            </div>
+          </div>
+          <div class="market-item">
+            <div class="mi">📈</div>
+            <div>
+              <h4>فئة مستهدفة ضخمة</h4>
+              <p>دي فئة كبيرة جداً وبتزيد بشكل مستمر مع الوقت.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PROTOTYPE -->
-<section class="light" id="prototype">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">Prototype</p>
-      <h2>تطبيق موبايل يساعدك تلاقي مكان هادئ تذاكر فيه</h2>
-      <p>خمس شاشات رئيسية تلخّص رحلة المستخدم داخل تطبيق StudySpot.</p>
+  <!-- PRODUCT -->
+  <section id="product" style="background: linear-gradient(180deg, transparent, rgba(255,255,255,0.35), transparent);">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="pill-num"></div>
+        <h2>4. المنتج والبروتوتايب (Product & Prototype)</h2>
+      </div>
+      <div class="split">
+        <div class="reveal">
+          <div class="accent-title">رحلة المستخدم داخل البروتوتايب:</div>
+          <div class="steps" style="margin-top: 18px;">
+            <div class="step">
+              <div class="step-icon">📍</div>
+              <div>
+                <h4>تحديد الموقع</h4>
+                <p>المستخدم بيفتح التطبيق، يحدد موقعه أو المنطقة اللي عايز يروحها.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-icon">📋</div>
+              <div>
+                <h4>ترشيح الأماكن</h4>
+                <p>تظهر له الأماكن المناسبة مع كل التفاصيل اللي تساعده ياخد قرار بسرعة.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-icon">🧭</div>
+              <div>
+                <h4>الانتقال المباشر</h4>
+                <p>يقدر تشوف تفاصيل المكان بالكامل أو يروح مباشرة بدون تعقيد.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal">
+          <img class="photo" src="https://static.vecteezy.com/system/resources/thumbnails/069/690/385/small_2x/young-men-studying-together-reviewing-documents-focused-expressions-casual-clothing-modern-workspace-laptop-on-table-coffee-cup-teamwork-collaboration-learning-environment-free-photo.jpeg" alt="Students collaborating" onerror="this.style.background='#e8ddd0'; this.src='';" />
+        </div>
+      </div>
     </div>
-    <div class="proto-strip">
-      <div class="proto-card reveal"><div class="step">1</div><h4>الترحيب والتسجيل</h4><p>يعمل المستخدم حساب أو يسجّل دخول.</p></div>
-      <div class="proto-card reveal"><div class="step">2</div><h4>الرئيسية</h4><p>يعرض الأماكن الهادئة القريبة مع المعلومات الأساسية.</p></div>
-      <div class="proto-card reveal"><div class="step">3</div><h4>تفاصيل المكان</h4><p>معلومات تفصيلية عن المكان المختار.</p></div>
-      <div class="proto-card reveal"><div class="step">4</div><h4>الحجز</h4><p>يتيح للمستخدم حجز مقعد أو غرفة مذاكرة.</p></div>
-      <div class="proto-card reveal"><div class="step">5</div><h4>التقييمات</h4><p>يقيّم المستخدمون المكان ويكتبون مراجعاتهم.</p></div>
+  </section>
+
+  <!-- TRACTION -->
+  <section id="traction">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="pill-num"></div>
+        <h2>5. إثبات الفكرة (Traction)</h2>
+      </div>
+      <p class="reveal" style="color: var(--muted); margin-bottom: 22px; max-width: 720px;">
+        قبل ما نصمم التطبيق، عملنا مقابلات مع مستخدمين وفهمنا احتياجاتهم بدقة.
+      </p>
+      <div class="grid-3">
+        <article class="card reveal">
+          <div class="icon red">💬</div>
+          <h3>مقابلات المستخدمين</h3>
+          <p>قبل ما نصمم التطبيق، عملنا مقابلات مع مستخدمين وفهمنا احتياجاتهم بدقة.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon orange">🛠️</div>
+          <h3>Personas & Prototype</h3>
+          <p>بناءً على الفهم العميق للجمهور، صممنا Personas وتطوير Prototype يعكس الحل بشكل عملي.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon teal">❤️</div>
+          <h3>تأكيد احتياج السوق</h3>
+          <p>لما عرضنا الفكرة، لقينا إن أغلب الناس شافوا إنها بتحل مشكلة حقيقية ووضحوا إنهم هيستخدموا تطبيق بالشكل ده.</p>
+        </article>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- TEAM -->
-<section>
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="eyebrow">Brainstorm Team</p>
-      <h2>إعداد الطلاب</h2>
+  <!-- TEAM -->
+  <section id="team" style="background: linear-gradient(180deg, transparent, rgba(255,255,255,0.35), transparent);">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="pill-num"></div>
+        <h2>6. الفريق (Team)</h2>
+      </div>
+      <p class="reveal" style="color: var(--muted); margin-bottom: 22px; font-weight: 600;">
+        "اشتغلنا كفريق، وكل واحد كان مسؤول عن جزء معين لتأمين أفضل نتيجة للمشروع."
+      </p>
+      <div class="grid-4">
+        <article class="card reveal">
+          <div class="icon orange">🔎</div>
+          <h3>البحث (Research)</h3>
+          <p>دراسة احتياجات السوق والجمهور واستخلاص الرؤى الأساسية.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon teal">🎨</div>
+          <h3>تصميم UI/UX</h3>
+          <p>بناء واجهات سهلة، جذابة، وتضمن تجربة مستخدم سلسة ومريحة.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon red">📱</div>
+          <h3>تصميم Prototype</h3>
+          <p>تطوير النماذج التفاعلية للتطبيق واختبار وظائفه الحيوية.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon orange">🖥️</div>
+          <h3>إعداد Presentation</h3>
+          <p>تجهيز إخراج المشروع والعرض التقديمي بالشكل الاحترافي الحالي.</p>
+        </article>
+      </div>
     </div>
-    <div class="team-grid">
-      <div class="team-card reveal"><span class="dot"></span>حمزة السيد ناشي</div>
-      <div class="team-card reveal"><span class="dot"></span>محمد إبراهيم طعيمة</div>
-      <div class="team-card reveal"><span class="dot"></span>يوسف سعيد الحداد</div>
-      <div class="team-card reveal"><span class="dot"></span>غادة محمد جلال</div>
-      <div class="team-card reveal"><span class="dot"></span>ياسمين محمود جمال</div>
-      <div class="team-card reveal"><span class="dot"></span>منة الله سامي عيسى</div>
-      <div class="team-card reveal"><span class="dot"></span>عمر أحمد حلمي</div>
-      <div class="team-card reveal"><span class="dot"></span>زياد سليمان</div>
+  </section>
+
+  <!-- COMPETITION -->
+  <section id="competition">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="pill-num"></div>
+        <h2>7. المنافسين (Competition)</h2>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead>
+            <tr>
+              <th>وجه المقارنة</th>
+              <th>Google Maps</th>
+              <th>تطبيق Study Spot (مشروعنا)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>نطاق العرض</td>
+              <td>يعرض كل الأماكن بشكل عام دون تخصيص.</td>
+              <td><strong>متخصص حصرياً</strong> في أماكن المذاكرة والعمل.</td>
+            </tr>
+            <tr>
+              <td>مستوى الهدوء والضوضاء</td>
+              <td>غير متوفر بدقة.</td>
+              <td><strong>يوفر تفاصيل دقيقة عن مستوى الهدوء.</strong></td>
+            </tr>
+            <tr>
+              <td>الإنترنت والكهرباء</td>
+              <td>معلومات عامة وغير مضمونة.</td>
+              <td><strong>يقيس جودة الـ Wi-Fi وتوفر فيش الكهرباء.</strong></td>
+            </tr>
+            <tr>
+              <td>طبيعة التقييمات</td>
+              <td>تقييمات عامة لجميع الزوار.</td>
+              <td><strong>تقييمات من ناس راحت تذاكر وتشتغل فعلاً.</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div class="brand">✳️ Study<span>Spot</span></div>
-  <p>StudySpot — مكانك الهادئ للمذاكرة والشغل · Design Thinking Research</p>
-</footer>
+  <!-- REVENUE -->
+  <section id="revenue" style="background: linear-gradient(180deg, transparent, rgba(255,255,255,0.35), transparent);">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="pill-num"></div>
+        <h2>8. نموذج الربح (PMC / Revenue Model)</h2>
+      </div>
+      <div class="grid-3">
+        <article class="card reveal">
+          <div class="icon orange">🤝</div>
+          <h3>الشراكات التجارية</h3>
+          <p>تحقيق أرباح من خلال شراكات مع الكافيهات والـ Coworking Spaces مقابل ظهورهم بشكل مميز داخل التطبيق.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon teal">📣</div>
+          <h3>الإعلانات الموجهة</h3>
+          <p>مساحات إعلانية مخصصة للعلامات التجارية المستهدفة للطلاب والمستقلين.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon red">👑</div>
+          <h3>اشتراك Premium</h3>
+          <p>مع الوقت ممكن نوفر اشتراك Premium بمميزات إضافية مخصصة للمستخدمين الأكثر استخداماً.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-<script>
-  // scroll reveal
-  const items = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
-    });
-  }, {threshold:.12});
-  items.forEach(i=>io.observe(i));
+  <!-- INVESTMENT -->
+  <section id="invest">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="pill-num"></div>
+        <h2>9. الاستثمار والتوسع (Amount Being Raised)</h2>
+      </div>
+      <div class="grid-2">
+        <article class="card reveal">
+          <div class="icon teal">📊</div>
+          <h3 style="color: var(--teal);">الوضع الحالي للمشروع</h3>
+          <p>حاليًا إحنا في مرحلة الـ Prototype وإثبات الفكرة وتأكيد احتياج السوق.</p>
+        </article>
+        <article class="card reveal">
+          <div class="icon orange">🚀</div>
+          <h3 style="color: var(--accent);">أهداف الاستثمار المطلوبة</h3>
+          <p>أي استثمار هيكون هدفه تطوير التطبيق بشكل كامل، وإطلاقه في السوق، والتسويق له، والتوسع في الشراكات.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  // POV accordion
-  document.querySelectorAll('.pov-item').forEach(item=>{
-    const q = item.querySelector('.pov-q');
-    const body = item.querySelector('.pov-body');
-    q.addEventListener('click', ()=>{
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.pov-item.open').forEach(other=>{
-        if(other!==item){ other.classList.remove('open'); other.querySelector('.pov-body').style.maxHeight = 0; }
-      });
-      if(isOpen){
-        item.classList.remove('open');
-        body.style.maxHeight = 0;
-      } else {
-        item.classList.add('open');
-        body.style.maxHeight = body.scrollHeight + 'px';
-      }
-    });
-  });
-</script>
+  <!-- CONCLUSION -->
+  <section id="conclusion">
+    <div class="container">
+      <div class="section-head reveal" style="justify-content: center;">
+        <div class="pill-num"></div>
+        <h2>10. الخاتمة (Conclusion)</h2>
+      </div>
+      <div class="quote-card reveal">
+        <div class="q">”</div>
+        <p>
+          "في النهاية، إحنا مش بنقدم مجرد تطبيق بيدل على أماكن، لكن بنقدم
+          تجربة تساعد المستخدم يوفر وقته، ويركز، ويكون أكثر إنتاجية"
+        </p>
+        <div class="sub">
+          "ونتمنى إن مشروعنا يكون خطوة حقيقية لحل مشكلة بيواجهها عدد كبير من الناس كل يوم."
+        </div>
+      </div>
 
+      <div class="thanks reveal">
+        <div class="qmark">؟</div>
+        <h2>شكراً لحضراتكم</h2>
+        <p>ومستعدين للإجابة على أي أسئلة</p>
+        <small>Study Spot Pitch Presentation</small>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Study Spot — All rights reserved</div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // mobile menu
+    const btn = document.getElementById("menuBtn");
+    const links = document.getElementById("navLinks");
+    btn.addEventListener("click", () => links.classList.toggle("open"));
+    links.querySelectorAll("a").forEach(a => a.addEventListener("click", () => links.classList.remove("open")));
+
+    // reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("show"); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+    // active nav link
+    const sections = [...document.querySelectorAll("section[id]")];
+    const navA = [...document.querySelectorAll(".nav-links a")];
+    const spy = () => {
+      const y = window.scrollY + 120;
+      let current = "";
+      sections.forEach(s => { if (y >= s.offsetTop) current = s.id; });
+      navA.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + current));
+    };
+    window.addEventListener("scroll", spy, { passive: true });
+    spy();
+  </script>
 </body>
 </html>
