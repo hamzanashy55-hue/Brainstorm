@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="scroll-smooth dark">
+<html lang="ar" dir="rtl" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiet Spot — Ultra-Professional UI/UX Showcase & Product Hub</title>
+    <title>Quiet Spot | سكينة - منصة أماكن المذاكرة والتركيز</title>
     
-    <!-- Google Fonts & FontAwesome -->
+    <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -19,48 +19,21 @@
             theme: {
                 extend: {
                     colors: {
-                        emerald: {
-                            950: '#081713',
-                            900: '#112922',
-                            800: '#1B3E34',
-                            700: '#255547',
-                            600: '#2E5E4E',
-                            500: '#3D7A66',
-                            400: '#589A83',
-                            100: '#E1EFEA',
-                            50: '#F2F8F5'
-                        },
-                        rust: {
-                            600: '#A45B3E',
-                            500: '#B86F4E',
-                            400: '#C98262',
-                            100: '#F6ECE7'
-                        },
-                        cream: {
-                            100: '#FAF8F5',
-                            200: '#F4EFE6',
-                            300: '#EAE2D5'
+                        brand: {
+                            dark: '#163328',
+                            primary: '#2E5E4E',
+                            light: '#457C69',
+                            cream: '#FAF8F5',
+                            cardBg: '#FFFFFF',
+                            rose: '#E9D0C6',
+                            accent: '#B86F4E',
+                            textDark: '#1E293B',
+                            textMuted: '#64748B'
                         }
                     },
                     fontFamily: {
                         cairo: ['Cairo', 'sans-serif'],
-                        tajawal: ['Tajawal', 'sans-serif'],
-                        sans: ['Plus Jakarta Sans', 'Tajawal', 'sans-serif']
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'glow': 'glow 3s ease-in-out infinite alternate',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-                            '50%': { transform: 'translateY(-12px) rotate(1deg)' },
-                        },
-                        glow: {
-                            '0%': { opacity: '0.4', filter: 'blur(20px)' },
-                            '100%': { opacity: '0.8', filter: 'blur(35px)' }
-                        }
+                        tajawal: ['Tajawal', 'sans-serif']
                     }
                 }
             }
@@ -70,284 +43,317 @@
     <style>
         body {
             font-family: 'Tajawal', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #0F172A;
+            color: #1E293B;
+            user-select: none;
         }
 
-        h1, h2, h3, h4, h5, h6, .font-heading {
+        h1, h2, h3, h4, h5, h6, .font-cairo {
             font-family: 'Cairo', sans-serif;
         }
 
-        /* Glassmorphism Classes */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2E5E4E;
+            border-radius: 10px;
         }
 
-        .dark .glass-card {
-            background: rgba(17, 41, 34, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(46, 94, 78, 0.3);
+        /* Phone Screen Frame Simulation */
+        .app-container {
+            transition: all 0.3s ease;
         }
 
-        /* Phone Screen Cropping Precision for 10 Screens */
-        .device-frame {
-            width: 295px;
-            height: 600px;
-            border: 10px solid #1B3E34;
-            border-radius: 46px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 0 2px rgba(255,255,255,0.1);
+        .mobile-mode {
+            max-width: 430px;
+            height: 880px;
+            border-radius: 48px;
+            border: 12px solid #1E293B;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 2px rgba(255,255,255,0.1);
             position: relative;
             overflow: hidden;
-            background: #FFFFFF;
-            flex-shrink: 0;
+            margin: 20px auto;
         }
 
-        .dark .device-frame {
-            border-color: #2E5E4E;
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(46, 94, 78, 0.3);
+        .desktop-mode {
+            width: 100%;
+            min-height: 100vh;
+            border-radius: 0;
+            border: none;
+            margin: 0;
         }
 
-        .device-notch {
+        /* Notch for Mobile Simulation */
+        .mobile-notch {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 125px;
-            height: 24px;
-            background-color: #1B3E34;
+            width: 140px;
+            height: 25px;
+            background-color: #1E293B;
             border-bottom-left-radius: 16px;
             border-bottom-right-radius: 16px;
-            z-index: 40;
+            z-index: 50;
         }
 
-        .dark .device-notch {
-            background-color: #2E5E4E;
+        /* Pulse Animation for Live Crowdedness */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        .live-pulse {
+            animation: pulseGlow 2s infinite ease-in-out;
         }
 
-        .screen-viewport {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-
-        .screen-atlas-img {
-            position: absolute;
-            width: 2020px;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            max-width: none;
-        }
-
-        /* Accurate Screen Offset Configurations based on 1000246790_2.jpg */
-        .crop-pos-1  { top: -15px; right: -322px; }  /* 1. Splash Screen */
-        .crop-pos-2  { top: -15px; right: -634px; }  /* 2. Login / Sign Up */
-        .crop-pos-3  { top: -15px; right: -950px; }  /* 3. Home Screen */
-        .crop-pos-4  { top: -15px; right: -1270px; } /* 4. Search & Filters */
-        .crop-pos-5  { top: -15px; right: -1590px; } /* 5. Map View */
-
-        .crop-pos-6  { top: -398px; right: -322px; }  /* 6. Place Details */
-        .crop-pos-7  { top: -398px; right: -634px; }  /* 7. Details (More) */
-        .crop-pos-8  { top: -398px; right: -950px; }  /* 8. Reviews */
-        .crop-pos-9  { top: -398px; right: -1270px; } /* 9. Favorites */
-        .crop-pos-10 { top: -398px; right: -1590px; } /* 10. Profile */
-
-        /* Toast Alert Floating Animation */
-        #toast {
-            transition: transform 0.3s ease, opacity 0.3s ease;
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body class="bg-cream-100 dark:bg-emerald-950 text-slate-800 dark:text-slate-100 min-h-screen selection:bg-emerald-500 selection:text-white">
+<body class="bg-slate-950 flex flex-col items-center justify-center min-h-screen p-0 sm:p-4">
 
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-6 left-6 z-50 transform translate-y-20 opacity-0 pointer-events-none bg-emerald-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-emerald-600">
-        <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
-        <span id="toastMsg" class="font-bold text-sm">تم نسخ كود اللون بنجاح!</span>
+    <!-- Top Mode Switcher Bar -->
+    <div class="fixed top-3 z-50 bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full border border-slate-700/60 shadow-2xl flex items-center gap-3 text-white text-xs font-bold">
+        <span class="text-slate-400">طريقة العرض:</span>
+        <button onclick="setAppMode('mobile')" id="btnMobileMode" class="px-3 py-1.5 rounded-full bg-brand-primary text-white flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-mobile-screen"></i> هاتف محاكي
+        </button>
+        <button onclick="setAppMode('desktop')" id="btnDesktopMode" class="px-3 py-1.5 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-desktop"></i> شاشة كاملة
+        </button>
+        <div class="h-4 w-px bg-slate-700 mx-1"></div>
+        <button onclick="resetAppData()" class="text-rose-400 hover:text-rose-300 flex items-center gap-1" title="إعادة ضبط البيانات">
+            <i class="fa-solid fa-arrows-rotate"></i> إعادة ضبط
+        </button>
     </div>
 
-    <!-- Navigation Bar -->
-    <header class="sticky top-0 z-50 bg-cream-100/80 dark:bg-emerald-950/80 backdrop-blur-xl border-b border-emerald-900/10 dark:border-emerald-800/30">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-700 to-emerald-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-emerald-700/30 group-hover:scale-105 transition duration-300">
+    <!-- MAIN APP CONTAINER -->
+    <div id="appContainer" class="app-container mobile-mode bg-brand-cream w-full flex flex-col relative overflow-hidden text-slate-800">
+        
+        <!-- Mobile Phone Notch -->
+        <div id="phoneNotch" class="mobile-notch flex justify-center items-end pb-1">
+            <div class="w-12 h-1 bg-slate-700 rounded-full"></div>
+        </div>
+
+        <!-- ==================== SPLASH SCREEN ==================== -->
+        <div id="screenSplash" class="absolute inset-0 z-40 bg-gradient-to-b from-brand-cream via-[#F3EFE6] to-brand-cream flex flex-col items-center justify-between p-8 text-center transition-all duration-500">
+            <div class="pt-12">
+                <span class="bg-brand-rose/60 text-brand-primary px-4 py-1.5 rounded-full font-bold text-xs tracking-wide">
+                    <i class="fa-solid fa-sparkles text-brand-accent"></i> التطبيق رقم #1 للمذاكرة والتركيز
+                </span>
+            </div>
+
+            <div class="space-y-6 max-w-xs">
+                <!-- App Mascot/Illustration Frame -->
+                <div class="w-44 h-44 mx-auto rounded-full bg-brand-primary/10 border-4 border-brand-primary/20 flex items-center justify-center relative shadow-inner">
+                    <i class="fa-solid fa-couch text-6xl text-brand-primary"></i>
+                    <div class="absolute -bottom-2 -right-2 w-12 h-12 bg-brand-accent text-white rounded-full flex items-center justify-center text-xl shadow-lg">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <h1 class="text-4xl font-extrabold text-brand-primary font-cairo">Quiet Spot</h1>
+                    <p class="text-brand-accent font-bold text-xl">هنخرج فين تذاكر النهاردة؟</p>
+                </div>
+
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    اكتشف أهدى الكافيهات ومساحات العمل والمكتبات، مع معرفة نسبة الزحمة والهدوء وسرعة الإنترنت لحظياً قبل ما تنزل من بيتك.
+                </p>
+            </div>
+
+            <div class="w-full space-y-3 pb-6">
+                <button onclick="navigateTo('screenHome'); hideSplash();" class="w-full py-4 bg-brand-primary hover:bg-brand-dark text-white rounded-2xl font-bold text-lg shadow-lg shadow-brand-primary/30 transition transform active:scale-95 flex items-center justify-center gap-2">
+                    <span>استكشف الآن</span>
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+
+                <button onclick="navigateTo('screenAuth'); hideSplash();" class="w-full py-3.5 bg-white border border-brand-primary/20 text-brand-primary rounded-2xl font-bold text-sm hover:bg-brand-rose/20 transition">
+                    تسجيل الدخول / حساب جديد
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== AUTHENTICATION SCREEN ==================== -->
+        <div id="screenAuth" class="hidden absolute inset-0 z-30 bg-brand-cream p-6 flex flex-col justify-between">
+            <div class="pt-8 text-center space-y-3">
+                <div class="w-16 h-16 rounded-2xl bg-brand-primary text-white mx-auto flex items-center justify-center text-3xl shadow-lg">
+                    <i class="fa-solid fa-couch"></i>
+                </div>
+                <h2 class="text-2xl font-black text-brand-primary font-cairo">مرحباً بك في Quiet Spot</h2>
+                <p class="text-xs text-slate-500">سجّل دخولك للوصول إلى المفضلة والحجوزات ونظام النقاط</p>
+            </div>
+
+            <div class="space-y-4 my-auto">
+                <button onclick="loginUser('Google')" class="w-full py-3.5 px-4 bg-white border border-slate-200 rounded-2xl font-bold text-sm text-slate-700 flex items-center justify-center gap-3 shadow-sm hover:bg-slate-50 transition">
+                    <i class="fa-brands fa-google text-red-500 text-lg"></i>
+                    <span>تسجيل الدخول باستخدام Google</span>
+                </button>
+
+                <button onclick="loginUser('Apple')" class="w-full py-3.5 px-4 bg-slate-900 text-white rounded-2xl font-bold text-sm flex items-center justify-center gap-3 shadow-md hover:bg-black transition">
+                    <i class="fa-brands fa-apple text-lg"></i>
+                    <span>تسجيل الدخول باستخدام Apple</span>
+                </button>
+
+                <div class="flex items-center my-4">
+                    <div class="flex-grow border-t border-slate-300"></div>
+                    <span class="px-3 text-xs text-slate-400 font-bold">أو البريد الإلكتروني</span>
+                    <div class="flex-grow border-t border-slate-300"></div>
+                </div>
+
+                <div class="space-y-3">
+                    <input type="email" id="authEmail" placeholder="البريد الإلكتروني" class="w-full p-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary">
+                    <input type="password" id="authPassword" placeholder="كلمة المرور" class="w-full p-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary">
+                    <button onclick="loginUser('Email')" class="w-full py-3.5 bg-brand-primary text-white rounded-2xl font-bold text-sm shadow-md hover:bg-brand-dark transition">
+                        تسجيل الدخول
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-center pb-4">
+                <button onclick="navigateTo('screenHome')" class="text-xs font-bold text-brand-accent hover:underline">
+                    المتابعة كزائر بدون تسجيل ←
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== MAIN HEADER ==================== -->
+        <header id="mainHeader" class="bg-brand-cream/90 backdrop-blur-md sticky top-0 z-20 px-5 pt-8 pb-3 border-b border-slate-200/60 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center text-lg font-bold shadow-md">
                     <i class="fa-solid fa-couch"></i>
                 </div>
                 <div>
-                    <span class="text-2xl font-black text-emerald-900 dark:text-emerald-50 tracking-tight font-heading block leading-none">Quiet Spot</span>
-                    <span class="text-xs font-bold text-rust-500 dark:text-rust-400 tracking-wider">CASE STUDY & INTERACTIVE HUB</span>
+                    <span class="text-xs text-slate-500 font-bold block leading-tight">الموقع الحالي</span>
+                    <span class="text-sm font-extrabold text-brand-primary flex items-center gap-1 font-cairo">
+                        <i class="fa-solid fa-location-dot text-brand-accent"></i> القاهرة، مصر
+                    </span>
                 </div>
-            </a>
+            </div>
 
-            <!-- Navigation Links -->
-            <nav class="hidden md:flex items-center gap-8 font-bold text-sm text-slate-700 dark:text-slate-300">
-                <a href="#hero" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">الرئيسية</a>
-                <a href="#interactive-showcase" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">استعراض الشاشات الـ 10</a>
-                <a href="#comparator" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">مقارنة الشاشات</a>
-                <a href="#live-sandbox" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">تجربة الفلترة الحية</a>
-                <a href="#design-system" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">نظام التصميم</a>
-                <a href="#bento-features" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">المميزات الذكية</a>
-            </nav>
-
-            <!-- Actions Right -->
-            <div class="flex items-center gap-3">
-                <!-- Dark Mode Toggle Button -->
-                <button onclick="toggleDarkMode()" aria-label="Toggle Theme" class="w-10 h-10 rounded-xl bg-slate-200/70 dark:bg-emerald-900/60 text-slate-800 dark:text-emerald-300 flex items-center justify-center text-lg hover:bg-slate-300 dark:hover:bg-emerald-800 transition">
-                    <i class="fa-solid fa-moon dark:hidden"></i>
-                    <i class="fa-solid fa-sun hidden dark:inline"></i>
+            <div class="flex items-center gap-2">
+                <!-- Notifications Button -->
+                <button onclick="toggleModal('modalNotifications')" class="relative w-10 h-10 rounded-xl bg-white border border-slate-200/80 text-slate-700 flex items-center justify-center text-lg shadow-sm hover:bg-slate-50">
+                    <i class="fa-regular fa-bell"></i>
+                    <span id="notifBadge" class="absolute -top-1 -right-1 w-4 h-4 bg-brand-accent text-white rounded-full text-[10px] font-bold flex items-center justify-center">2</span>
                 </button>
 
-                <a href="#live-sandbox" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md hover:shadow-emerald-600/30 transition hover:scale-105 flex items-center gap-2">
-                    <i class="fa-solid fa-gamepad"></i>
-                    <span>تجربة التطبيق الحي</span>
-                </a>
+                <!-- Compare Places Button -->
+                <button onclick="openCompareModal()" class="w-10 h-10 rounded-xl bg-white border border-slate-200/80 text-brand-primary flex items-center justify-center text-lg shadow-sm hover:bg-slate-50" title="مقارنة بين مكانين">
+                    <i class="fa-solid fa-[#fa-code-compare] fa-code-compare"></i>
+                </button>
+
+                <!-- Add Place Button -->
+                <button onclick="toggleModal('modalAddPlace')" class="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center text-lg shadow-md hover:bg-brand-dark" title="إضافة مكان جديد">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Hero Section -->
-    <section id="hero" class="relative pt-12 pb-24 overflow-hidden">
-        <!-- Glow Orbs -->
-        <div class="absolute top-10 right-1/4 w-96 h-96 bg-emerald-500/15 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
-        <div class="absolute bottom-10 left-10 w-96 h-96 bg-rust-500/15 dark:bg-rust-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
-
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- ==================== MAIN SCROLLABLE CONTENT VIEWPORT ==================== -->
+        <main class="flex-grow overflow-y-auto pb-24 hide-scrollbar">
             
-            <!-- Left Info Column -->
-            <div class="lg:col-span-7 space-y-6 text-right">
-                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-900/60 border border-emerald-600/20 text-emerald-800 dark:text-emerald-300 font-bold text-sm">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                    <span>دراسة حالة واجهات وتجربة المستخدم (Product UX Case Study)</span>
-                </div>
-
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-emerald-950 dark:text-white leading-[1.15] tracking-tight">
-                    Quiet Spot <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-emerald-500 to-rust-500 font-extrabold text-3xl sm:text-4xl">
-                        "هنخرج فين تذاكر النهاردة؟"
-                    </span>
-                </h1>
-
-                <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl font-normal">
-                    تطبيق هاتف محمول مبتكر مصمم خصيصاً لمساعدة الطلاب والمهنيين المستقلين في العثور على أهدى وأنسب مساحات العمل والمقاهي، مع توفير مؤشرات لحظية لنسبة الهدوء، سرعة الإنترنت، وتوفر المقابس الكهربائية.
-                </p>
-
-                <!-- Quick Action Buttons -->
-                <div class="flex flex-wrap items-center gap-4 pt-2">
-                    <a href="#interactive-showcase" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-emerald-600/30 hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-3">
-                        <i class="fa-solid fa-mobile-screen"></i>
-                        <span>استعراض الـ 10 شاشات</span>
-                    </a>
-                    <a href="#design-system" class="bg-white dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-200 border border-emerald-900/10 dark:border-emerald-700/40 px-7 py-4 rounded-2xl font-bold text-lg hover:bg-emerald-50 dark:hover:bg-emerald-800/40 transition flex items-center gap-3">
-                        <i class="fa-solid fa-palette text-rust-500"></i>
-                        <span>دليل الهوية والألوان</span>
-                    </a>
-                </div>
-
-                <!-- Metrics Grid -->
-                <div class="grid grid-cols-3 gap-6 pt-8 border-t border-emerald-900/10 dark:border-emerald-800/30">
-                    <div class="glass-card p-4 rounded-2xl text-center">
-                        <span class="block text-3xl sm:text-4xl font-black text-emerald-600 dark:text-emerald-400 font-heading">10</span>
-                        <span class="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 mt-1 block">شاشات كاملة الواجهات</span>
-                    </div>
-                    <div class="glass-card p-4 rounded-2xl text-center">
-                        <span class="block text-3xl sm:text-4xl font-black text-rust-500 font-heading">85%</span>
-                        <span class="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 mt-1 block">معيار الهدوء المستهدف</span>
-                    </div>
-                    <div class="glass-card p-4 rounded-2xl text-center">
-                        <span class="block text-3xl sm:text-4xl font-black text-emerald-600 dark:text-emerald-400 font-heading">100%</span>
-                        <span class="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 mt-1 block">واقعية الصور والمرافق</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Animated Hero Mockup -->
-            <div class="lg:col-span-5 flex justify-center relative">
-                <div class="relative animate-float">
-                    <div class="device-frame">
-                        <div class="device-notch"></div>
-                        <div class="screen-viewport">
-                            <img src="1000246790_2.jpg" alt="Quiet Spot App Home" class="screen-atlas-img crop-pos-3">
-                        </div>
-                    </div>
-
-                    <!-- Floating Badge 1 -->
-                    <div class="absolute top-12 -left-10 glass-card p-4 rounded-2xl shadow-2xl flex items-center gap-3 border-emerald-500/30 animate-pulse-slow">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-wifi"></i>
-                        </div>
-                        <div>
-                            <span class="block text-xs font-bold text-slate-400">سرعة الفايبر</span>
-                            <span class="block text-sm font-black text-emerald-800 dark:text-emerald-200">110 Mbps متوفر</span>
-                        </div>
-                    </div>
-
-                    <!-- Floating Badge 2 -->
-                    <div class="absolute bottom-16 -right-10 glass-card p-4 rounded-2xl shadow-2xl flex items-center gap-3 border-rust-500/30">
-                        <div class="w-10 h-10 rounded-xl bg-rust-500/20 text-rust-500 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div>
-                            <span class="block text-xs font-bold text-slate-400">التقييم العام</span>
-                            <span class="block text-sm font-black text-emerald-800 dark:text-emerald-200">4.6 (128 تقييم)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Main Interactive 10 Screens Showcase Section -->
-    <section id="interactive-showcase" class="py-20 bg-white dark:bg-emerald-900/20 border-t border-emerald-900/10 dark:border-emerald-800/30">
-        <div class="max-w-7xl mx-auto px-6">
-            
-            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
-                <span class="px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 font-bold text-xs tracking-widest uppercase">
-                    Interactive Screen Explorer
-                </span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-emerald-950 dark:text-white font-heading">
-                    استكشاف شاشات التطبيق العشر بالتفصيل
-                </h2>
-                <p class="text-slate-600 dark:text-slate-300 text-lg">
-                    اختر الشاشة للتعرف على تحليل الواجهة، أهداف تجربة المستخدم (UX Rationale)، والعناصر المخصصة.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            <!-- SCREEN 1: HOME VIEW -->
+            <div id="screenHome" class="app-screen p-5 space-y-6">
                 
-                <!-- Left Screen Selection List (10 Screens) -->
-                <div class="lg:col-span-6 space-y-3" id="screensAccordion">
+                <!-- Search & Quick Filter Bar -->
+                <div class="flex items-center gap-2">
+                    <div class="relative flex-grow">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="searchInput" oninput="renderHomePlaces()" placeholder="ابحث عن مكان، منطقة أو كافيه..." class="w-full pl-3 pr-10 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary shadow-sm">
+                    </div>
+                    <button onclick="toggleModal('modalFilter')" class="px-4 py-3 bg-brand-primary text-white rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-md hover:bg-brand-dark">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>فلتر</span>
+                    </button>
+                </div>
+
+                <!-- Category Chips -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 hide-scrollbar">
+                    <button onclick="filterCategory('all')" class="cat-chip active flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold bg-brand-primary text-white shadow-sm">
+                        الكل <span id="catCountAll" class="text-[10px] opacity-80">(5)</span>
+                    </button>
+                    <button onclick="filterCategory('cafe')" class="cat-chip flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200">
+                        <i class="fa-solid fa-mug-hot text-brand-accent ml-1"></i> كافيهات
+                    </button>
+                    <button onclick="filterCategory('library')" class="cat-chip flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200">
+                        <i class="fa-solid fa-book text-brand-primary ml-1"></i> مكتبات
+                    </button>
+                    <button onclick="filterCategory('coworking')" class="cat-chip flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200">
+                        <i class="fa-solid fa-laptop-code text-brand-light ml-1"></i> مساحات عمل
+                    </button>
+                </div>
+
+                <!-- Live AI Recommendation Banner -->
+                <div class="bg-gradient-to-r from-brand-primary to-brand-dark text-white p-4 rounded-2xl shadow-lg relative overflow-hidden">
+                    <div class="relative z-10 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-brand-accent/30 text-brand-rose text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-brand-accent/40">
+                                <i class="fa-solid fa-robot"></i> اقتراح ذكي لكم الآن
+                            </span>
+                            <span class="text-[10px] text-slate-300">ناءً على الهدوء الحالي</span>
+                        </div>
+                        <h3 class="font-bold text-base font-cairo">Calm Corner — الدقي</h3>
+                        <p class="text-xs text-slate-200">نسبة الهدوء 92% • زحمة قليلة جداً • واي فاي 85 Mbps</p>
+                        <button onclick="openPlaceDetails(2)" class="mt-2 px-3 py-1.5 bg-white text-brand-primary rounded-xl text-xs font-bold hover:bg-brand-rose transition">
+                            عرض التفاصيل والحجز
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Section: Nearest Places -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-extrabold text-base text-brand-primary font-cairo">الأقرب إليك للمذاكرة</h3>
+                        <button onclick="navigateTo('screenMap')" class="text-xs text-brand-accent font-bold hover:underline">عرض على الخريطة</button>
+                    </div>
+
+                    <div id="homePlacesList" class="space-y-4">
+                        <!-- Rendered Dynamic Places -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCREEN 2: MAP VIEW -->
+            <div id="screenMap" class="app-screen hidden p-5 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-extrabold text-lg text-brand-primary font-cairo">خريطة أماكن المذاكرة والهدوء</h2>
+                    <span class="text-xs font-bold text-slate-500"><i class="fa-solid fa-location-dot text-brand-accent"></i> 5 أماكن متوفرة</span>
+                </div>
+
+                <!-- Simulated Interactive Map Graphics Canvas -->
+                <div class="w-full h-96 bg-emerald-900/10 border-2 border-brand-primary/20 rounded-3xl relative overflow-hidden shadow-inner flex flex-col justify-between p-4" style="background-image: radial-gradient(#2E5E4E 1px, transparent 1px); background-size: 20px 20px;">
                     
-                    <!-- Screen 1 Tab -->
-                    <button onclick="activateScreen(1, this)" class="screen-tab active w-full text-right p-4 rounded-2xl border-2 border-emerald-600 bg-emerald-50 dark:bg-emerald-900/40 shadow-md flex items-center justify-between transition-all">
-                        <div class="flex items-center gap-4">
-                            <div class="tab-num w-11 h-11 rounded-xl bg-emerald-600 text-white font-black text-lg flex items-center justify-center">01</div>
-                            <div>
-                                <h3 class="font-bold text-lg text-emerald-950 dark:text-white">شاشة البداية (Splash Screen)</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">الشعار اللفظي والهوية البصرية الأساسية</p>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-chevron-left text-emerald-600"></i>
+                    <!-- Roads Visual Simulation -->
+                    <div class="absolute top-1/2 left-0 right-0 h-8 bg-slate-300/40 -rotate-12 transform"></div>
+                    <div class="absolute top-0 bottom-0 left-1/3 w-8 bg-slate-300/40 rotate-6 transform"></div>
+
+                    <!-- User Location Dot -->
+                    <div class="absolute top-1/2 left-1/3 w-6 h-6 bg-blue-500 border-2 border-white rounded-full flex items-center justify-center shadow-lg live-pulse">
+                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+
+                    <!-- Interactive Place Pins -->
+                    <!-- Pin 1 -->
+                    <button onclick="showMapPopup(1)" class="absolute top-12 right-12 bg-brand-primary text-white px-2.5 py-1 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1 hover:scale-110 transition border border-white">
+                        <i class="fa-solid fa-star text-amber-300 text-[10px]"></i> 4.6 | Study Hub
                     </button>
 
-                    <!-- Screen 2 Tab -->
-                    <button onclick="activateScreen(2, this)" class="screen-tab w-full text-right p-4 rounded-2xl border border-slate-200 dark:border-emerald-800/40 bg-slate-50/50 dark:bg-emerald-950/40 hover:bg-emerald-50/50 transition-all flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="tab-num w-11 h-11 rounded-xl bg-slate-200 dark:bg-emerald-900 text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center">02</div>
-                            <div>
-                                <h3 class="font-bold text-lg text-slate-800 dark:text-slate-200">تسجيل الدخول (Login / Sign Up)</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">تسجيل سريع عبر Google & Apple بنقرة واحدة</p>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-chevron-left text-slate-400"></i>
+                    <!-- Pin 2 -->
+                    <button onclick="showMapPopup(2)" class="absolute top-28 left-8 bg-brand-primary text-white px-2.5 py-1 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1 hover:scale-110 transition border border-white">
+                        <i class="fa-solid fa-star text-amber-300 text-[10px]"></i> 4.7 | Calm Corner
                     </button>
 
-                    <!-- Screen 3 Tab -->
-                    <button onclick="activateScreen(3, this)" class="screen-tab w-full text-right p-4 rounded-2xl border border-slate-200 dark:border-emerald-800/40 bg-slate-50/50 dark:bg-emerald-950/40 hover:bg-emerald-50/50 transition-all flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="tab-num w-11 h-11 rounded-xl bg-slate-200 dark:bg-emerald-900 text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center">03</div>
-                            <div>
-                                <h3 class="font-bold text-l
+                    <!-- Pin 3 -->
+                    <button onclick="showMapPopup(3)" class="absolute bottom-20 right-20 bg-brand-prima
