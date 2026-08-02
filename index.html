@@ -1,730 +1,418 @@
+بناءً على العرض التقديمي (Pitch Deck) الممتاز الذي أرفقته لمشروع **"Study Spot"**، قمت بتصميم وبرمجة صفحة هبوط (Landing Page) احترافية وعصرية متوافقة مع شاشات الكمبيوتر والموبايل. 
+
+هذا الموقع سيعرض فكرتك بشكل جذاب للمستثمرين أو المستخدمين المحتملين.
+
+### كيف تستخدم هذا الكود؟
+1. افتح برنامج Notepad (أو أي محرر نصوص مثل VS Code).
+2. انسخ الكود الموجود بالأسفل بالكامل والصقه في الملف.
+3. احفظ الملف باسم `index.html`.
+4. افتح الملف باستخدام أي متصفح (مثل Google Chrome) لترى النتيجة.
+
+---
+
+### كود الموقع (HTML + CSS + JS)
+
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Study Spot — Pitch Deck</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #f7f1e8;
-      --bg-soft: #faf6f0;
-      --card: #ffffff;
-      --text: #2a2118;
-      --muted: #6b5e52;
-      --accent: #e07a4d;
-      --accent-soft: #f3d5c4;
-      --teal: #1f7a6c;
-      --teal-soft: #d8efe9;
-      --red: #e2554a;
-      --orange: #ef8b3a;
-      --green: #2a9d7a;
-      --shadow: 0 10px 40px rgba(80, 50, 20, 0.08);
-      --radius: 22px;
-      --radius-sm: 16px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Spot | دليلك لأفضل مكان للمذاكرة والعمل</title>
+    <!-- استدعاء خطوط جوجل (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- استدعاء أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* الألوان الأساسية للمشروع مستوحاة من العرض التقديمي */
+        :root {
+            --primary-color: #269382; /* لون الأزرار والعناصر (أخضر مزرق) */
+            --secondary-color: #e27d60; /* لون ثانوي (برتقالي هادئ) */
+            --bg-color: #fcfbf9; /* لون الخلفية (أوف وايت) */
+            --text-dark: #333333;
+            --text-gray: #666666;
+            --white: #ffffff;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "Cairo", system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
 
-    /* soft blobs */
-    body::before, body::after {
-      content: "";
-      position: fixed;
-      width: 420px; height: 420px;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.35;
-      z-index: -1;
-      pointer-events: none;
-    }
-    body::before { background: #f0c9a8; top: -80px; right: -100px; }
-    body::after { background: #c8e6dc; bottom: 10%; left: -120px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
 
-    .container { width: min(1120px, 92%); margin: 0 auto; }
+        /* تصميم شريط التنقل */
+        header {
+            background-color: var(--white);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    /* NAV */
-    nav {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(247, 241, 232, 0.85);
-      border-bottom: 1px solid rgba(0,0,0,0.04);
-    }
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 0; gap: 16px;
-    }
-    .logo {
-      font-weight: 800; font-size: 1.25rem; color: var(--text);
-      display: flex; align-items: center; gap: 8px; text-decoration: none;
-    }
-    .logo span {
-      width: 34px; height: 34px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent), #f0a06a);
-      display: grid; place-items: center; color: white; font-size: 0.95rem;
-    }
-    .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
-    .nav-links a {
-      text-decoration: none; color: var(--muted); font-weight: 600;
-      font-size: 0.9rem; padding: 8px 12px; border-radius: 999px;
-      transition: 0.2s ease;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      background: white; color: var(--accent); box-shadow: var(--shadow);
-    }
-    .menu-btn {
-      display: none; border: 0; background: white; border-radius: 12px;
-      width: 44px; height: 44px; font-size: 1.2rem; cursor: pointer;
-      box-shadow: var(--shadow);
-    }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
 
-    /* SECTIONS */
-    section { padding: 72px 0; }
-    .section-head {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 28px; justify-content: flex-start;
-    }
-    .section-head h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800;
-    }
-    .pill-num {
-      width: 8px; height: 28px; border-radius: 8px;
-      background: linear-gradient(180deg, var(--accent), #f0a06a);
-    }
+        .cta-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
 
-    /* HERO */
-    .hero { padding: 48px 0 24px; }
-    .hero-card {
-      background: var(--card);
-      border: 1px solid rgba(180,140,100,0.15);
-      border-radius: 28px;
-      padding: clamp(28px, 5vw, 56px);
-      text-align: center;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #f8e6d8; color: var(--accent);
-      padding: 8px 16px; border-radius: 999px;
-      font-weight: 700; font-size: 0.92rem; margin-bottom: 22px;
-    }
-    .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 3.8rem);
-      font-weight: 800; letter-spacing: -0.5px; margin-bottom: 10px;
-    }
-    .hero .tagline {
-      color: var(--accent); font-size: clamp(1.1rem, 2.5vw, 1.45rem);
-      font-weight: 700; margin-bottom: 14px;
-    }
-    .hero p.desc {
-      color: var(--muted); max-width: 640px; margin: 0 auto 28px;
-      font-size: 1.05rem;
-    }
-    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      border: 0; cursor: pointer; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 22px; border-radius: 999px; font-weight: 700;
-      font-family: inherit; font-size: 0.98rem; transition: 0.2s ease;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #ef9458);
-      color: white; box-shadow: 0 8px 24px rgba(224,122,77,0.35);
-    }
-    .btn-primary:hover { transform: translateY(-2px); }
-    .btn-ghost {
-      background: white; color: var(--text);
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-    .btn-ghost:hover { background: var(--bg-soft); }
+        .cta-btn:hover {
+            background-color: #1e7568;
+            transform: translateY(-2px);
+        }
 
-    /* GRID CARDS */
-    .grid-3 {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
-    }
-    .grid-2 {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
-    }
-    .grid-4 {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid rgba(180,140,100,0.12);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(80,50,20,0.12); }
-    .icon {
-      width: 46px; height: 46px; border-radius: 14px;
-      display: grid; place-items: center; color: white;
-      font-size: 1.2rem; margin-bottom: 14px;
-    }
-    .icon.teal { background: linear-gradient(135deg, #1f7a6c, #2fa58f); }
-    .icon.red { background: linear-gradient(135deg, #e2554a, #f07860); }
-    .icon.orange { background: linear-gradient(135deg, #ef8b3a, #f5a85f); }
-    .icon.green { background: linear-gradient(135deg, #2a9d7a, #45b892); }
-    .icon.dark { background: linear-gradient(135deg, #3d342c, #5a4d42); }
-    .card h3 { font-size: 1.15rem; margin-bottom: 8px; font-weight: 800; }
-    .card p { color: var(--muted); font-size: 0.95rem; }
+        /* القسم الرئيسي (Hero Section) */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 80px 5%;
+            min-height: 80vh;
+        }
 
-    /* SOLUTION */
-    .split {
-      display: grid; grid-template-columns: 1.05fr 1fr; gap: 28px; align-items: center;
-    }
-    .photo {
-      width: 100%; border-radius: 24px; object-fit: cover;
-      box-shadow: var(--shadow); min-height: 380px; background: #e8ddd0;
-    }
-    .feature-list { list-style: none; margin-top: 18px; display: grid; gap: 14px; }
-    .feature-list li {
-      display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start;
-    }
-    .check {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--teal-soft); color: var(--teal);
-      display: grid; place-items: center; font-size: 0.85rem; font-weight: 800;
-      margin-top: 3px;
-    }
-    .feature-list strong { display: block; font-weight: 800; }
-    .feature-list span { color: var(--muted); font-size: 0.95rem; }
-    .accent-title { color: var(--accent); font-weight: 800; font-size: 1.2rem; margin-bottom: 8px; }
+        .hero-text {
+            flex: 1;
+            padding-left: 50px;
+        }
 
-    /* MARKET highlight */
-    .market-box {
-      background: linear-gradient(135deg, #1f7a6c, #2a9d7a);
-      color: white; border-radius: var(--radius); padding: 28px;
-      box-shadow: 0 16px 40px rgba(31,122,108,0.25);
-    }
-    .market-box h3 { font-size: 1.35rem; margin-bottom: 10px; }
-    .market-box p { opacity: 0.92; }
-    .market-item {
-      display: grid; grid-template-columns: 40px 1fr; gap: 12px;
-      align-items: start; margin-bottom: 16px;
-    }
-    .market-item .mi {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: white; display: grid; place-items: center; font-size: 1.1rem;
-    }
-    .market-item h4 { font-weight: 800; margin-bottom: 2px; }
-    .market-item p { color: var(--muted); font-size: 0.92rem; }
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
 
-    /* JOURNEY */
-    .steps { display: grid; gap: 16px; }
-    .step {
-      display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: start;
-    }
-    .step-icon {
-      width: 42px; height: 42px; border-radius: 12px;
-      background: #f8e6d8; color: var(--accent);
-      display: grid; place-items: center; font-size: 1.1rem;
-    }
-    .step h4 { font-weight: 800; }
-    .step p { color: var(--muted); font-size: 0.95rem; }
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
 
-    /* TABLE */
-    .table-wrap {
-      overflow-x: auto; border-radius: var(--radius);
-      box-shadow: var(--shadow); border: 1px solid rgba(180,140,100,0.12);
-      background: white;
-    }
-    table { width: 100%; border-collapse: collapse; min-width: 720px; }
-    th, td { padding: 16px 18px; text-align: right; font-size: 0.95rem; }
-    th {
-      color: white; font-weight: 800;
-    }
-    th:nth-child(1) { background: #d9654a; width: 22%; }
-    th:nth-child(2) { background: #d9654a; }
-    th:nth-child(3) { background: var(--teal); }
-    tr:nth-child(even) td { background: #fbf8f4; }
-    td:first-child { font-weight: 700; color: var(--text); }
-    td strong { color: var(--teal); }
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
 
-    /* QUOTE */
-    .quote-card {
-      background: white; border-radius: var(--radius);
-      padding: clamp(24px, 4vw, 40px);
-      box-shadow: var(--shadow); text-align: center;
-      border: 1px solid rgba(180,140,100,0.12);
-      max-width: 820px; margin: 0 auto;
-    }
-    .quote-card .q {
-      font-size: 2rem; color: var(--accent); line-height: 1; margin-bottom: 10px;
-    }
-    .quote-card p { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
-    .quote-card .sub { color: var(--accent); font-weight: 600; font-size: 1rem; }
+        /* صورة تخيلية للموبايل */
+        .mockup {
+            width: 300px;
+            height: 600px;
+            background-color: #fff;
+            border: 12px solid #333;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        }
 
-    .thanks {
-      background: white; border-radius: var(--radius);
-      padding: 40px 24px; text-align: center; box-shadow: var(--shadow);
-      border: 1px solid rgba(180,140,100,0.12); margin-top: 28px;
-    }
-    .thanks .qmark {
-      width: 48px; height: 48px; border-radius: 50%;
-      background: #f8e6d8; color: var(--accent);
-      display: grid; place-items: center; margin: 0 auto 14px;
-      font-weight: 800; font-size: 1.3rem;
-    }
-    .thanks h2 { font-size: 2rem; margin-bottom: 8px; }
-    .thanks p { color: var(--teal); font-weight: 700; font-size: 1.1rem; }
-    .thanks small { display: block; margin-top: 10px; color: var(--muted); }
+        .mockup h3 {
+            color: var(--primary-color);
+            margin-top: 20px;
+        }
 
-    footer {
-      padding: 28px 0 40px; text-align: center; color: var(--muted); font-size: 0.9rem;
-    }
+        /* قسم المشكلة */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--text-dark);
+        }
 
-    /* reveal animation */
-    .reveal {
-      opacity: 0; transform: translateY(18px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.show { opacity: 1; transform: none; }
+        .problems, .features, .target-audience {
+            padding: 80px 5%;
+        }
 
-    @media (max-width: 900px) {
-      .grid-3, .grid-4, .split, .grid-2 { grid-template-columns: 1fr; }
-      .grid-4 { grid-template-columns: 1fr 1fr; }
-      .nav-links { display: none; }
-      .nav-links.open {
-        display: flex; flex-direction: column; position: absolute;
-        top: 70px; right: 4%; left: 4%; background: white;
-        padding: 12px; border-radius: 16px; box-shadow: var(--shadow);
-      }
-      .menu-btn { display: grid; place-items: center; }
-      .photo { min-height: 260px; }
-    }
-    @media (max-width: 560px) {
-      .grid-4 { grid-template-columns: 1fr; }
-      section { padding: 56px 0; }
-    }
-  </style>
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .card i {
+            font-size: 40px;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            background: #fff0ec;
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+        }
+
+        .features .card i {
+            color: var(--primary-color);
+            background: #e6f4f2;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+
+        /* قسم المقارنة */
+        .comparison {
+            background-color: var(--white);
+            padding: 80px 5%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: #fff;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 20px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+        
+        th:nth-child(2) {
+            background-color: #ea4335; /* لون جوجل ماب للتوضيح */
+        }
+        th:nth-child(3) {
+            background-color: #333; 
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* الفوتر */
+        footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 5%;
+        }
+
+        /* التصميم المتجاوب للموبايل */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 40px;
+            }
+            .hero-text {
+                padding-left: 0;
+                margin-bottom: 50px;
+            }
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            th { text-align: center; }
+            td { text-align: center; border-bottom: 2px solid #eee; }
+        }
+    </style>
 </head>
 <body>
-  <nav>
-    <div class="container nav-inner">
-      <a class="logo" href="#top"><span>☕</span> Study Spot</a>
-      <button class="menu-btn" id="menuBtn" aria-label="menu">☰</button>
-      <div class="nav-links" id="navLinks">
-        <a href="#problem">المشكلة</a>
-        <a href="#solution">الحل</a>
-        <a href="#market">السوق</a>
-        <a href="#product">المنتج</a>
-        <a href="#traction">الإثبات</a>
-        <a href="#team">الفريق</a>
-        <a href="#competition">المنافسون</a>
-        <a href="#revenue">نموذج الربح</a>
-        <a href="#invest">الاستثمار</a>
-      </div>
-    </div>
-  </nav>
 
-  <!-- HERO -->
-  <header class="hero" id="top">
-    <div class="container">
-      <div class="hero-card reveal">
-        <div class="badge">☕ عرض التقديم للمشروع (Pitch Deck)</div>
-        <h1>Study Spot</h1>
-        <div class="tagline">دليلك الذكي لأفضل مكان للمذاكرة والعمل</div>
-        <p class="desc">
-          تطبيق متكامل يساعد الطلبة والمستقلين على اكتشاف مساحات العمل الهادئة والمناسبة
-          لاحتياجاتهم بأقل وقت وجهد.
-        </p>
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="#solution">اكتشف الحل</a>
-          <a class="btn btn-ghost" href="#product">رحلة المستخدم</a>
+    <!-- شريط التنقل -->
+    <header>
+        <a href="#" class="logo">Study <span>Spot</span></a>
+        <a href="#download" class="cta-btn">انضم لقائمة الانتظار</a>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>دليلك الذكي لأفضل مكان للمذاكرة والعمل</h1>
+            <p>تطبيق متكامل يساعد الطلبة والمستقلين على اكتشاف مساحات العمل الهادئة والمناسبة لاحتياجاتهم بأقل وقت وجهد.</p>
+            <a href="#features" class="cta-btn" style="background-color: var(--text-dark);">اكتشف المميزات</a>
         </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- PROBLEM -->
-  <section id="problem">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="pill-num"></div>
-        <h2>1. المشكلة (Problem)</h2>
-      </div>
-      <div class="grid-3">
-        <article class="card reveal">
-          <div class="icon orange">🔍</div>
-          <h3>البحث اليومي المجهد</h3>
-          <p>كل يوم آلاف الطلبة والـ Freelancers بيدوروا على مكان هادي يذاكروا أو يشتغلوا فيه.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon red">⏱️</div>
-          <h3>ضياع الوقت والجهد</h3>
-          <p>بيواجهوا مشكلة إنهم ميعرفوش أي مكان مناسب قبل ما يروحوا، وده بيضيع وقت ومجهود كبير.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon teal">🔊</div>
-          <h3>عدم ملاءمة المكان</h3>
-          <p>في الآخر ممكن يلاقوا المكان زحمة جداً، أو صوته عالي، أو إن شبكة الإنترنت فيه ضعيفة وتمنعهم من الشغل.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOLUTION -->
-  <section id="solution" style="background: linear-gradient(180deg, transparent, rgba(255,255,255,0.35), transparent);">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="pill-num"></div>
-        <h2>2. الحل (Solution)</h2>
-      </div>
-      <div class="split">
-        <div class="reveal">
-          <img class="photo" src="https://images.squarespace-cdn.com/content/v1/5e74d0b0ec99d437dda01b4d/c513cb45-49f7-4210-93fa-4d3bc8b1b260/IMG_2412.jpg" alt="Study space" onerror="this.style.background='#e8ddd0'; this.src=''; this.alt='صورة مساحة عمل';" />
+        <div class="hero-image">
+            <div class="mockup">
+                <i class="fa-solid fa-map-location-dot" style="font-size: 60px; color: var(--primary-color);"></i>
+                <h3>Study Spot</h3>
+                <p style="font-size: 12px; color: #888; margin-top:10px;">واجهة التطبيق هنا</p>
+            </div>
         </div>
-        <div class="reveal">
-          <div class="accent-title">تطبيق Study Spot</div>
-          <p style="color: var(--muted); margin-bottom: 8px;">
-            علشان كده صممنا تطبيق Study Spot، وهو تطبيق بيساعد المستخدم يلاقي أفضل مكان للمذاكرة أو الشغل حسب احتياجاته في أقل وقت.
-          </p>
-          <ul class="feature-list">
-            <li>
-              <div class="check">✓</div>
-              <div>
-                <strong>معلومات دقيقة</strong>
-                <span>بيوفر معلومات عن مستوى الهدوء وجودة الإنترنت.</span>
-              </div>
-            </li>
-            <li>
-              <div class="check">✓</div>
-              <div>
-                <strong>التفاصيل العملية</strong>
-                <span>معرفة الأسعار وساعات العمل المتوفرة.</span>
-              </div>
-            </li>
-            <li>
-              <div class="check">✓</div>
-              <div>
-                <strong>تقييمات موثوقة</strong>
-                <span>تقييمات حقيقية من المستخدمين لمساعدتك في اتخاذ القرار.</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- MARKET -->
-  <section id="market">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="pill-num"></div>
-        <h2>3. السوق المستهدف (Market)</h2>
-      </div>
-      <div class="split">
-        <div class="market-box reveal">
-          <div style="font-size: 1.8rem; margin-bottom: 10px;">👥</div>
-          <h3>توسع مستمر في السوق</h3>
-          <p>
-            الفئة المستهدفة مش الطلبة بس، لكن كمان الـ Freelancers والـ Remote Workers،
-            وأي شخص محتاج مكان هادي يركز فيه بأعلى كفاءة.
-          </p>
+    <!-- قسم المشكلة -->
+    <section class="problems">
+        <h2 class="section-title">لماذا صممنا Study Spot؟ <span style="color:var(--secondary-color)">(المشكلة)</span></h2>
+        <div class="cards-container">
+            <div class="card">
+                <i class="fa-solid fa-magnifying-glass-location"></i>
+                <h3>البحث اليومي المجهد</h3>
+                <p>كل يوم آلاف الطلبة والـ Freelancers يبحثون عن مكان هادئ ليذاكروا أو يعملوا فيه.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <h3>ضياع الوقت والجهد</h3>
+                <p>يواجهون مشكلة عدم معرفة المكان المناسب قبل الذهاب إليه، مما يضيع الكثير من الوقت.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-volume-high"></i>
+                <h3>عدم ملاءمة المكان</h3>
+                <p>قد يصلون ليجدوا المكان مزدحماً، مزعجاً، أو بشبكة إنترنت ضعيفة تمنعهم من إنجاز مهامهم.</p>
+            </div>
         </div>
-        <div class="reveal">
-          <div class="market-item">
-            <div class="mi">🎓</div>
-            <div>
-              <h4>الطلاب (Students)</h4>
-              <p>يبحثون دائماً عن بيئة مناسبة للاستذكار والمشاريع الدراسية.</p>
+    </section>
+
+    <!-- قسم الحل (المميزات) -->
+    <section class="features" id="features">
+        <h2 class="section-title">كيف نسهل حياتك؟ <span style="color:var(--primary-color)">(الحل)</span></h2>
+        <div class="cards-container">
+            <div class="card">
+                <i class="fa-solid fa-wifi"></i>
+                <h3>معلومات دقيقة وموثوقة</h3>
+                <p>نوفر معلومات حقيقية عن مستوى الهدوء، جودة الإنترنت، وتوفر مقابس الكهرباء في كل مكان.</p>
             </div>
-          </div>
-          <div class="market-item">
-            <div class="mi">💻</div>
-            <div>
-              <h4>المستقلين (Freelancers)</h4>
-              <p>يتطلب عملهم أماكن بإنترنت قوي وجو يشجع على الإنتاجية.</p>
+            <div class="card">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                <h3>التفاصيل العملية</h3>
+                <p>معرفة الأسعار، ساعات العمل المتوفرة، والخدمات المتاحة قبل أن تتحرك من منزلك.</p>
             </div>
-          </div>
-          <div class="market-item">
-            <div class="mi">💼</div>
-            <div>
-              <h4>العاملون عن بُعد (Remote Workers)</h4>
-              <p>يحتاجون لتغيير روتين العمل في مكان هادئ ومجهز.</p>
+            <div class="card">
+                <i class="fa-solid fa-star"></i>
+                <h3>تقييمات مجتمع حقيقي</h3>
+                <p>تقييمات موثوقة من مستخدمين حقيقيين ذهبوا للعمل والمذاكرة، لمساعدتك في اتخاذ القرار.</p>
             </div>
-          </div>
-          <div class="market-item">
-            <div class="mi">📈</div>
-            <div>
-              <h4>فئة مستهدفة ضخمة</h4>
-              <p>دي فئة كبيرة جداً وبتزيد بشكل مستمر مع الوقت.</p>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PRODUCT -->
-  <section id="product" style="background: linear-gradient(180deg, transparent, rgba(255,255,255,0.35), transparent);">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="pill-num"></div>
-        <h2>4. المنتج والبروتوتايب (Product & Prototype)</h2>
-      </div>
-      <div class="split">
-        <div class="reveal">
-          <div class="accent-title">رحلة المستخدم داخل البروتوتايب:</div>
-          <div class="steps" style="margin-top: 18px;">
-            <div class="step">
-              <div class="step-icon">📍</div>
-              <div>
-                <h4>تحديد الموقع</h4>
-                <p>المستخدم بيفتح التطبيق، يحدد موقعه أو المنطقة اللي عايز يروحها.</p>
-              </div>
+    <!-- قسم السوق المستهدف -->
+    <section class="target-audience" style="background-color: #f4f9f8;">
+        <h2 class="section-title">لمن هذا التطبيق؟</h2>
+        <div class="cards-container">
+            <div class="card" style="box-shadow: none;">
+                <i class="fa-solid fa-user-graduate" style="color: #4a90e2; background: #e9f2fb;"></i>
+                <h3>الطلاب (Students)</h3>
+                <p>يبحثون دائماً عن بيئة مناسبة للاستذكار والمشاريع الدراسية بعيداً عن مشتتات المنزل.</p>
             </div>
-            <div class="step">
-              <div class="step-icon">📋</div>
-              <div>
-                <h4>ترشيح الأماكن</h4>
-                <p>تظهر له الأماكن المناسبة مع كل التفاصيل اللي تساعده ياخد قرار بسرعة.</p>
-              </div>
+            <div class="card" style="box-shadow: none;">
+                <i class="fa-solid fa-laptop-code" style="color: #9b59b6; background: #f4eaf9;"></i>
+                <h3>المستقلين (Freelancers)</h3>
+                <p>يتطلب عملهم أماكن بإنترنت قوي وجو يشجع على الإنتاجية والإبداع.</p>
             </div>
-            <div class="step">
-              <div class="step-icon">🧭</div>
-              <div>
-                <h4>الانتقال المباشر</h4>
-                <p>يقدر تشوف تفاصيل المكان بالكامل أو يروح مباشرة بدون تعقيد.</p>
-              </div>
+            <div class="card" style="box-shadow: none;">
+                <i class="fa-solid fa-briefcase" style="color: #e67e22; background: #fdf2e8;"></i>
+                <h3>العاملون عن بُعد</h3>
+                <p>يحتاجون لتغيير روتين العمل من المنزل في مكان هادئ ومجهز بكل سبل الراحة.</p>
             </div>
-          </div>
         </div>
-        <div class="reveal">
-          <img class="photo" src="https://static.vecteezy.com/system/resources/thumbnails/069/690/385/small_2x/young-men-studying-together-reviewing-documents-focused-expressions-casual-clothing-modern-workspace-laptop-on-table-coffee-cup-teamwork-collaboration-learning-environment-free-photo.jpeg" alt="Students collaborating" onerror="this.style.background='#e8ddd0'; this.src='';" />
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- TRACTION -->
-  <section id="traction">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="pill-num"></div>
-        <h2>5. إثبات الفكرة (Traction)</h2>
-      </div>
-      <p class="reveal" style="color: var(--muted); margin-bottom: 22px; max-width: 720px;">
-        قبل ما نصمم التطبيق، عملنا مقابلات مع مستخدمين وفهمنا احتياجاتهم بدقة.
-      </p>
-      <div class="grid-3">
-        <article class="card reveal">
-          <div class="icon red">💬</div>
-          <h3>مقابلات المستخدمين</h3>
-          <p>قبل ما نصمم التطبيق، عملنا مقابلات مع مستخدمين وفهمنا احتياجاتهم بدقة.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon orange">🛠️</div>
-          <h3>Personas & Prototype</h3>
-          <p>بناءً على الفهم العميق للجمهور، صممنا Personas وتطوير Prototype يعكس الحل بشكل عملي.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon teal">❤️</div>
-          <h3>تأكيد احتياج السوق</h3>
-          <p>لما عرضنا الفكرة، لقينا إن أغلب الناس شافوا إنها بتحل مشكلة حقيقية ووضحوا إنهم هيستخدموا تطبيق بالشكل ده.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- TEAM -->
-  <section id="team" style="background: linear-gradient(180deg, transparent, rgba(255,255,255,0.35), transparent);">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="pill-num"></div>
-        <h2>6. الفريق (Team)</h2>
-      </div>
-      <p class="reveal" style="color: var(--muted); margin-bottom: 22px; font-weight: 600;">
-        "اشتغلنا كفريق، وكل واحد كان مسؤول عن جزء معين لتأمين أفضل نتيجة للمشروع."
-      </p>
-      <div class="grid-4">
-        <article class="card reveal">
-          <div class="icon orange">🔎</div>
-          <h3>البحث (Research)</h3>
-          <p>دراسة احتياجات السوق والجمهور واستخلاص الرؤى الأساسية.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon teal">🎨</div>
-          <h3>تصميم UI/UX</h3>
-          <p>بناء واجهات سهلة، جذابة، وتضمن تجربة مستخدم سلسة ومريحة.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon red">📱</div>
-          <h3>تصميم Prototype</h3>
-          <p>تطوير النماذج التفاعلية للتطبيق واختبار وظائفه الحيوية.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon orange">🖥️</div>
-          <h3>إعداد Presentation</h3>
-          <p>تجهيز إخراج المشروع والعرض التقديمي بالشكل الاحترافي الحالي.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMPETITION -->
-  <section id="competition">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="pill-num"></div>
-        <h2>7. المنافسين (Competition)</h2>
-      </div>
-      <div class="table-wrap reveal">
+    <!-- قسم المنافسين -->
+    <section class="comparison">
+        <h2 class="section-title">بماذا نتميز عن غيرنا؟</h2>
         <table>
-          <thead>
-            <tr>
-              <th>وجه المقارنة</th>
-              <th>Google Maps</th>
-              <th>تطبيق Study Spot (مشروعنا)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>نطاق العرض</td>
-              <td>يعرض كل الأماكن بشكل عام دون تخصيص.</td>
-              <td><strong>متخصص حصرياً</strong> في أماكن المذاكرة والعمل.</td>
-            </tr>
-            <tr>
-              <td>مستوى الهدوء والضوضاء</td>
-              <td>غير متوفر بدقة.</td>
-              <td><strong>يوفر تفاصيل دقيقة عن مستوى الهدوء.</strong></td>
-            </tr>
-            <tr>
-              <td>الإنترنت والكهرباء</td>
-              <td>معلومات عامة وغير مضمونة.</td>
-              <td><strong>يقيس جودة الـ Wi-Fi وتوفر فيش الكهرباء.</strong></td>
-            </tr>
-            <tr>
-              <td>طبيعة التقييمات</td>
-              <td>تقييمات عامة لجميع الزوار.</td>
-              <td><strong>تقييمات من ناس راحت تذاكر وتشتغل فعلاً.</strong></td>
-            </tr>
-          </tbody>
+            <thead>
+                <tr>
+                    <th>وجه المقارنة</th>
+                    <th>خرائط جوجل (Google Maps)</th>
+                    <th>تطبيق Study Spot (مشروعنا)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>نطاق العرض</strong></td>
+                    <td>يعرض كل الأماكن بشكل عام دون تخصيص</td>
+                    <td class="highlight">متخصص حصرياً في أماكن المذاكرة والعمل</td>
+                </tr>
+                <tr>
+                    <td><strong>مستوى الهدوء والضوضاء</strong></td>
+                    <td>غير متوفر بدقة</td>
+                    <td class="highlight">يوفر تفاصيل دقيقة عن مستوى الهدوء</td>
+                </tr>
+                <tr>
+                    <td><strong>الإنترنت والكهرباء</strong></td>
+                    <td>معلومات عامة وغير مضمونة</td>
+                    <td class="highlight">يقيس جودة الـ Wi-Fi وتوفر فيش الكهرباء</td>
+                </tr>
+                <tr>
+                    <td><strong>طبيعة التقييمات</strong></td>
+                    <td>تقييمات عامة لجميع الزوار (طعام، خدمة..)</td>
+                    <td class="highlight">تقييمات من أشخاص ذهبوا للعمل والمذاكرة فعلياً</td>
+                </tr>
+            </tbody>
         </table>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- REVENUE -->
-  <section id="revenue" style="background: linear-gradient(180deg, transparent, rgba(255,255,255,0.35), transparent);">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="pill-num"></div>
-        <h2>8. نموذج الربح (PMC / Revenue Model)</h2>
-      </div>
-      <div class="grid-3">
-        <article class="card reveal">
-          <div class="icon orange">🤝</div>
-          <h3>الشراكات التجارية</h3>
-          <p>تحقيق أرباح من خلال شراكات مع الكافيهات والـ Coworking Spaces مقابل ظهورهم بشكل مميز داخل التطبيق.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon teal">📣</div>
-          <h3>الإعلانات الموجهة</h3>
-          <p>مساحات إعلانية مخصصة للعلامات التجارية المستهدفة للطلاب والمستقلين.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon red">👑</div>
-          <h3>اشتراك Premium</h3>
-          <p>مع الوقت ممكن نوفر اشتراك Premium بمميزات إضافية مخصصة للمستخدمين الأكثر استخداماً.</p>
-        </article>
-      </div>
-    </div>
-  </section>
+    <!-- الخاتمة والفوتر -->
+    <footer>
+        <h3 style="margin-bottom: 15px;">"في النهاية، إحنا مش بنقدم مجرد تطبيق بيدل على أماكن، لكن بنقدم تجربة تساعد المستخدم يوفر وقته ويركز أكثر"</h3>
+        <p>جميع الحقوق محفوظة لمشروع Study Spot &copy; 2023</p>
+    </footer>
 
-  <!-- INVESTMENT -->
-  <section id="invest">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="pill-num"></div>
-        <h2>9. الاستثمار والتوسع (Amount Being Raised)</h2>
-      </div>
-      <div class="grid-2">
-        <article class="card reveal">
-          <div class="icon teal">📊</div>
-          <h3 style="color: var(--teal);">الوضع الحالي للمشروع</h3>
-          <p>حاليًا إحنا في مرحلة الـ Prototype وإثبات الفكرة وتأكيد احتياج السوق.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon orange">🚀</div>
-          <h3 style="color: var(--accent);">أهداف الاستثمار المطلوبة</h3>
-          <p>أي استثمار هيكون هدفه تطوير التطبيق بشكل كامل، وإطلاقه في السوق، والتسويق له، والتوسع في الشراكات.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONCLUSION -->
-  <section id="conclusion">
-    <div class="container">
-      <div class="section-head reveal" style="justify-content: center;">
-        <div class="pill-num"></div>
-        <h2>10. الخاتمة (Conclusion)</h2>
-      </div>
-      <div class="quote-card reveal">
-        <div class="q">”</div>
-        <p>
-          "في النهاية، إحنا مش بنقدم مجرد تطبيق بيدل على أماكن، لكن بنقدم
-          تجربة تساعد المستخدم يوفر وقته، ويركز، ويكون أكثر إنتاجية"
-        </p>
-        <div class="sub">
-          "ونتمنى إن مشروعنا يكون خطوة حقيقية لحل مشكلة بيواجهها عدد كبير من الناس كل يوم."
-        </div>
-      </div>
-
-      <div class="thanks reveal">
-        <div class="qmark">؟</div>
-        <h2>شكراً لحضراتكم</h2>
-        <p>ومستعدين للإجابة على أي أسئلة</p>
-        <small>Study Spot Pitch Presentation</small>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">© <span id="year"></span> Study Spot — All rights reserved</div>
-  </footer>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // mobile menu
-    const btn = document.getElementById("menuBtn");
-    const links = document.getElementById("navLinks");
-    btn.addEventListener("click", () => links.classList.toggle("open"));
-    links.querySelectorAll("a").forEach(a => a.addEventListener("click", () => links.classList.remove("open")));
-
-    // reveal on scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("show"); });
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-
-    // active nav link
-    const sections = [...document.querySelectorAll("section[id]")];
-    const navA = [...document.querySelectorAll(".nav-links a")];
-    const spy = () => {
-      const y = window.scrollY + 120;
-      let current = "";
-      sections.forEach(s => { if (y >= s.offsetTop) current = s.id; });
-      navA.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + current));
-    };
-    window.addEventListener("scroll", spy, { passive: true });
-    spy();
-  </script>
 </body>
 </html>
+```
+
+### مميزات هذا الموقع:
+1. **تصميم يعكس هويتك:** استخدمت ألوان قريبة جداً من روح الصور التي رفعتها (الأخضر المزرق والألوان الهادئة).
+2. **شامل لكل المعلومات:** قمت بتحويل النصوص من الـ Pitch Deck الخاص بك (المشكلة، الحل، السوق المستهدف، مقارنة المنافسين) إلى أقسام جذابة ومقروءة على الويب.
+3. **متجاوب 100% (Responsive):** الموقع يعمل بشكل ممتاز ومرتب على شاشات الموبايل والكمبيوتر.
+4. **Mockup للهاتف:** وضعت رسمة "برمجية" مبسطة لشكل الموبايل في أول صفحة لتخيل شكل التطبيق، لاحقاً يمكنك استبدالها بصورة حقيقية لشاشات تطبيقك الفعلي.
+
+إذا أردت أي تعديل على الألوان، إضافة صور معينة، أو ربط زر "انضم لقائمة الانتظار" بنموذج جوجل (Google Form) لجمع إيميلات المهتمين، أخبرني فوراً!
