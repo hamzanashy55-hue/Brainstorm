@@ -1,37 +1,66 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiet Spot — معرض دراسة حالة واجهات وتجربة المستخدم</title>
+    <title>Quiet Spot — Ultra-Professional UI/UX Showcase & Product Hub</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            darkGreen: '#1A332B',
-                            primary: '#2E5E4E',
-                            lightGreen: '#457C69',
-                            cream: '#FAF8F5',
-                            softRose: '#E9D0C6',
-                            accent: '#B86F4E',
-                            darkText: '#1E293B',
-                            mutedText: '#64748B'
+                        emerald: {
+                            950: '#081713',
+                            900: '#112922',
+                            800: '#1B3E34',
+                            700: '#255547',
+                            600: '#2E5E4E',
+                            500: '#3D7A66',
+                            400: '#589A83',
+                            100: '#E1EFEA',
+                            50: '#F2F8F5'
+                        },
+                        rust: {
+                            600: '#A45B3E',
+                            500: '#B86F4E',
+                            400: '#C98262',
+                            100: '#F6ECE7'
+                        },
+                        cream: {
+                            100: '#FAF8F5',
+                            200: '#F4EFE6',
+                            300: '#EAE2D5'
                         }
                     },
                     fontFamily: {
                         cairo: ['Cairo', 'sans-serif'],
-                        tajawal: ['Tajawal', 'sans-serif']
+                        tajawal: ['Tajawal', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'Tajawal', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-12px) rotate(1deg)' },
+                        },
+                        glow: {
+                            '0%': { opacity: '0.4', filter: 'blur(20px)' },
+                            '100%': { opacity: '0.8', filter: 'blur(35px)' }
+                        }
                     }
                 }
             }
@@ -41,291 +70,284 @@
     <style>
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: #F8F6F0;
-            color: #1E293B;
-            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        h1, h2, h3, h4, h5, h6, .font-heading {
             font-family: 'Cairo', sans-serif;
         }
 
-        /* Phone Screen Cropping System for 10 Screens */
-        .phone-mockup-frame {
-            width: 290px;
-            height: 590px;
-            border: 10px solid #2E5E4E;
-            border-radius: 44px;
-            box-shadow: 0 25px 50px -12px rgba(46, 94, 78, 0.35), 0 0 0 4px #1A332B;
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .dark .glass-card {
+            background: rgba(17, 41, 34, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(46, 94, 78, 0.3);
+        }
+
+        /* Phone Screen Cropping Precision for 10 Screens */
+        .device-frame {
+            width: 295px;
+            height: 600px;
+            border: 10px solid #1B3E34;
+            border-radius: 46px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 0 2px rgba(255,255,255,0.1);
             position: relative;
             overflow: hidden;
             background: #FFFFFF;
+            flex-shrink: 0;
         }
 
-        .phone-notch {
+        .dark .device-frame {
+            border-color: #2E5E4E;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(46, 94, 78, 0.3);
+        }
+
+        .device-notch {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
-            height: 22px;
-            background-color: #2E5E4E;
-            border-bottom-left-radius: 14px;
-            border-bottom-right-radius: 14px;
-            z-index: 30;
+            width: 125px;
+            height: 24px;
+            background-color: #1B3E34;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 40;
         }
 
-        .screen-container {
+        .dark .device-notch {
+            background-color: #2E5E4E;
+        }
+
+        .screen-viewport {
             width: 100%;
             height: 100%;
             position: relative;
             overflow: hidden;
         }
 
-        .screen-img {
+        .screen-atlas-img {
             position: absolute;
-            width: 1980px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 2020px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             max-width: none;
         }
 
-        /* Precise CSS Screen Offsets based on 1000246790_2.jpg */
-        .pos-screen-1 { top: -15px; right: -315px; }    /* Splash Screen */
-        .pos-screen-2 { top: -15px; right: -620px; }    /* Login / Sign Up */
-        .pos-screen-3 { top: -15px; right: -930px; }    /* Home */
-        .pos-screen-4 { top: -15px; right: -1245px; }   /* Search & Filter */
-        .pos-screen-5 { top: -15px; right: -1560px; }   /* Map View */
+        /* Accurate Screen Offset Configurations based on 1000246790_2.jpg */
+        .crop-pos-1  { top: -15px; right: -322px; }  /* 1. Splash Screen */
+        .crop-pos-2  { top: -15px; right: -634px; }  /* 2. Login / Sign Up */
+        .crop-pos-3  { top: -15px; right: -950px; }  /* 3. Home Screen */
+        .crop-pos-4  { top: -15px; right: -1270px; } /* 4. Search & Filters */
+        .crop-pos-5  { top: -15px; right: -1590px; } /* 5. Map View */
 
-        .pos-screen-6 { top: -390px; right: -315px; }   /* Place Details */
-        .pos-screen-7 { top: -390px; right: -620px; }   /* Details (More) */
-        .pos-screen-8 { top: -390px; right: -930px; }   /* Reviews */
-        .pos-screen-9 { top: -390px; right: -1245px; }  /* Favorites */
-        .pos-screen-10 { top: -390px; right: -1560px; } /* Profile */
+        .crop-pos-6  { top: -398px; right: -322px; }  /* 6. Place Details */
+        .crop-pos-7  { top: -398px; right: -634px; }  /* 7. Details (More) */
+        .crop-pos-8  { top: -398px; right: -950px; }  /* 8. Reviews */
+        .crop-pos-9  { top: -398px; right: -1270px; } /* 9. Favorites */
+        .crop-pos-10 { top: -398px; right: -1590px; } /* 10. Profile */
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FAF8F5;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2E5E4E;
-            border-radius: 4px;
+        /* Toast Alert Floating Animation */
+        #toast {
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="bg-cream-100 dark:bg-emerald-950 text-slate-800 dark:text-slate-100 min-h-screen selection:bg-emerald-500 selection:text-white">
 
-    <!-- Header / Navbar -->
-    <header class="sticky top-0 z-50 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-brand-softRose/40">
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 left-6 z-50 transform translate-y-20 opacity-0 pointer-events-none bg-emerald-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-emerald-600">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
+        <span id="toastMsg" class="font-bold text-sm">تم نسخ كود اللون بنجاح!</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-cream-100/80 dark:bg-emerald-950/80 backdrop-blur-xl border-b border-emerald-900/10 dark:border-emerald-800/30">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center text-xl font-bold shadow-md">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-700 to-emerald-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-emerald-700/30 group-hover:scale-105 transition duration-300">
                     <i class="fa-solid fa-couch"></i>
                 </div>
                 <div>
-                    <span class="text-2xl font-black text-brand-primary tracking-tight">Quiet Spot</span>
-                    <span class="text-xs block text-brand-accent font-semibold -mt-1">Case Study Showcase</span>
+                    <span class="text-2xl font-black text-emerald-900 dark:text-emerald-50 tracking-tight font-heading block leading-none">Quiet Spot</span>
+                    <span class="text-xs font-bold text-rust-500 dark:text-rust-400 tracking-wider">CASE STUDY & INTERACTIVE HUB</span>
                 </div>
-            </div>
+            </a>
 
-            <nav class="hidden md:flex items-center gap-8 font-semibold text-brand-darkText">
-                <a href="#hero" class="hover:text-brand-primary transition-colors">الرئيسية</a>
-                <a href="#screens" class="hover:text-brand-primary transition-colors">شاشات التطبيق</a>
-                <a href="#branding" class="hover:text-brand-primary transition-colors">الهوية البصرية</a>
-                <a href="#features" class="hover:text-brand-primary transition-colors">المميزات الذكية</a>
-                <a href="#prototype" class="hover:text-brand-primary transition-colors">محاكي التفاعل</a>
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 font-bold text-sm text-slate-700 dark:text-slate-300">
+                <a href="#hero" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">الرئيسية</a>
+                <a href="#interactive-showcase" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">استعراض الشاشات الـ 10</a>
+                <a href="#comparator" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">مقارنة الشاشات</a>
+                <a href="#live-sandbox" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">تجربة الفلترة الحية</a>
+                <a href="#design-system" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">نظام التصميم</a>
+                <a href="#bento-features" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">المميزات الذكية</a>
             </nav>
 
-            <a href="#screens" class="bg-brand-primary hover:bg-brand-darkGreen text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md transition-all hover:scale-105">
-                <i class="fa-solid fa-mobile-screen ml-1.5"></i> استكشف 10 شاشات
-            </a>
+            <!-- Actions Right -->
+            <div class="flex items-center gap-3">
+                <!-- Dark Mode Toggle Button -->
+                <button onclick="toggleDarkMode()" aria-label="Toggle Theme" class="w-10 h-10 rounded-xl bg-slate-200/70 dark:bg-emerald-900/60 text-slate-800 dark:text-emerald-300 flex items-center justify-center text-lg hover:bg-slate-300 dark:hover:bg-emerald-800 transition">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline"></i>
+                </button>
+
+                <a href="#live-sandbox" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md hover:shadow-emerald-600/30 transition hover:scale-105 flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <span>تجربة التطبيق الحي</span>
+                </a>
+            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="relative py-16 lg:py-24 overflow-hidden bg-gradient-to-b from-[#FAF8F5] via-[#F3EFE6] to-[#FAF8F5]">
-        <div class="absolute -top-20 -right-20 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-0 -left-20 w-96 h-96 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+    <section id="hero" class="relative pt-12 pb-24 overflow-hidden">
+        <!-- Glow Orbs -->
+        <div class="absolute top-10 right-1/4 w-96 h-96 bg-emerald-500/15 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-rust-500/15 dark:bg-rust-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
 
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Info Column -->
             <div class="lg:col-span-7 space-y-6 text-right">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-softRose/50 border border-brand-accent/30 text-brand-primary font-bold text-sm">
-                    <i class="fa-solid fa-sparkles text-brand-accent"></i>
-                    <span>تطبيق هاتف محمول مخصص للطلاب وأصحاب العمل الحر</span>
+                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-900/60 border border-emerald-600/20 text-emerald-800 dark:text-emerald-300 font-bold text-sm">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span>دراسة حالة واجهات وتجربة المستخدم (Product UX Case Study)</span>
                 </div>
 
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-primary leading-tight">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-emerald-950 dark:text-white leading-[1.15] tracking-tight">
                     Quiet Spot <br>
-                    <span class="text-brand-accent text-3xl sm:text-4xl font-bold">"هنخرج فين تذاكر النهاردة؟"</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-emerald-500 to-rust-500 font-extrabold text-3xl sm:text-4xl">
+                        "هنخرج فين تذاكر النهاردة؟"
+                    </span>
                 </h1>
 
-                <p class="text-lg sm:text-xl text-brand-mutedText leading-relaxed max-w-2xl">
-                    منصة ذكية تساعد المستخدمين على اختيار أنسب الكافيهات ومساحات العمل للهادفة للمذاكرة والتركيز، مع عرض حي ومباشر لنسبة الزحمة والهدوء والمرافق المتاحة.
+                <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl font-normal">
+                    تطبيق هاتف محمول مبتكر مصمم خصيصاً لمساعدة الطلاب والمهنيين المستقلين في العثور على أهدى وأنسب مساحات العمل والمقاهي، مع توفير مؤشرات لحظية لنسبة الهدوء، سرعة الإنترنت، وتوفر المقابس الكهربائية.
                 </p>
 
-                <div class="flex flex-wrap items-center gap-4 pt-4">
-                    <a href="#screens" class="bg-brand-primary text-white hover:bg-brand-darkGreen px-8 py-3.5 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
-                        <i class="fa-solid fa-eye ml-2"></i> تصفح الشاشات تفاعلياً
+                <!-- Quick Action Buttons -->
+                <div class="flex flex-wrap items-center gap-4 pt-2">
+                    <a href="#interactive-showcase" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-emerald-600/30 hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-3">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        <span>استعراض الـ 10 شاشات</span>
                     </a>
-                    <a href="#branding" class="bg-white text-brand-primary hover:bg-brand-softRose/30 border border-brand-primary/20 px-7 py-3.5 rounded-2xl font-bold text-lg shadow-sm transition-all">
-                        <i class="fa-solid fa-palette ml-2"></i> نظام التصميم الهيكلي
+                    <a href="#design-system" class="bg-white dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-200 border border-emerald-900/10 dark:border-emerald-700/40 px-7 py-4 rounded-2xl font-bold text-lg hover:bg-emerald-50 dark:hover:bg-emerald-800/40 transition flex items-center gap-3">
+                        <i class="fa-solid fa-palette text-rust-500"></i>
+                        <span>دليل الهوية والألوان</span>
                     </a>
                 </div>
 
-                <!-- Stats Badges -->
-                <div class="grid grid-cols-3 gap-4 pt-8 border-t border-brand-primary/10">
-                    <div>
-                        <span class="block text-3xl font-black text-brand-primary">10</span>
-                        <span class="text-sm font-semibold text-brand-mutedText">شاشات تفاعلية مصممة</span>
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-3 gap-6 pt-8 border-t border-emerald-900/10 dark:border-emerald-800/30">
+                    <div class="glass-card p-4 rounded-2xl text-center">
+                        <span class="block text-3xl sm:text-4xl font-black text-emerald-600 dark:text-emerald-400 font-heading">10</span>
+                        <span class="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 mt-1 block">شاشات كاملة الواجهات</span>
                     </div>
-                    <div>
-                        <span class="block text-3xl font-black text-brand-accent">100%</span>
-                        <span class="text-sm font-semibold text-brand-mutedText">تجربة مستخدم مريحة للعين</span>
+                    <div class="glass-card p-4 rounded-2xl text-center">
+                        <span class="block text-3xl sm:text-4xl font-black text-rust-500 font-heading">85%</span>
+                        <span class="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 mt-1 block">معيار الهدوء المستهدف</span>
                     </div>
-                    <div>
-                        <span class="block text-3xl font-black text-brand-primary">7+</span>
-                        <span class="text-sm font-semibold text-brand-mutedText">خواص ذكية ومباشرة</span>
+                    <div class="glass-card p-4 rounded-2xl text-center">
+                        <span class="block text-3xl sm:text-4xl font-black text-emerald-600 dark:text-emerald-400 font-heading">100%</span>
+                        <span class="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 mt-1 block">واقعية الصور والمرافق</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Hero Interactive Phone Display -->
-            <div class="lg:col-span-5 flex justify-center">
-                <div class="relative group">
-                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-primary to-brand-accent rounded-[50px] opacity-20 group-hover:opacity-40 blur-xl transition duration-500"></div>
-                    
-                    <div class="phone-mockup-frame">
-                        <div class="phone-notch"></div>
-                        <div class="screen-container">
-                            <img src="1000246790_2.jpg" alt="Quiet Spot Hero Screen" class="screen-img pos-screen-3" id="heroPhoneImg">
+            <!-- Right Animated Hero Mockup -->
+            <div class="lg:col-span-5 flex justify-center relative">
+                <div class="relative animate-float">
+                    <div class="device-frame">
+                        <div class="device-notch"></div>
+                        <div class="screen-viewport">
+                            <img src="1000246790_2.jpg" alt="Quiet Spot App Home" class="screen-atlas-img crop-pos-3">
                         </div>
                     </div>
 
-                    <!-- Floating Indicator Card -->
-                    <div class="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-brand-softRose/60 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-signal"></i>
+                    <!-- Floating Badge 1 -->
+                    <div class="absolute top-12 -left-10 glass-card p-4 rounded-2xl shadow-2xl flex items-center gap-3 border-emerald-500/30 animate-pulse-slow">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-wifi"></i>
                         </div>
                         <div>
-                            <span class="block text-xs font-bold text-gray-500">مؤشر حي</span>
-                            <span class="block text-sm font-bold text-brand-primary">نسبة الهدوء 85%</span>
+                            <span class="block text-xs font-bold text-slate-400">سرعة الفايبر</span>
+                            <span class="block text-sm font-black text-emerald-800 dark:text-emerald-200">110 Mbps متوفر</span>
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge 2 -->
+                    <div class="absolute bottom-16 -right-10 glass-card p-4 rounded-2xl shadow-2xl flex items-center gap-3 border-rust-500/30">
+                        <div class="w-10 h-10 rounded-xl bg-rust-500/20 text-rust-500 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold text-slate-400">التقييم العام</span>
+                            <span class="block text-sm font-black text-emerald-800 dark:text-emerald-200">4.6 (128 تقييم)</span>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <!-- Interactive Screens Explorer Section -->
-    <section id="screens" class="py-20 bg-white">
+    <!-- Main Interactive 10 Screens Showcase Section -->
+    <section id="interactive-showcase" class="py-20 bg-white dark:bg-emerald-900/20 border-t border-emerald-900/10 dark:border-emerald-800/30">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-brand-accent font-bold text-sm tracking-widest uppercase">شاشات التطبيق بالتفصيل</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-primary mt-2">استعراض الشاشات العشره للواجهات (UI/UX)</h2>
-                <p class="text-brand-mutedText mt-3 text-lg">اضغط على أي شاشة للاطلاع عليها مباشرة في محاكي الهاتف ومعرفة أهم خصائصها وتجربة المستخدم الخاصة بها.</p>
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 font-bold text-xs tracking-widest uppercase">
+                    Interactive Screen Explorer
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-emerald-950 dark:text-white font-heading">
+                    استكشاف شاشات التطبيق العشر بالتفصيل
+                </h2>
+                <p class="text-slate-600 dark:text-slate-300 text-lg">
+                    اختر الشاشة للتعرف على تحليل الواجهة، أهداف تجربة المستخدم (UX Rationale)، والعناصر المخصصة.
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
                 
-                <!-- Left: Interactive Navigation Tabs (10 Screens) -->
-                <div class="lg:col-span-7 space-y-3" id="screenTabsList">
-                    <!-- Screen Item 1 -->
-                    <button onclick="switchScreen(1, this)" class="screen-tab-btn active w-full text-right p-4 rounded-2xl border-2 border-brand-primary bg-brand-cream shadow-sm flex items-start gap-4 transition-all">
-                        <div class="tab-icon w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">1</div>
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-lg text-brand-primary">شاشة البداية (Splash Screen)</h3>
-                                <span class="text-xs bg-brand-softRose text-brand-primary font-bold px-2.5 py-1 rounded-md">الانطباع الأول</span>
+                <!-- Left Screen Selection List (10 Screens) -->
+                <div class="lg:col-span-6 space-y-3" id="screensAccordion">
+                    
+                    <!-- Screen 1 Tab -->
+                    <button onclick="activateScreen(1, this)" class="screen-tab active w-full text-right p-4 rounded-2xl border-2 border-emerald-600 bg-emerald-50 dark:bg-emerald-900/40 shadow-md flex items-center justify-between transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="tab-num w-11 h-11 rounded-xl bg-emerald-600 text-white font-black text-lg flex items-center justify-center">01</div>
+                            <div>
+                                <h3 class="font-bold text-lg text-emerald-950 dark:text-white">شاشة البداية (Splash Screen)</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">الشعار اللفظي والهوية البصرية الأساسية</p>
                             </div>
-                            <p class="text-sm text-brand-mutedText mt-1">تأكيد الهوية والشعار اللفظي: "هنخرج فين تذاكر النهاردة؟" برسم مريح وعصري.</p>
                         </div>
+                        <i class="fa-solid fa-chevron-left text-emerald-600"></i>
                     </button>
 
-                    <!-- Screen Item 2 -->
-                    <button onclick="switchScreen(2, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
-                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">2</div>
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-lg text-gray-800">تسجيل الدخول (Login / Sign Up)</h3>
-                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">سهولة الوصول</span>
+                    <!-- Screen 2 Tab -->
+                    <button onclick="activateScreen(2, this)" class="screen-tab w-full text-right p-4 rounded-2xl border border-slate-200 dark:border-emerald-800/40 bg-slate-50/50 dark:bg-emerald-950/40 hover:bg-emerald-50/50 transition-all flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="tab-num w-11 h-11 rounded-xl bg-slate-200 dark:bg-emerald-900 text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center">02</div>
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800 dark:text-slate-200">تسجيل الدخول (Login / Sign Up)</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">تسجيل سريع عبر Google & Apple بنقرة واحدة</p>
                             </div>
-                            <p class="text-sm text-brand-mutedText mt-1">دعم التسجيل السريع بنقرة واحدة بحسابات Google وApple للوصول الفوري.</p>
                         </div>
+                        <i class="fa-solid fa-chevron-left text-slate-400"></i>
                     </button>
 
-                    <!-- Screen Item 3 -->
-                    <button onclick="switchScreen(3, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
-                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">3</div>
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-lg text-gray-800">الشاشة الرئيسية (Home Screen)</h3>
-                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">مركز الاستكشاف</span>
-                            </div>
-                            <p class="text-sm text-brand-mutedText mt-1">عرض بطاقات الأماكن المحيطة، مسافة الوصول بالدقائق، والتقييم اللحظي.</p>
-                        </div>
-                    </button>
-
-                    <!-- Screen Item 4 -->
-                    <button onclick="switchScreen(4, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
-                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">4</div>
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-lg text-gray-800">البحث والفلترة الذكية (Search & Filters)</h3>
-                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">تخصيص دقيق</span>
-                            </div>
-                            <p class="text-sm text-brand-mutedText mt-1">تحديد خيارات مثل: زحمة قليلة، ثقبة هنية، واي فاي سريع، وجود فيش كهرباء.</p>
-                        </div>
-                    </button>
-
-                    <!-- Screen Item 5 -->
-                    <button onclick="switchScreen(5, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
-                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">5</div>
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-lg text-gray-800">عرض الخريطة التفاعلية (Map View)</h3>
-                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">تصفح مكاني</span>
-                            </div>
-                            <p class="text-sm text-brand-mutedText mt-1">دبابيس مخصصة تظهر التقييم المباشر على الخريطة مع نافذة معاينة سريعة.</p>
-                        </div>
-                    </button>
-
-                    <!-- Screen Item 6 -->
-                    <button onclick="switchScreen(6, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
-                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">6</div>
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-lg text-gray-800">تفاصيل المكان الرئيسية (Place Details)</h3>
-                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">معلومات كاملة</span>
-                            </div>
-                            <p class="text-sm text-brand-mutedText mt-1">عرض نسب الهدوء والزحمة، السرعة الفعلية للنت، وأزرار الاتجاهات والحجز.</p>
-                        </div>
-                    </button>
-
-                    <!-- Screen Item 7 -->
-                    <button onclick="switchScreen(7, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
-                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">7</div>
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-lg text-gray-800">المرافق والمعلومات (More Info)</h3>
-                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">تفاصيل إضافية</span>
-                            </div>
-                            <p class="text-sm text-brand-mutedText mt-1">ساعات العمل الرسمية، قائمة المنيو والأسعار، المصلى وتوفر مواقف السيارات.</p>
-                        </div>
-                    </button>
-
-                    <!-- Screen Item 8 -->
-                    <button onclick="switchScreen(8, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all">
-                        <div class="tab-icon w-10 h-10 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">8</div>
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-lg text-gray-800">التقييمات والمراجعات (Reviews & Ratings)</h3>
-                                <span class="text-xs bg-gray-200 text-gray-700 font-bold px-2.5 py-1 rounded-md">شفافية عالية</span>
-                            </div>
-                            <p class="text-sm text-brand-mutedText mt-1">تفكيك التقييم لدرجات النظافة، الهدوء، المعاملة، الأسعار وتعليقات صور الزوار.</p>
-                        </div>
-                    </button>
-
-                    <!-- Screen Item 9 -->
-                    <button onclick="switchScreen(9, this)" class="screen-tab-btn w-full text-right p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-brand-cream/60 shadow-sm flex items-start gap-4 transition-all
+                    <!-- Screen 3 Tab -->
+                    <button onclick="activateScreen(3, this)" class="screen-tab w-full text-right p-4 rounded-2xl border border-slate-200 dark:border-emerald-800/40 bg-slate-50/50 dark:bg-emerald-950/40 hover:bg-emerald-50/50 transition-all flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="tab-num w-11 h-11 rounded-xl bg-slate-200 dark:bg-emerald-900 text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center">03</div>
+                            <div>
+                                <h3 class="font-bold text-l
