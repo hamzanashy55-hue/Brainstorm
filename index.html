@@ -1,17 +1,19 @@
+أنا الآن بصدد تجهيز ورفع الملف الشامل للتطبيق التفاعلي الكامل **Quiet Spot | سكينة**، والذي يضم كافة الشاشات العشريّة، شاشة الترحيب والأونباردينغ (Onboarding)، المساعد الذكي، حاسبة الكافيين، مؤقت بومودورو مع أصوات الخلفية، نظام الحجوزات، والأزرار العاملة 100%.
+```html:quiet_spot_full_app.html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiet Spot | سكينة - منصة أماكن المذاكرة والتركيز</title>
+    <title>Quiet Spot | سكينة - المنصة الشاملة الذكية للمذاكرة والتركيز</title>
     
-    <!-- Google Fonts & Icons -->
+    <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,6 +29,7 @@
                             cardBg: '#FFFFFF',
                             rose: '#E9D0C6',
                             accent: '#B86F4E',
+                            gold: '#D97706',
                             textDark: '#1E293B',
                             textMuted: '#64748B'
                         }
@@ -41,100 +44,99 @@
     </script>
 
     <style>
+        * { box-sizing: border-box; }
         body {
             font-family: 'Tajawal', sans-serif;
             background-color: #0F172A;
             color: #1E293B;
             user-select: none;
+            margin: 0;
+            padding: 0;
         }
+        h1, h2, h3, h4, h5, h6, .font-cairo { font-family: 'Cairo', sans-serif; }
 
-        h1, h2, h3, h4, h5, h6, .font-cairo {
-            font-family: 'Cairo', sans-serif;
-        }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+        ::-webkit-scrollbar-thumb { background: #2E5E4E; border-radius: 10px; }
 
-        /* Custom Scrollbars */
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2E5E4E;
-            border-radius: 10px;
-        }
-
-        /* Phone Screen Frame Simulation */
-        .app-container {
-            transition: all 0.3s ease;
-        }
+        .app-container { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .mobile-mode {
             max-width: 430px;
-            height: 880px;
+            height: 890px;
             border-radius: 48px;
             border: 12px solid #1E293B;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 2px rgba(255,255,255,0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255,255,255,0.1);
             position: relative;
             overflow: hidden;
-            margin: 20px auto;
+            margin: 15px auto;
         }
 
         .desktop-mode {
             width: 100%;
-            min-height: 100vh;
-            border-radius: 0;
-            border: none;
-            margin: 0;
+            max-width: 920px;
+            min-height: 94vh;
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin: 15px auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
         }
 
-        /* Notch for Mobile Simulation */
         .mobile-notch {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 140px;
-            height: 25px;
+            width: 135px;
+            height: 24px;
             background-color: #1E293B;
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
             z-index: 50;
         }
 
-        /* Pulse Animation for Live Crowdedness */
         @keyframes pulseGlow {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.7; transform: scale(1.05); }
         }
-        .live-pulse {
-            animation: pulseGlow 2s infinite ease-in-out;
+        .live-pulse { animation: pulseGlow 2s infinite ease-in-out; }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .seat-btn.selected {
+            background-color: #2E5E4E !important;
+            color: #FFFFFF !important;
+            border-color: #163328 !important;
         }
 
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .noise-heatmap {
+            background: radial-gradient(circle at 30% 30%, rgba(34, 197, 94, 0.35) 0%, transparent 40%),
+                        radial-gradient(circle at 70% 60%, rgba(239, 68, 68, 0.35) 0%, transparent 45%),
+                        radial-gradient(circle at 50% 80%, rgba(234, 179, 8, 0.35) 0%, transparent 40%);
         }
     </style>
 </head>
-<body class="bg-slate-950 flex flex-col items-center justify-center min-h-screen p-0 sm:p-4">
+<body class="bg-slate-950 flex flex-col items-center justify-center min-h-screen p-0 sm:p-2">
 
-    <!-- Top Mode Switcher Bar -->
-    <div class="fixed top-3 z-50 bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full border border-slate-700/60 shadow-2xl flex items-center gap-3 text-white text-xs font-bold">
-        <span class="text-slate-400">طريقة العرض:</span>
+    <!-- Top Admin & Switcher Bar -->
+    <div class="fixed top-2 z-50 bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full border border-slate-700/60 shadow-2xl flex items-center gap-2 text-white text-xs font-bold overflow-x-auto max-w-full">
+        <span class="text-slate-400">العرض:</span>
         <button onclick="setAppMode('mobile')" id="btnMobileMode" class="px-3 py-1.5 rounded-full bg-brand-primary text-white flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-mobile-screen"></i> هاتف محاكي
+            <i class="fa-solid fa-mobile-screen"></i> محاكي جوال
         </button>
         <button onclick="setAppMode('desktop')" id="btnDesktopMode" class="px-3 py-1.5 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-desktop"></i> شاشة كاملة
+            <i class="fa-solid fa-desktop"></i> شاشة واسعة
         </button>
         <div class="h-4 w-px bg-slate-700 mx-1"></div>
-        <button onclick="resetAppData()" class="text-rose-400 hover:text-rose-300 flex items-center gap-1" title="إعادة ضبط البيانات">
-            <i class="fa-solid fa-arrows-rotate"></i> إعادة ضبط
+        <button onclick="toggleModal('modalStudentPass')" class="text-amber-400 hover:text-amber-300 flex items-center gap-1">
+            <i class="fa-solid fa-id-card"></i> Student Pass
+        </button>
+        <button onclick="toggleModal('modalMarketplace')" class="text-emerald-400 hover:text-emerald-300 flex items-center gap-1">
+            <i class="fa-solid fa-store"></i> متجر النقاط
+        </button>
+        <button onclick="resetAppData()" class="text-rose-400 hover:text-rose-300 flex items-center gap-1" title="إعادة ضبط">
+            <i class="fa-solid fa-arrows-rotate"></i>
         </button>
     </div>
 
@@ -146,214 +148,1824 @@
             <div class="w-12 h-1 bg-slate-700 rounded-full"></div>
         </div>
 
-        <!-- ==================== SPLASH SCREEN ==================== -->
-        <div id="screenSplash" class="absolute inset-0 z-40 bg-gradient-to-b from-brand-cream via-[#F3EFE6] to-brand-cream flex flex-col items-center justify-between p-8 text-center transition-all duration-500">
-            <div class="pt-12">
-                <span class="bg-brand-rose/60 text-brand-primary px-4 py-1.5 rounded-full font-bold text-xs tracking-wide">
-                    <i class="fa-solid fa-sparkles text-brand-accent"></i> التطبيق رقم #1 للمذاكرة والتركيز
-                </span>
-            </div>
-
-            <div class="space-y-6 max-w-xs">
-                <!-- App Mascot/Illustration Frame -->
-                <div class="w-44 h-44 mx-auto rounded-full bg-brand-primary/10 border-4 border-brand-primary/20 flex items-center justify-center relative shadow-inner">
-                    <i class="fa-solid fa-couch text-6xl text-brand-primary"></i>
-                    <div class="absolute -bottom-2 -right-2 w-12 h-12 bg-brand-accent text-white rounded-full flex items-center justify-center text-xl shadow-lg">
-                        <i class="fa-solid fa-book-open"></i>
-                    </div>
-                </div>
-
-                <div class="space-y-2">
-                    <h1 class="text-4xl font-extrabold text-brand-primary font-cairo">Quiet Spot</h1>
-                    <p class="text-brand-accent font-bold text-xl">هنخرج فين تذاكر النهاردة؟</p>
-                </div>
-
-                <p class="text-sm text-slate-600 leading-relaxed">
-                    اكتشف أهدى الكافيهات ومساحات العمل والمكتبات، مع معرفة نسبة الزحمة والهدوء وسرعة الإنترنت لحظياً قبل ما تنزل من بيتك.
-                </p>
-            </div>
-
-            <div class="w-full space-y-3 pb-6">
-                <button onclick="navigateTo('screenHome'); hideSplash();" class="w-full py-4 bg-brand-primary hover:bg-brand-dark text-white rounded-2xl font-bold text-lg shadow-lg shadow-brand-primary/30 transition transform active:scale-95 flex items-center justify-center gap-2">
-                    <span>استكشف الآن</span>
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-
-                <button onclick="navigateTo('screenAuth'); hideSplash();" class="w-full py-3.5 bg-white border border-brand-primary/20 text-brand-primary rounded-2xl font-bold text-sm hover:bg-brand-rose/20 transition">
-                    تسجيل الدخول / حساب جديد
-                </button>
-            </div>
-        </div>
-
-        <!-- ==================== AUTHENTICATION SCREEN ==================== -->
-        <div id="screenAuth" class="hidden absolute inset-0 z-30 bg-brand-cream p-6 flex flex-col justify-between">
-            <div class="pt-8 text-center space-y-3">
-                <div class="w-16 h-16 rounded-2xl bg-brand-primary text-white mx-auto flex items-center justify-center text-3xl shadow-lg">
+        <!-- ==================== MAIN HEADER ==================== -->
+        <header id="mainHeader" class="hidden bg-brand-cream/95 backdrop-blur-md sticky top-0 z-20 px-4 pt-7 pb-2.5 border-b border-slate-200/60 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <button onclick="navigateTo('screenProfile')" class="w-9 h-9 rounded-xl bg-brand-primary text-white flex items-center justify-center text-sm font-bold shadow-md hover:bg-brand-dark">
                     <i class="fa-solid fa-couch"></i>
-                </div>
-                <h2 class="text-2xl font-black text-brand-primary font-cairo">مرحباً بك في Quiet Spot</h2>
-                <p class="text-xs text-slate-500">سجّل دخولك للوصول إلى المفضلة والحجوزات ونظام النقاط</p>
-            </div>
-
-            <div class="space-y-4 my-auto">
-                <button onclick="loginUser('Google')" class="w-full py-3.5 px-4 bg-white border border-slate-200 rounded-2xl font-bold text-sm text-slate-700 flex items-center justify-center gap-3 shadow-sm hover:bg-slate-50 transition">
-                    <i class="fa-brands fa-google text-red-500 text-lg"></i>
-                    <span>تسجيل الدخول باستخدام Google</span>
                 </button>
-
-                <button onclick="loginUser('Apple')" class="w-full py-3.5 px-4 bg-slate-900 text-white rounded-2xl font-bold text-sm flex items-center justify-center gap-3 shadow-md hover:bg-black transition">
-                    <i class="fa-brands fa-apple text-lg"></i>
-                    <span>تسجيل الدخول باستخدام Apple</span>
-                </button>
-
-                <div class="flex items-center my-4">
-                    <div class="flex-grow border-t border-slate-300"></div>
-                    <span class="px-3 text-xs text-slate-400 font-bold">أو البريد الإلكتروني</span>
-                    <div class="flex-grow border-t border-slate-300"></div>
-                </div>
-
-                <div class="space-y-3">
-                    <input type="email" id="authEmail" placeholder="البريد الإلكتروني" class="w-full p-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                    <input type="password" id="authPassword" placeholder="كلمة المرور" class="w-full p-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                    <button onclick="loginUser('Email')" class="w-full py-3.5 bg-brand-primary text-white rounded-2xl font-bold text-sm shadow-md hover:bg-brand-dark transition">
-                        تسجيل الدخول
+                <div>
+                    <span class="text-[9px] text-slate-500 font-bold block leading-tight">الموقع الحالي</span>
+                    <button onclick="changeUserCity()" class="text-xs font-extrabold text-brand-primary flex items-center gap-1 font-cairo hover:underline">
+                        <i class="fa-solid fa-location-dot text-brand-accent"></i> <span id="currentCityText">القاهرة، مصر</span>
                     </button>
                 </div>
             </div>
 
-            <div class="text-center pb-4">
-                <button onclick="navigateTo('screenHome')" class="text-xs font-bold text-brand-accent hover:underline">
-                    المتابعة كزائر بدون تسجيل ←
+            <!-- Header Quick Action Bar -->
+            <div class="flex items-center gap-1.5">
+                <button onclick="toggleModal('modalArPreview')" class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs shadow-md hover:bg-indigo-700" title="معاينة 360° AR">
+                    <i class="fa-solid fa-vr-cardboard"></i>
                 </button>
-            </div>
-        </div>
-
-        <!-- ==================== MAIN HEADER ==================== -->
-        <header id="mainHeader" class="bg-brand-cream/90 backdrop-blur-md sticky top-0 z-20 px-5 pt-8 pb-3 border-b border-slate-200/60 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center text-lg font-bold shadow-md">
-                    <i class="fa-solid fa-couch"></i>
-                </div>
-                <div>
-                    <span class="text-xs text-slate-500 font-bold block leading-tight">الموقع الحالي</span>
-                    <span class="text-sm font-extrabold text-brand-primary flex items-center gap-1 font-cairo">
-                        <i class="fa-solid fa-location-dot text-brand-accent"></i> القاهرة، مصر
-                    </span>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <!-- Notifications Button -->
-                <button onclick="toggleModal('modalNotifications')" class="relative w-10 h-10 rounded-xl bg-white border border-slate-200/80 text-slate-700 flex items-center justify-center text-lg shadow-sm hover:bg-slate-50">
+                <button onclick="toggleModal('modalVoiceNotes')" class="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center text-xs shadow-md hover:bg-rose-700" title="ملخص الـ AI للصوت">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+                <button onclick="toggleModal('modalAiAssistant')" class="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xs shadow-md hover:bg-purple-700 live-pulse" title="مساعد المذاكرة AI">
+                    <i class="fa-solid fa-robot"></i>
+                </button>
+                <button onclick="toggleModal('modalCaffeine')" class="w-8 h-8 rounded-xl bg-amber-700 text-white flex items-center justify-center text-xs shadow-md hover:bg-amber-800" title="حاسبة الكافيين">
+                    <i class="fa-solid fa-mug-hot"></i>
+                </button>
+                <button onclick="toggleModal('modalHappyHour')" class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xs shadow-md hover:bg-amber-600" title="عروض أوقات الهدوء">
+                    <i class="fa-solid fa-bolt"></i>
+                </button>
+                <button onclick="toggleModal('modalNotifications')" class="relative w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center text-xs shadow-sm hover:bg-slate-50">
                     <i class="fa-regular fa-bell"></i>
-                    <span id="notifBadge" class="absolute -top-1 -right-1 w-4 h-4 bg-brand-accent text-white rounded-full text-[10px] font-bold flex items-center justify-center">2</span>
-                </button>
-
-                <!-- Compare Places Button -->
-                <button onclick="openCompareModal()" class="w-10 h-10 rounded-xl bg-white border border-slate-200/80 text-brand-primary flex items-center justify-center text-lg shadow-sm hover:bg-slate-50" title="مقارنة بين مكانين">
-                    <i class="fa-solid fa-[#fa-code-compare] fa-code-compare"></i>
-                </button>
-
-                <!-- Add Place Button -->
-                <button onclick="toggleModal('modalAddPlace')" class="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center text-lg shadow-md hover:bg-brand-dark" title="إضافة مكان جديد">
-                    <i class="fa-solid fa-plus"></i>
+                    <span id="notifBadge" class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-brand-accent text-white rounded-full text-[8px] font-bold flex items-center justify-center">4</span>
                 </button>
             </div>
         </header>
 
-        <!-- ==================== MAIN SCROLLABLE CONTENT VIEWPORT ==================== -->
-        <main class="flex-grow overflow-y-auto pb-24 hide-scrollbar">
-            
-            <!-- SCREEN 1: HOME VIEW -->
-            <div id="screenHome" class="app-screen p-5 space-y-6">
+        <!-- ==================== MAIN SCROLLABLE VIEWPORT ==================== -->
+        <main class="flex-grow overflow-y-auto hide-scrollbar relative">
+
+            <!-- 1. SPLASH & ONBOARDING WIZARD SCREEN -->
+            <div id="screenSplash" class="app-screen inset-0 bg-gradient-to-b from-brand-cream via-[#F3EFE6] to-brand-cream p-5 flex flex-col justify-between text-center min-h-full">
+                <div class="pt-6">
+                    <span class="bg-brand-rose/60 text-brand-primary px-3 py-1 rounded-full font-bold text-[11px] tracking-wide">
+                        <i class="fa-solid fa-sparkles text-brand-accent"></i> المنصة المتكاملة والذكية للمذاكرة والتركيز
+                    </span>
+                </div>
+
+                <div id="onboardingContainer" class="space-y-4 max-w-xs mx-auto my-auto py-2">
+                    <div class="w-32 h-32 mx-auto rounded-full bg-brand-primary/10 border-4 border-brand-primary/20 flex items-center justify-center relative shadow-inner">
+                        <i class="fa-solid fa-couch text-5xl text-brand-primary"></i>
+                        <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-brand-accent text-white rounded-full flex items-center justify-center text-base shadow-lg">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h1 class="text-2xl font-black text-brand-primary font-cairo">Quiet Spot | سكينة</h1>
+                        <p class="text-brand-accent font-bold text-sm">هنخرج فين تذاكر النهاردة؟</p>
+                    </div>
+
+                    <p class="text-xs text-slate-600 leading-relaxed" id="onboardingDescText">
+                        اختر مقعدك المفضل على الخريطة، اعرف سرعة النت ومستوى الهدوء بالديسيبل، اطلب مشروبك مسبقاً، وابحث عن رفيق للمذاكرة بكل سهولة.
+                    </p>
+
+                    <div class="flex justify-center gap-1.5 pt-1">
+                        <span onclick="setOnboardingStep(1)" class="w-3 h-3 rounded-full bg-brand-primary cursor-pointer" id="dotStep1"></span>
+                        <span onclick="setOnboardingStep(2)" class="w-3 h-3 rounded-full bg-slate-300 cursor-pointer" id="dotStep2"></span>
+                        <span onclick="setOnboardingStep(3)" class="w-3 h-3 rounded-full bg-slate-300 cursor-pointer" id="dotStep3"></span>
+                    </div>
+                </div>
+
+                <div class="w-full space-y-2 pb-2">
+                    <button onclick="navigateTo('screenHome')" class="w-full py-3.5 bg-brand-primary hover:bg-brand-dark text-white rounded-2xl font-bold text-sm shadow-lg transition flex items-center justify-center gap-2">
+                        <span>ابدأ الاستكشاف الآن</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button onclick="navigateTo('screenAuth')" class="w-full py-2.5 bg-white border border-brand-primary/20 text-brand-primary rounded-2xl font-bold text-xs hover:bg-brand-rose/20 transition">
+                        تسجيل الدخول / حساب جديد
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. AUTHENTICATION SCREEN -->
+            <div id="screenAuth" class="app-screen hidden p-5 flex flex-col justify-between min-h-full">
+                <div class="pt-6 text-center space-y-2">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-primary text-white mx-auto flex items-center justify-center text-xl shadow-lg">
+                        <i class="fa-solid fa-couch"></i>
+                    </div>
+                    <h2 class="text-lg font-black text-brand-primary font-cairo">مرحباً بك في Quiet Spot</h2>
+                    <p class="text-xs text-slate-500">سجّل دخولك للوصول إلى كارت الطلاب، الخصومات ومتجر الجوائز</p>
+                </div>
+
+                <div class="space-y-2.5 my-auto py-3">
+                    <button onclick="loginUser('Google')" class="w-full py-3 px-4 bg-white border border-slate-200 rounded-2xl font-bold text-xs text-slate-700 flex items-center justify-center gap-2.5 shadow-sm hover:bg-slate-50 transition">
+                        <i class="fa-brands fa-google text-red-500 text-sm"></i>
+                        <span>تسجيل الدخول باستخدام Google</span>
+                    </button>
+                    <button onclick="loginUser('Apple')" class="w-full py-3 px-4 bg-slate-900 text-white rounded-2xl font-bold text-xs flex items-center justify-center gap-2.5 shadow-md hover:bg-black transition">
+                        <i class="fa-brands fa-apple text-sm"></i>
+                        <span>تسجيل الدخول باستخدام Apple</span>
+                    </button>
+                    <div class="flex items-center my-2">
+                        <div class="flex-grow border-t border-slate-300"></div>
+                        <span class="px-2 text-[10px] text-slate-400 font-bold">أو البريد الإلكتروني</span>
+                        <div class="flex-grow border-t border-slate-300"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <input type="email" id="authEmail" placeholder="البريد الإلكتروني" class="w-full p-2.5 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary">
+                        <input type="password" id="authPassword" placeholder="كلمة المرور" class="w-full p-2.5 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary">
+                        <button onclick="loginUser('Email')" class="w-full py-2.5 bg-brand-primary text-white rounded-2xl font-bold text-xs shadow-md hover:bg-brand-dark transition">
+                            تسجيل الدخول
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center pb-2">
+                    <button onclick="navigateTo('screenHome')" class="text-xs font-bold text-brand-accent hover:underline">
+                        المتابعة كزائر بدون تسجيل ←
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3. HOME VIEW -->
+            <div id="screenHome" class="app-screen hidden p-4 space-y-3.5 pb-24">
                 
+                <!-- Welcome Personalized Banner -->
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between text-xs">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-xs">
+                            أ.م
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] text-slate-400 block">أهلاً بك يا بطل! 👏</span>
+                            <h4 class="font-bold text-brand-primary" id="homeWelcomeName">أحمد محمد</h4>
+                        </div>
+                    </div>
+                    <button onclick="toggleModal('modalExamGroups')" class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-xl text-[10px] font-bold hover:bg-amber-100">
+                        <i class="fa-solid fa-graduation-cap"></i> مجموعات الامتحانات
+                    </button>
+                </div>
+
                 <!-- Search & Quick Filter Bar -->
                 <div class="flex items-center gap-2">
                     <div class="relative flex-grow">
-                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-slate-400"></i>
-                        <input type="text" id="searchInput" oninput="renderHomePlaces()" placeholder="ابحث عن مكان، منطقة أو كافيه..." class="w-full pl-3 pr-10 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary shadow-sm">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input type="text" id="searchInput" oninput="renderHomePlaces()" placeholder="ابحث عن مكان، منطقة أو كافيه..." class="w-full pl-3 pr-9 py-2 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary shadow-sm">
                     </div>
-                    <button onclick="toggleModal('modalFilter')" class="px-4 py-3 bg-brand-primary text-white rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-md hover:bg-brand-dark">
+                    <button onclick="toggleModal('modalFilter')" class="px-3 py-2 bg-brand-primary text-white rounded-2xl text-xs font-bold flex items-center gap-1 shadow-md hover:bg-brand-dark">
                         <i class="fa-solid fa-sliders"></i>
                         <span>فلتر</span>
                     </button>
                 </div>
 
                 <!-- Category Chips -->
-                <div class="flex items-center gap-2 overflow-x-auto pb-1 hide-scrollbar">
-                    <button onclick="filterCategory('all')" class="cat-chip active flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold bg-brand-primary text-white shadow-sm">
-                        الكل <span id="catCountAll" class="text-[10px] opacity-80">(5)</span>
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 hide-scrollbar">
+                    <button onclick="filterCategory('all', this)" class="cat-chip active flex-shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-brand-primary text-white shadow-sm">
+                        الكل <span id="catCountAll" class="text-[9px] opacity-80">(3)</span>
                     </button>
-                    <button onclick="filterCategory('cafe')" class="cat-chip flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200">
+                    <button onclick="filterCategory('cafe', this)" class="cat-chip flex-shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200">
                         <i class="fa-solid fa-mug-hot text-brand-accent ml-1"></i> كافيهات
                     </button>
-                    <button onclick="filterCategory('library')" class="cat-chip flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200">
+                    <button onclick="filterCategory('library', this)" class="cat-chip flex-shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200">
                         <i class="fa-solid fa-book text-brand-primary ml-1"></i> مكتبات
                     </button>
-                    <button onclick="filterCategory('coworking')" class="cat-chip flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200">
+                    <button onclick="filterCategory('coworking', this)" class="cat-chip flex-shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200">
                         <i class="fa-solid fa-laptop-code text-brand-light ml-1"></i> مساحات عمل
                     </button>
                 </div>
 
+                <!-- Quick Features Grid Showcase -->
+                <div class="grid grid-cols-5 gap-1.5 text-center text-[9px] font-bold">
+                    <button onclick="toggleModal('modalArPreview')" class="p-1.5 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-brand-primary">
+                        <i class="fa-solid fa-vr-cardboard text-indigo-600 block text-sm mb-1"></i> معاينة 360°
+                    </button>
+                    <button onclick="toggleModal('modalPreOrder')" class="p-1.5 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-brand-primary">
+                        <i class="fa-solid fa-bell-slash text-amber-600 block text-sm mb-1"></i> طلب صامت
+                    </button>
+                    <button onclick="toggleModal('modalSwapCorner')" class="p-1.5 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-brand-primary">
+                        <i class="fa-solid fa-book-bookmark text-emerald-600 block text-sm mb-1"></i> تبادل كتب
+                    </button>
+                    <button onclick="toggleModal('modalInterviewBooth')" class="p-1.5 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-brand-primary">
+                        <i class="fa-solid fa-headset text-rose-600 block text-sm mb-1"></i> كبائن مكالمات
+                    </button>
+                    <button onclick="toggleModal('modalHappyHour')" class="p-1.5 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-brand-primary">
+                        <i class="fa-solid fa-bolt text-amber-500 block text-sm mb-1"></i> عروض Off-Peak
+                    </button>
+                </div>
+
                 <!-- Live AI Recommendation Banner -->
-                <div class="bg-gradient-to-r from-brand-primary to-brand-dark text-white p-4 rounded-2xl shadow-lg relative overflow-hidden">
+                <div class="bg-gradient-to-r from-brand-primary to-brand-dark text-white p-3.5 rounded-2xl shadow-lg relative overflow-hidden">
                     <div class="relative z-10 space-y-1">
                         <div class="flex items-center justify-between">
-                            <span class="bg-brand-accent/30 text-brand-rose text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-brand-accent/40">
-                                <i class="fa-solid fa-robot"></i> اقتراح ذكي لكم الآن
+                            <span class="bg-brand-accent/30 text-brand-rose text-[9px] font-bold px-2 py-0.5 rounded-full border border-brand-accent/40">
+                                <i class="fa-solid fa-robot"></i> ترشيح ذكي بالذكاء الاصطناعي
                             </span>
-                            <span class="text-[10px] text-slate-300">ناءً على الهدوء الحالي</span>
+                            <span class="text-[9px] text-slate-300"><i class="fa-solid fa-volume-low text-emerald-300 ml-1"></i> 32dB (هدوء تام)</span>
                         </div>
-                        <h3 class="font-bold text-base font-cairo">Calm Corner — الدقي</h3>
-                        <p class="text-xs text-slate-200">نسبة الهدوء 92% • زحمة قليلة جداً • واي فاي 85 Mbps</p>
-                        <button onclick="openPlaceDetails(2)" class="mt-2 px-3 py-1.5 bg-white text-brand-primary rounded-xl text-xs font-bold hover:bg-brand-rose transition">
-                            عرض التفاصيل والحجز
-                        </button>
+                        <h3 class="font-bold text-xs font-cairo">Calm Corner — الدقي</h3>
+                        <p class="text-[10px] text-slate-200">نسبة الهدوء 92% • زحمة 15% • واي فاي 85 Mbps</p>
+                        <div class="flex items-center gap-1.5 pt-1">
+                            <button onclick="openPlaceDetails(2)" class="px-2.5 py-1 bg-white text-brand-primary rounded-xl text-[10px] font-bold hover:bg-brand-rose transition">
+                                التفاصيل والمنيو
+                            </button>
+                            <button onclick="openSeatSelectorModal(2)" class="px-2.5 py-1 bg-brand-accent text-white rounded-xl text-[10px] font-bold hover:bg-amber-700 transition">
+                                <i class="fa-solid fa-chair"></i> اختر مقعدك
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Section: Nearest Places -->
-                <div class="space-y-3">
+                <div class="space-y-2.5">
                     <div class="flex items-center justify-between">
-                        <h3 class="font-extrabold text-base text-brand-primary font-cairo">الأقرب إليك للمذاكرة</h3>
-                        <button onclick="navigateTo('screenMap')" class="text-xs text-brand-accent font-bold hover:underline">عرض على الخريطة</button>
+                        <h3 class="font-extrabold text-xs text-brand-primary font-cairo">الأقرب إليك للمذاكرة والتركيز</h3>
+                        <button onclick="navigateTo('screenMap')" class="text-[11px] text-brand-accent font-bold hover:underline">عرض الخريطة</button>
                     </div>
-
-                    <div id="homePlacesList" class="space-y-4">
-                        <!-- Rendered Dynamic Places -->
+                    <div id="homePlacesList" class="space-y-2.5">
+                        <!-- Dynamic Places Cards -->
                     </div>
                 </div>
             </div>
 
-            <!-- SCREEN 2: MAP VIEW -->
-            <div id="screenMap" class="app-screen hidden p-5 space-y-4">
+            <!-- 4. MAP VIEW & HEATMAP -->
+            <div id="screenMap" class="app-screen hidden p-4 space-y-3 pb-24">
                 <div class="flex items-center justify-between">
-                    <h2 class="font-extrabold text-lg text-brand-primary font-cairo">خريطة أماكن المذاكرة والهدوء</h2>
-                    <span class="text-xs font-bold text-slate-500"><i class="fa-solid fa-location-dot text-brand-accent"></i> 5 أماكن متوفرة</span>
+                    <h2 class="font-extrabold text-sm text-brand-primary font-cairo">خريطة الأماكن والضوضاء الحرارية</h2>
+                    <button onclick="toggleHeatmapOverlay()" class="text-xs font-bold bg-brand-primary text-white px-2 py-0.5 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-fire text-amber-300"></i> الخريطة الحرارية
+                    </button>
                 </div>
 
-                <!-- Simulated Interactive Map Graphics Canvas -->
-                <div class="w-full h-96 bg-emerald-900/10 border-2 border-brand-primary/20 rounded-3xl relative overflow-hidden shadow-inner flex flex-col justify-between p-4" style="background-image: radial-gradient(#2E5E4E 1px, transparent 1px); background-size: 20px 20px;">
-                    
-                    <!-- Roads Visual Simulation -->
-                    <div class="absolute top-1/2 left-0 right-0 h-8 bg-slate-300/40 -rotate-12 transform"></div>
-                    <div class="absolute top-0 bottom-0 left-1/3 w-8 bg-slate-300/40 rotate-6 transform"></div>
+                <div id="mapCanvas" class="w-full h-80 bg-emerald-900/10 border-2 border-brand-primary/20 rounded-3xl relative overflow-hidden shadow-inner flex flex-col justify-between p-3" style="background-image: radial-gradient(#2E5E4E 1px, transparent 1px); background-size: 18px 18px;">
+                    <div class="absolute top-1/2 left-0 right-0 h-7 bg-slate-300/40 -rotate-12 transform"></div>
+                    <div class="absolute top-0 bottom-0 left-1/3 w-7 bg-slate-300/40 rotate-6 transform"></div>
 
-                    <!-- User Location Dot -->
-                    <div class="absolute top-1/2 left-1/3 w-6 h-6 bg-blue-500 border-2 border-white rounded-full flex items-center justify-center shadow-lg live-pulse">
-                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                    <div id="heatmapLayer" class="hidden absolute inset-0 noise-heatmap pointer-events-none opacity-80"></div>
+
+                    <div class="absolute top-1/2 left-1/3 w-5 h-5 bg-blue-500 border-2 border-white rounded-full flex items-center justify-center shadow-lg live-pulse">
+                        <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
                     </div>
 
-                    <!-- Interactive Place Pins -->
-                    <!-- Pin 1 -->
-                    <button onclick="showMapPopup(1)" class="absolute top-12 right-12 bg-brand-primary text-white px-2.5 py-1 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1 hover:scale-110 transition border border-white">
-                        <i class="fa-solid fa-star text-amber-300 text-[10px]"></i> 4.6 | Study Hub
+                    <button onclick="showMapPopup(1)" class="absolute top-8 right-6 bg-brand-primary text-white px-2 py-0.5 rounded-xl text-[10px] font-bold shadow-lg flex items-center gap-1 border border-white">
+                        <i class="fa-solid fa-star text-amber-300"></i> 4.6 | Study Hub (35dB)
+                    </button>
+                    <button onclick="showMapPopup(2)" class="absolute top-20 left-4 bg-brand-primary text-white px-2 py-0.5 rounded-xl text-[10px] font-bold shadow-lg flex items-center gap-1 border border-white">
+                        <i class="fa-solid fa-star text-amber-300"></i> 4.7 | Calm Corner (32dB)
+                    </button>
+                    <button onclick="showMapPopup(3)" class="absolute bottom-14 right-14 bg-brand-primary text-white px-2 py-0.5 rounded-xl text-[10px] font-bold shadow-lg flex items-center gap-1 border border-white">
+                        <i class="fa-solid fa-star text-amber-300"></i> 4.8 | مكتبة المعرفة (28dB)
                     </button>
 
-                    <!-- Pin 2 -->
-                    <button onclick="showMapPopup(2)" class="absolute top-28 left-8 bg-brand-primary text-white px-2.5 py-1 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1 hover:scale-110 transition border border-white">
-                        <i class="fa-solid fa-star text-amber-300 text-[10px]"></i> 4.7 | Calm Corner
-                    </button>
+                    <div id="mapPopupCard" class="hidden mt-auto bg-white p-2.5 rounded-2xl border border-slate-200 shadow-xl flex items-center gap-2.5">
+                        <img id="mapPopupImg" class="w-12 h-12 rounded-xl object-cover" src="https://placehold.co/600x400/png">
+                        <div class="flex-grow space-y-0.5 text-right">
+                            <h4 id="mapPopupTitle" class="font-bold text-xs text-brand-primary"></h4>
+                            <p id="mapPopupAddress" class="text-[9px] text-slate-500"></p>
+                            <div class="flex items-center gap-2 text-[9px] font-bold text-brand-accent">
+                                <span id="mapPopupQuiet"></span> • <span id="mapPopupPrice"></span>
+                            </div>
+                        </div>
+                        <button id="mapPopupBtn" class="px-2.5 py-1.5 bg-brand-primary text-white rounded-xl text-xs font-bold">
+                            عرض
+                        </button>
+                    </div>
+                </div>
 
-                    <!-- Pin 3 -->
-                    <button onclick="showMapPopup(3)" class="absolute bottom-20 right-20 bg-brand-prima
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 text-xs space-y-1">
+                    <span class="font-bold text-brand-primary block"><i class="fa-solid fa-microphone-lines text-brand-accent"></i> خريطة الهدوء بالديسيبل (IoT Noise Score):</span>
+                    <p class="text-slate-600 text-[10px]">المناطق الملونة بالأخضر داخل الخريطة تعني مستوى ضوضاء منخفض جداً متصل بحساسات ذكية داخل المكان.</p>
+                </div>
+            </div>
+
+            <!-- 5. FOCUS TIMER, DEEP LOCK & TO-DO -->
+            <div id="screenTimer" class="app-screen hidden p-4 space-y-3.5 text-center pb-24">
+                <div class="space-y-1">
+                    <span class="bg-brand-primary/10 text-brand-primary font-bold text-xs px-3 py-1 rounded-full">
+                        <i class="fa-solid fa-brain"></i> وضع التركيز وبومودورو + حظر المشتتات
+                    </span>
+                    <h2 class="text-lg font-extrabold text-brand-primary font-cairo">جلسة المذاكرة الحالية</h2>
+                    <p class="text-[11px] text-slate-500">اكسب +50 نقطة تركيز مع كل جلسة مكتملة!</p>
+                </div>
+
+                <!-- Deep Lock Social Media Blocker Toggle -->
+                <div class="bg-white p-2.5 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
+                    <div class="text-right">
+                        <h4 class="font-bold text-brand-primary"><i class="fa-solid fa-lock text-rose-600"></i> حظر المشتتات (Deep Lock)</h4>
+                        <span class="text-[9px] text-slate-500 block">قفل السوشيال ميديا أثناء الجلسة تجنباً لخسارة النقاط</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="deepLockToggle" onchange="toggleDeepLockMode(this)" class="sr-only peer">
+                        <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-600"></div>
+                    </label>
+                </div>
+
+                <!-- Timer Circle Display -->
+                <div class="w-44 h-44 mx-auto rounded-full border-8 border-brand-primary/20 bg-white shadow-xl flex flex-col items-center justify-center relative">
+                    <span id="timerDisplay" class="text-3xl font-black text-brand-primary font-mono tracking-wider">25:00</span>
+                    <span id="timerStatusLabel" class="text-[11px] font-bold text-brand-accent mt-1">جاهز للبدء؟</span>
+                    
+                    <div class="absolute -bottom-2 bg-brand-rose text-brand-primary px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border border-brand-accent/30">
+                        +50 نقطة
+                    </div>
+                </div>
+
+                <!-- Timer Controls -->
+                <div class="flex items-center justify-center gap-3 pt-1">
+                    <button onclick="startTimer()" id="btnStartTimer" class="w-12 h-12 rounded-full bg-brand-primary text-white text-lg shadow-lg hover:bg-brand-dark flex items-center justify-center">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                    <button onclick="pauseTimer()" class="w-10 h-10 rounded-full bg-slate-200 text-slate-700 text-sm hover:bg-slate-300 flex items-center justify-center">
+                        <i class="fa-solid fa-pause"></i>
+                    </button>
+                    <button onclick="resetTimer()" class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 text-sm hover:bg-rose-200 flex items-center justify-center">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+
+                <!-- Session To-Do List Integration -->
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 text-right space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-brand-primary"><i class="fa-solid fa-list-check text-brand-accent"></i> قائمة مهام الجلسة:</span>
+                        <button onclick="addTodoTask()" class="text-[10px] bg-brand-primary text-white px-2 py-0.5 rounded-lg font-bold">+ إضافة مهمة</button>
+                    </div>
+
+                    <div id="todoListContainer" class="space-y-1 text-xs font-bold">
+                        <label class="flex items-center justify-between p-2 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" onchange="toggleTaskDone(this)" class="accent-brand-primary w-3.5 h-3.5">
+                                <span class="task-text">مذاكرة شبكات الفصل الثالث (25 دقيقة)</span>
+                            </div>
+                            <span class="text-[9px] text-brand-accent bg-amber-50 px-1 py-0.5 rounded">عاجل</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Ambient Study Music Sound Options -->
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm space-y-2 text-right">
+                    <span class="text-xs font-bold text-brand-primary block"><i class="fa-solid fa-headphones"></i> أصوات خلفية وراديو Lofi (تفاعلي صوتي):</span>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="toggleAmbientSound('rain', this)" class="ambient-btn p-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:border-brand-primary">
+                            <i class="fa-solid fa-cloud-rain text-blue-500 block text-xs mb-1"></i> صوت المطر
+                        </button>
+                        <button onclick="toggleAmbientSound('cafe', this)" class="ambient-btn p-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:border-brand-primary">
+                            <i class="fa-solid fa-mug-hot text-amber-600 block text-xs mb-1"></i> ضوضاء كافيه
+                        </button>
+                        <button onclick="toggleAmbientSound('lofi', this)" class="ambient-btn p-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:border-brand-primary">
+                            <i class="fa-solid fa-compact-disc text-purple-500 block text-xs mb-1"></i> Lofi Beats
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. COMMUNITY, BUDDY & CARPOOLING -->
+            <div id="screenCommunity" class="app-screen hidden p-4 space-y-3.5 pb-24">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-extrabold text-sm text-brand-primary font-cairo">مجتمع المذاكرة والشبكة الأكاديمية</h2>
+                    <button onclick="checkInUserLocation()" class="px-2.5 py-1 bg-brand-accent text-white rounded-xl text-xs font-bold shadow-sm">
+                        <i class="fa-solid fa-location-arrow"></i> أنا هنا الآن
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+                    <button onclick="toggleModal('modalExamGroups')" class="p-2.5 bg-white rounded-xl border border-slate-200 text-right flex items-center justify-between hover:bg-slate-50">
+                        <span><i class="fa-solid fa-graduation-cap text-purple-600 ml-1"></i> مجموعات الامتحانات</span>
+                        <i class="fa-solid fa-chevron-left text-slate-300"></i>
+                    </button>
+                    <button onclick="toggleModal('modalCarpool')" class="p-2.5 bg-white rounded-xl border border-slate-200 text-right flex items-center justify-between hover:bg-slate-50">
+                        <span><i class="fa-solid fa-car-side text-blue-500 ml-1"></i> تشارك التوصيلة</span>
+                        <i class="fa-solid fa-chevron-left text-slate-300"></i>
+                    </button>
+                    <button onclick="toggleModal('modalSwapCorner')" class="p-2.5 bg-white rounded-xl border border-slate-200 text-right flex items-center justify-between hover:bg-slate-50">
+                        <span><i class="fa-solid fa-book-bookmark text-emerald-600 ml-1"></i> ركن تبادل الملخصات</span>
+                        <i class="fa-solid fa-chevron-left text-slate-300"></i>
+                    </button>
+                    <button onclick="toggleModal('modalInterviewBooth')" class="p-2.5 bg-white rounded-xl border border-slate-200 text-right flex items-center justify-between hover:bg-slate-50">
+                        <span><i class="fa-solid fa-headset text-rose-600 ml-1"></i> كبائن الاتصال الفوري</span>
+                        <i class="fa-solid fa-chevron-left text-slate-300"></i>
+                    </button>
+                </div>
+
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between text-xs font-bold">
+                        <span class="text-brand-primary"><i class="fa-solid fa-users text-emerald-600"></i> الطلاب متواجدين الآن بالمكان</span>
+                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full" id="activeBuddiesCount">12 طالب نشط</span>
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="buddyListContainer">
+                        <div class="p-2 bg-slate-50 rounded-xl flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-xs">ع.م</div>
+                                <div class="text-right">
+                                    <h4 class="font-bold text-slate-800">عمر محمود</h4>
+                                    <span class="text-[9px] text-slate-500">بيذاكر: هندسة برمجيات • The Study Hub</span>
+                                </div>
+                            </div>
+                            <button onclick="sendBuddyRequest(this, 'عمر محمود')" class="px-2 py-1 bg-brand-primary text-white rounded-lg text-[10px] font-bold">
+                                شارك الطاولة
+                            </button>
+                        </div>
+
+                        <div class="p-2 bg-slate-50 rounded-xl flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-brand-accent text-white flex items-center justify-center font-bold text-xs">س.أ</div>
+                                <div class="text-right">
+                                    <h4 class="font-bold text-slate-800">سارة أحمد</h4>
+                                    <span class="text-[9px] text-slate-500">بيذاكر: طب أسنان • Calm Corner</span>
+                                </div>
+                            </div>
+                            <button onclick="sendBuddyRequest(this, 'سارة أحمد')" class="px-2 py-1 bg-brand-primary text-white rounded-lg text-[10px] font-bold">
+                                شارك الطاولة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. FAVORITES & BOOKINGS & PRE-ORDERS -->
+            <div id="screenFavorites" class="app-screen hidden p-4 space-y-3.5 pb-24">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-extrabold text-sm text-brand-primary font-cairo">المفضلة والحجوزات والمشروبات</h2>
+                </div>
+
+                <div class="flex border-b border-slate-200 font-bold text-xs">
+                    <button onclick="switchFavTab('favs')" id="tabFavs" class="pb-2 px-3 border-b-2 border-brand-primary text-brand-primary">
+                        المفضلة (<span id="favsCount">0</span>)
+                    </button>
+                    <button onclick="switchFavTab('bookings')" id="tabBookings" class="pb-2 px-3 text-slate-400">
+                        حجوزات الغرف (<span id="bookingsCount">0</span>)
+                    </button>
+                    <button onclick="switchFavTab('orders')" id="tabOrders" class="pb-2 px-3 text-slate-400">
+                        الطلبات الصامطة
+                    </button>
+                </div>
+
+                <div id="favsTabContent" class="space-y-2.5"></div>
+                <div id="bookingsTabContent" class="hidden space-y-2.5"></div>
+
+                <div id="ordersTabContent" class="hidden space-y-2.5">
+                    <div class="bg-white p-3 rounded-2xl border border-slate-200 text-xs space-y-2">
+                        <div class="flex items-center justify-between font-bold text-brand-primary">
+                            <span><i class="fa-solid fa-mug-hot text-brand-accent"></i> الطلبات الصامطة المسبقة</span>
+                            <span class="text-[9px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">قيد التحضير</span>
+                        </div>
+                        <p class="text-slate-600 text-[10px]" id="activePreOrdersSummary">1x سبانيش لاتيه بارد (Calm Corner)</p>
+                        <button onclick="openBillSplitterModal()" class="w-full py-2 bg-slate-100 text-brand-primary font-bold rounded-xl text-[10px] flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-calculator"></i> تقسيم الفاتورة تلقائياً مع الأصدقاء
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. USER PROFILE, ANALYTICS & STAMP CARD -->
+            <div id="screenProfile" class="app-screen hidden p-4 space-y-3.5 pb-24">
+                <div class="bg-white p-4 rounded-3xl border border-slate-200 text-center space-y-2 relative overflow-hidden">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-brand-primary text-white flex items-center justify-center text-2xl font-bold border-2 border-brand-rose">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h3 id="userNameDisplay" class="font-bold text-sm text-brand-primary font-cairo">أحمد محمد</h3>
+                        <span class="text-[9px] bg-brand-rose text-brand-primary px-2 py-0.5 rounded-full font-bold">طالب مجتهد • Lv. 7</span>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 text-center">
+                        <div>
+                            <span id="userPoints" class="block font-black text-sm text-brand-primary">2,450</span>
+                            <span class="text-[9px] text-slate-400 font-bold">إجمالي النقاط</span>
+                        </div>
+                        <div>
+                            <span id="userFocusHours" class="block font-black text-sm text-brand-accent">56</span>
+                            <span class="text-[9px] text-slate-400 font-bold">ساعات المذاكرة</span>
+                        </div>
+                        <div>
+                            <span id="userBadgesCount" class="block font-black text-sm text-brand-primary">12</span>
+                            <span class="text-[9px] text-slate-400 font-bold">شارات الإنجاز</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Digital Stamp Loyalty Card Integration -->
+                <div class="bg-gradient-to-r from-brand-primary to-brand-dark text-white p-3.5 rounded-2xl space-y-2">
+                    <div class="flex items-center justify-between text-xs font-bold">
+                        <span><i class="fa-solid fa-stamp text-amber-300"></i> كارت أختام المذاكرة (Loyalty Stamps)</span>
+                        <span class="text-[10px] text-brand-rose" id="stampProgressText">5 / 6 أختام</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-white/10 p-2 rounded-xl">
+                        <div class="w-7 h-7 rounded-full bg-amber-400 text-slate-900 flex items-center justify-center font-black text-xs">✓</div>
+                        <div class="w-7 h-7 rounded-full bg-amber-400 text-slate-900 flex items-center justify-center font-black text-xs">✓</div>
+                        <div class="w-7 h-7 rounded-full bg-amber-400 text-slate-900 flex items-center justify-center font-black text-xs">✓</div>
+                        <div class="w-7 h-7 rounded-full bg-amber-400 text-slate-900 flex items-center justify-center font-black text-xs">✓</div>
+                        <div class="w-7 h-7 rounded-full bg-amber-400 text-slate-900 flex items-center justify-center font-black text-xs">✓</div>
+                        <button onclick="redeemStampReward()" class="w-7 h-7 rounded-full bg-white/20 text-white hover:bg-amber-400 hover:text-slate-900 transition flex items-center justify-center font-black text-xs" title="انقر للختم الأخير">
+                            <i class="fa-solid fa-gift"></i>
+                        </button>
+                    </div>
+                    <p class="text-[9px] text-slate-200">باقي ختم واحد وتقتني مشروب أو ساعة مذاكرة مجانية مقبلة!</p>
+                </div>
+
+                <!-- Weekly Focus Analytics Graph Summary -->
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 space-y-2">
+                    <h4 class="font-bold text-xs text-brand-primary font-cairo flex items-center justify-between">
+                        <span><i class="fa-solid fa-chart-simple text-brand-accent"></i> تحليلات التركيز الأسبوعية</span>
+                        <span class="text-[9px] text-slate-400">18 ساعة هذا الأسبوع</span>
+                    </h4>
+                    <div class="flex items-end justify-between h-16 pt-2 px-2 text-center text-[8px] font-bold text-slate-500 border-b border-slate-100">
+                        <div class="space-y-1"><div class="w-4 bg-brand-primary/20 h-6 mx-auto rounded-t"></div><span>سبت</span></div>
+                        <div class="space-y-1"><div class="w-4 bg-brand-primary/40 h-10 mx-auto rounded-t"></div><span>أحد</span></div>
+                        <div class="space-y-1"><div class="w-4 bg-brand-primary h-14 mx-auto rounded-t"></div><span>إثنين</span></div>
+                        <div class="space-y-1"><div class="w-4 bg-brand-primary/60 h-8 mx-auto rounded-t"></div><span>ثلاثاء</span></div>
+                        <div class="space-y-1"><div class="w-4 bg-brand-accent h-12 mx-auto rounded-t"></div><span>أربعاء</span></div>
+                        <div class="space-y-1"><div class="w-4 bg-brand-primary/30 h-5 mx-auto rounded-t"></div><span>خميس</span></div>
+                        <div class="space-y-1"><div class="w-4 bg-slate-200 h-3 mx-auto rounded-t"></div><span>جمعة</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-100 text-xs font-bold text-slate-700">
+                    <button onclick="toggleModal('modalNotifications')" class="w-full p-2.5 text-right flex items-center justify-between hover:bg-slate-50">
+                        <span><i class="fa-regular fa-bell text-brand-primary ml-2"></i> الإشعارات والتنبيهات</span>
+                        <i class="fa-solid fa-chevron-left text-slate-300"></i>
+                    </button>
+                    <button onclick="editUserProfilePrompt()" class="w-full p-2.5 text-right flex items-center justify-between hover:bg-slate-50">
+                        <span><i class="fa-solid fa-pen-to-square text-brand-primary ml-2"></i> تعديل بيانات الحساب</span>
+                        <i class="fa-solid fa-chevron-left text-slate-300"></i>
+                    </button>
+                    <button onclick="logoutUser()" class="w-full p-2.5 text-right text-rose-600 flex items-center justify-between hover:bg-rose-50">
+                        <span><i class="fa-solid fa-right-from-bracket ml-2"></i> تسجيل الخروج</span>
+                        <i class="fa-solid fa-chevron-left text-rose-300"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 9. PLACE DETAILS FULL SCREEN VIEW -->
+            <div id="screenPlaceDetails" class="app-screen hidden p-4 space-y-3.5 pb-24">
+                <div class="flex items-center justify-between">
+                    <button onclick="navigateTo('screenHome')" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <h3 id="detailsTitleHeader" class="font-bold text-xs text-brand-primary font-cairo">تفاصيل المكان</h3>
+                    <button id="detailsFavBtn" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-rose-500 flex items-center justify-center">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                </div>
+
+                <div class="relative h-44 rounded-2xl overflow-hidden shadow-sm">
+                    <img id="detailsImage" class="w-full h-full object-cover" src="https://placehold.co/600x400/png">
+                    <span id="detailsCategoryBadge" class="absolute top-2.5 right-2.5 bg-brand-primary text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow"></span>
+                </div>
+
+                <div class="space-y-0.5 text-right">
+                    <div class="flex items-center justify-between">
+                        <h2 id="detailsName" class="text-lg font-black text-brand-primary font-cairo"></h2>
+                        <span id="detailsRating" class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-lg"></span>
+                    </div>
+                    <p id="detailsAddress" class="text-xs text-slate-500"></p>
+                </div>
+
+                <div class="grid grid-cols-4 gap-1.5 text-center text-xs">
+                    <div class="bg-emerald-50 border border-emerald-200 p-2 rounded-xl">
+                        <span class="text-[8px] text-slate-500 block font-bold">الهدوء</span>
+                        <span id="detailsQuietness" class="font-extrabold text-emerald-700 text-xs"></span>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 p-2 rounded-xl">
+                        <span class="text-[8px] text-slate-500 block font-bold">الزحمة</span>
+                        <span id="detailsCrowdedness" class="font-extrabold text-amber-700 text-xs"></span>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 p-2 rounded-xl">
+                        <span class="text-[8px] text-slate-500 block font-bold">النت</span>
+                        <span id="detailsWifiSpeed" class="font-extrabold text-blue-700 text-xs"></span>
+                    </div>
+                    <div class="bg-purple-50 border border-purple-200 p-2 rounded-xl">
+                        <span class="text-[8px] text-slate-500 block font-bold">الشمس والتهوية</span>
+                        <span class="font-extrabold text-purple-700 text-xs">90% مريح</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-1.5 pt-1 text-[10px] font-bold">
+                    <button onclick="toggleModal('modalArPreview')" class="py-2 bg-indigo-600 text-white rounded-xl shadow flex items-center justify-center gap-1 hover:bg-indigo-700 transition">
+                        <i class="fa-solid fa-vr-cardboard"></i> معاينة 360° AR
+                    </button>
+                    <button onclick="toggleModal('modalPreOrder')" class="py-2 bg-amber-600 text-white rounded-xl shadow flex items-center justify-center gap-1 hover:bg-amber-700 transition">
+                        <i class="fa-solid fa-mug-hot"></i> طلب صامت QR
+                    </button>
+                    <button onclick="openBookingModal()" class="py-2 bg-brand-primary text-white rounded-xl shadow flex items-center justify-center gap-1 hover:bg-brand-dark transition">
+                        <i class="fa-solid fa-calendar-check"></i> حجز غرفة
+                    </button>
+                </div>
+
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 space-y-2 text-right">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-xs text-brand-primary font-cairo">تقييمات المذاكرين</h4>
+                        <button onclick="openAddReviewModal()" class="text-[10px] bg-brand-primary text-white px-2 py-0.5 rounded-lg font-bold">+ أضف تقييمك</button>
+                    </div>
+
+                    <div id="placeReviewsContainer" class="space-y-2 text-xs">
+                        <div class="p-2 bg-slate-50 rounded-xl space-y-1 text-xs">
+                            <div class="flex items-center justify-between font-bold">
+                                <span>مريم علي</span>
+                                <span class="text-amber-500">★★★★★</span>
+                            </div>
+                            <p class="text-slate-600 text-[10px]">مكان هادئ جداً والإنترنت ممتاز والفيش بجوار الطاولات.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- ==================== BOTTOM NAVIGATION BAR ==================== -->
+        <nav id="bottomNav" class="hidden bg-white/95 backdrop-blur-md border-t border-slate-200/80 absolute bottom-0 left-0 right-0 z-20 py-2 px-2 flex items-center justify-around text-slate-400">
+            <button onclick="navigateTo('screenHome')" id="navHome" class="nav-btn active flex flex-col items-center gap-0.5 text-brand-primary">
+                <i class="fa-solid fa-house text-base"></i>
+                <span class="text-[9px] font-bold">الرئيسية</span>
+            </button>
+
+            <button onclick="navigateTo('screenMap')" id="navMap" class="nav-btn flex flex-col items-center gap-0.5 hover:text-brand-primary">
+                <i class="fa-solid fa-map-location-dot text-base"></i>
+                <span class="text-[9px] font-bold">الخريطة</span>
+            </button>
+
+            <button onclick="navigateTo('screenTimer')" id="navTimer" class="flex flex-col items-center justify-center w-11 h-11 rounded-full bg-brand-primary text-white -mt-5 shadow-lg hover:bg-brand-dark transition transform active:scale-90">
+                <i class="fa-solid fa-stopwatch text-lg"></i>
+            </button>
+
+            <button onclick="navigateTo('screenCommunity')" id="navCommunity" class="nav-btn flex flex-col items-center gap-0.5 hover:text-brand-primary">
+                <i class="fa-solid fa-users text-base"></i>
+                <span class="text-[9px] font-bold">المجتمع</span>
+            </button>
+
+            <button onclick="navigateTo('screenFavorites')" id="navFavorites" class="nav-btn flex flex-col items-center gap-0.5 hover:text-brand-primary">
+                <i class="fa-regular fa-heart text-base"></i>
+                <span class="text-[9px] font-bold">المفضلة</span>
+            </button>
+
+            <button onclick="navigateTo('screenProfile')" id="navProfile" class="nav-btn flex flex-col items-center gap-0.5 hover:text-brand-primary">
+                <i class="fa-regular fa-user text-base"></i>
+                <span class="text-[9px] font-bold">حسابي</span>
+            </button>
+        </nav>
+
+        <!-- ==================== ALL 100% WORKING MODALS ==================== -->
+
+        <!-- 1. 360 AR VIRTUAL PREVIEW MODAL -->
+        <div id="modalArPreview" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3 text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-vr-cardboard text-indigo-600"></i> معاينة الطاولة بالواقع المعزز 360°</h3>
+                    <button onclick="toggleModal('modalArPreview')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="relative h-48 rounded-2xl overflow-hidden shadow border border-indigo-200">
+                    <img class="w-full h-full object-cover" alt="360 AR View" src="https://cdn.shopify.com/s/files/1/0609/8989/8907/files/omni_one_crouching_office_03.jpg?v=1728080327">
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                        <span class="bg-white/90 text-indigo-900 font-extrabold text-xs px-3 py-1.5 rounded-full shadow flex items-center gap-1.5 live-pulse">
+                            <i class="fa-solid fa-arrows-spin"></i> اسحب للتدوير 360°
+                        </span>
+                    </div>
+                </div>
+                <div class="space-y-1 text-[10px] font-bold text-slate-600">
+                    <p class="text-emerald-700">✓ الإضاءة الطبيعية: ممتازة (نافذة شمس مباشرة)</p>
+                    <p class="text-blue-700">✓ القرب من المقبس: على بعد 30 سم فقط من الطاولة</p>
+                    <p class="text-amber-700">✓ مستوى التكييف: بعيد عن التكييف المباشر</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. AI VOICE LECTURE NOTES MODAL -->
+        <div id="modalVoiceNotes" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3 text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-file-audio text-rose-600"></i> ملخص المحاضرات بالذكاء الاصطناعي</h3>
+                    <button onclick="toggleModal('modalVoiceNotes')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <p class="text-[10px] text-slate-600">سجل ملاحظاتك الصوتية أثناء المذاكرة داخل المكان ليقوم الـ AI بتحويلها لنص وملخص سريع.</p>
+                <div class="p-3 bg-white rounded-xl border border-slate-200 text-center space-y-2">
+                    <button id="btnRecordVoice" onclick="toggleVoiceRecording()" class="w-12 h-12 rounded-full bg-rose-600 text-white text-xl mx-auto flex items-center justify-center shadow-lg">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                    <span id="voiceStatusText" class="block text-[10px] text-slate-500 font-bold">انقر لبدء التسجيل الصوتي</span>
+                </div>
+                <div id="voiceSummaryResult" class="hidden p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-xs space-y-1">
+                    <span class="font-bold text-rose-900 block text-[10px]">🤖 ملخص الـ AI التلقائي:</span>
+                    <p class="text-[10px] text-slate-700 leading-relaxed">تم تلخيص نقاط الدرس الرئيسية: 1. تعريف البروتوكولات 2. سرعة الاستجابة 3. طبقات الشبكة.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. BOOK & SUMMARY SWAP CORNER MODAL -->
+        <div id="modalSwapCorner" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3 text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-book-bookmark text-emerald-600"></i> ركن تبادل الكتب والملخصات</h3>
+                    <button onclick="toggleModal('modalSwapCorner')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="p-2.5 bg-white rounded-xl border border-slate-200 text-xs space-y-2">
+                    <div class="flex items-center justify-between font-bold">
+                        <span>كتاب أساسيات البرمجة (Python)</span>
+                        <span class="text-emerald-700 text-[9px] bg-emerald-50 px-1.5 py-0.5 rounded">متوفر بالرف</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500">متواجد في الرف الذكي لـ Calm Corner الدقي. امسح كود الـ QR للحصول عليه.</p>
+                    <button onclick="simulateSwapQrScan()" class="w-full py-1.5 bg-emerald-700 text-white font-bold rounded-lg text-[10px]">
+                        امسح QR الكتاب لاستعارته
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. EMERGENCY INTERVIEW BOOTH MODAL -->
+        <div id="modalInterviewBooth" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3 text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-headset text-rose-600"></i> كبائن الاتصال والمقابلات العازلة</h3>
+                    <button onclick="toggleModal('modalInterviewBooth')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <p class="text-[10px] text-slate-600">حجز كبسولة عازلة للصوت فورية لمدة 20 دقيقة لإجراء مقابلات العمل أونلاين أو المكالمات الهامة.</p>
+                <div class="p-2.5 bg-white rounded-xl border border-slate-200 text-xs space-y-2">
+                    <div class="flex items-center justify-between font-bold">
+                        <span>كبسولة هدوء Booth #1</span>
+                        <span class="text-emerald-700 text-[9px] bg-emerald-50 px-1.5 py-0.5 rounded">شاغرة الآن</span>
+                    </div>
+                    <button onclick="bookInterviewBooth()" class="w-full py-2 bg-rose-600 text-white rounded-xl font-bold text-xs">
+                        تأكيد حجز الـ 20 دقيقة (25 ج.م)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. AI COMPANION CHATBOT MODAL -->
+        <div id="modalAiAssistant" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end justify-center">
+            <div class="bg-brand-cream w-full rounded-t-3xl p-4 space-y-3 max-h-[85vh] flex flex-col">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo flex items-center gap-1.5">
+                        <i class="fa-solid fa-robot text-purple-600"></i> مساعد المذاكرة الذكي (AI Companion)
+                    </h3>
+                    <button onclick="toggleModal('modalAiAssistant')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-2 p-2 bg-white rounded-2xl border border-slate-200 text-xs min-h-[220px]">
+                    <div class="p-2.5 bg-purple-50 border border-purple-100 rounded-xl text-purple-900 text-[11px] leading-relaxed">
+                        🤖 <strong>أهلاً بك!</strong> أنا مساعدك الذكي. يمكنك سؤالي عن كيفية تقسيم وقت المذاكرة، جدول Pomodoro المناسب لمادتك، أو أفضل المشروبات لزيادة التركيز!
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5 pt-1">
+                    <input type="text" id="aiInputPrompt" placeholder="اسأل مساعد الذكاء الاصطناعي..." class="flex-grow p-2 bg-white border rounded-xl text-xs font-bold focus:outline-none">
+                    <button onclick="sendAiMessage()" class="px-3 py-2 bg-purple-600 text-white rounded-xl text-xs font-bold hover:bg-purple-700">إرسال</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. CAFFEINE TRACKER MODAL -->
+        <div id="modalCaffeine" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3 text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-mug-hot text-amber-700"></i> حاسبة الكافيين والصحة</h3>
+                    <button onclick="toggleModal('modalCaffeine')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="text-xs space-y-2">
+                    <div class="p-2.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-center">
+                        <span class="block text-[10px] text-slate-500 font-bold">الكافيين المستهلك اليوم:</span>
+                        <span id="caffeineCounter" class="text-xl font-black">150 mg</span>
+                        <span class="block text-[9px] text-emerald-700 font-bold mt-0.5">✓ مستوى ممتاز للتركيز</span>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block font-bold text-slate-500 text-[10px]">سجل مشروبك الآن:</label>
+                        <div class="grid grid-cols-2 gap-1.5 font-bold text-[10px]">
+                            <button onclick="addCaffeineIntake(75, 'اسبريسو')" class="p-2 bg-white border rounded-xl hover:bg-amber-50">☕ اسبريسو (+75mg)</button>
+                            <button onclick="addCaffeineIntake(120, 'كابتشينو')" class="p-2 bg-white border rounded-xl hover:bg-amber-50">🥤 كابتشينو (+120mg)</button>
+                            <button onclick="addCaffeineIntake(40, 'شاي أخضر')" class="p-2 bg-white border rounded-xl hover:bg-amber-50">🍵 شاي أخضر (+40mg)</button>
+                            <button onclick="addCaffeineIntake(0, 'كوب ماء')" class="p-2 bg-white border rounded-xl hover:bg-blue-50">💧 كوب ماء (+0mg)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. FOCUS POINTS MARKETPLACE MODAL -->
+        <div id="modalMarketplace" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end justify-center">
+            <div class="bg-brand-cream w-full rounded-t-3xl p-4 space-y-3 max-h-[85vh] overflow-y-auto text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-store text-emerald-600"></i> متجر استبدال نقاط التركيز</h3>
+                    <button onclick="toggleModal('modalMarketplace')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs font-bold">
+                    <div class="p-2 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
+                        <span>رصيدك الحالي:</span>
+                        <span class="text-emerald-800 font-extrabold" id="marketUserPoints">2,450 نقطة</span>
+                    </div>
+                    <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-brand-primary">كشكول كورسات Quiet Spot</h4>
+                            <span class="text-[10px] text-slate-400">500 نقطة</span>
+                        </div>
+                        <button onclick="redeemMarketItem('كشكول كورسات', 500)" class="px-2.5 py-1 bg-brand-primary text-white rounded-lg text-[10px]">استبدال</button>
+                    </div>
+                    <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-brand-primary">خصم 30% كورس Coursera</h4>
+                            <span class="text-[10px] text-slate-400">1,000 نقطة</span>
+                        </div>
+                        <button onclick="redeemMarketItem('كورس Coursera', 1000)" class="px-2.5 py-1 bg-brand-primary text-white rounded-lg text-[10px]">استبدال</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. EXAM MATCHING GROUPS MODAL -->
+        <div id="modalExamGroups" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end justify-center">
+            <div class="bg-brand-cream w-full rounded-t-3xl p-4 space-y-3 max-h-[85vh] overflow-y-auto text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-graduation-cap text-purple-600"></i> مجموعات الامتحانات والمذاكرة</h3>
+                    <button onclick="toggleModal('modalExamGroups')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs font-bold">
+                    <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-brand-primary">دفعة ثانوية عامة 2026 (فيزياء)</h4>
+                            <span class="text-[10px] text-slate-400">8 طلاب في The Study Hub</span>
+                        </div>
+                        <button onclick="joinExamGroup('ثانوية عامة')" class="px-2.5 py-1 bg-purple-600 text-white rounded-lg text-[10px]">انضمام</button>
+                    </div>
+                    <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-brand-primary">مجموعة CFA Level 1</h4>
+                            <span class="text-[10px] text-slate-400">4 طلاب في Calm Corner</span>
+                        </div>
+                        <button onclick="joinExamGroup('CFA')" class="px-2.5 py-1 bg-purple-600 text-white rounded-lg text-[10px]">انضمام</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. CARPOOLING MODAL -->
+        <div id="modalCarpool" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3 text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-car-side text-blue-500"></i> تشارك التوصيلة للمكان</h3>
+                    <button onclick="toggleModal('modalCarpool')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs font-bold">
+                    <p class="text-[11px] text-slate-600">طلاب قادمون من منطقتك متوجهون لنفس مكان المذاكرة:</p>
+                    <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-brand-primary">محمد علي (من المعادي)</h4>
+                            <span class="text-[10px] text-slate-400">متوجه إلى The Study Hub</span>
+                        </div>
+                        <button onclick="requestCarpoolRide('محمد علي')" class="px-2 py-1 bg-blue-600 text-white rounded-lg text-[10px]">تشارك الرحلة</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. INTERACTIVE SEAT MAP MODAL -->
+        <div id="modalSeatMap" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end justify-center">
+            <div class="bg-brand-cream w-full rounded-t-3xl p-4 space-y-3 max-h-[85vh] overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-chair text-brand-accent"></i> اختر مقعدك المفضل على الخريطة</h3>
+                    <button onclick="toggleModal('modalSeatMap')" class="text-slate-400 text-base"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 text-center space-y-3">
+                    <span class="text-[10px] text-slate-400 font-bold block">مخطط الطاولات (شباك - زاوية هادئة - بجوار الفيشة)</span>
+                    <div class="grid grid-cols-3 gap-2 text-xs font-bold">
+                        <button onclick="selectSeat(this, 'طاولة شباك 101')" class="seat-btn p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-emerald-50 text-slate-700">
+                            <i class="fa-solid fa-window-maximize block text-sm mb-1 text-blue-500"></i> شباك (101)
+                        </button>
+                        <button onclick="selectSeat(this, 'مقعد هادئ 102')" class="seat-btn p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-emerald-50 text-slate-700">
+                            <i class="fa-solid fa-couch block text-sm mb-1 text-emerald-600"></i> زاوية (102)
+                        </button>
+                        <button onclick="selectSeat(this, 'مقعد فيش 103')" class="seat-btn p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-emerald-50 text-slate-700">
+                            <i class="fa-solid fa-plug block text-sm mb-1 text-amber-600"></i> فيش (103)
+                        </button>
+                    </div>
+                </div>
+                <button onclick="confirmSeatBooking()" class="w-full py-2.5 bg-brand-primary text-white rounded-2xl font-bold text-xs shadow-md hover:bg-brand-dark">
+                    تأكيد حجز المقعد
+                </button>
+            </div>
+        </div>
+
+        <!-- 11. PRE-ORDER DRINKS MODAL -->
+        <div id="modalPreOrder" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end justify-center">
+            <div class="bg-brand-cream w-full rounded-t-3xl p-4 space-y-3 max-h-[85vh] overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-mug-hot text-amber-600"></i> الطلب الصامت المسبق من الطاولة</h3>
+                    <button onclick="toggleModal('modalPreOrder')" class="text-slate-400 text-base"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs font-bold text-right">
+                    <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-brand-primary">سبانيش لاتيه بارد</h4>
+                            <span class="text-[10px] text-slate-400">65 ج.م</span>
+                        </div>
+                        <button onclick="addPreOrderItem('سبانيش لاتيه بارد', 65)" class="px-2.5 py-1 bg-brand-primary text-white rounded-lg text-xs">+ إضافة</button>
+                    </div>
+                    <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <h4 class="font-bold text-brand-primary">كابتشينو دوبل</h4>
+                            <span class="text-[10px] text-slate-400">55 ج.م</span>
+                        </div>
+                        <button onclick="addPreOrderItem('كابتشينو دوبل', 55)" class="px-2.5 py-1 bg-brand-primary text-white rounded-lg text-xs">+ إضافة</button>
+                    </div>
+                </div>
+                <button onclick="confirmPreOrder()" class="w-full py-2.5 bg-amber-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-amber-700">
+                    تأكيد الطلب والدفع عند الوصول
+                </button>
+            </div>
+        </div>
+
+        <!-- 12. STUDENT PASS MODAL -->
+        <div id="modalStudentPass" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-id-card text-amber-600"></i> Quiet Spot Student Pass</h3>
+                    <button onclick="toggleModal('modalStudentPass')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="text-center space-y-2 text-xs">
+                    <p class="text-slate-600">اشتراك شهري مخصص للطلاب يمنحك خصومات مباشرة 20% على المشروبات وساعات المذاكرة الشريكة.</p>
+                    <div class="p-2.5 bg-amber-50 border border-amber-200 rounded-2xl font-bold text-amber-900">سعر الاشتراك: 99 ج.م / شهرياً</div>
+                </div>
+                <button onclick="activateStudentPass()" class="w-full py-2.5 bg-amber-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-amber-700">
+                    اشترك الآن واكسب الخصم
+                </button>
+            </div>
+        </div>
+
+        <!-- 13. HAPPY HOUR FLASH DEALS MODAL -->
+        <div id="modalHappyHour" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3 text-center">
+                <div class="w-10 h-10 rounded-full bg-amber-500 text-white mx-auto flex items-center justify-center text-lg live-pulse">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="font-bold text-xs text-brand-primary font-cairo">عروض أوقات الهدوء الحالية (Off-Peak)!</h3>
+                <p class="text-xs text-slate-600">المكان الآن هادئ! احصل على خصم 50% على جميع القهوة في Calm Corner الدقي حتى الساعة 12:00 ظهراً.</p>
+                <button onclick="toggleModal('modalHappyHour'); openPlaceDetails(2);" class="w-full py-2 bg-brand-primary text-white rounded-2xl font-bold text-xs shadow-md hover:bg-brand-dark">
+                    احجز في العرض الآن
+                </button>
+            </div>
+        </div>
+
+        <!-- 14. BILL SPLITTER MODAL -->
+        <div id="modalBillSplitter" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-calculator"></i> حاسبة تقسيم الفاتورة</h3>
+                    <button onclick="toggleModal('modalBillSplitter')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs font-bold text-right">
+                    <div>
+                        <label class="block text-slate-500 mb-1">المبلغ الإجمالي (ج.م):</label>
+                        <input type="number" id="splitTotalAmount" value="200" oninput="calculateBillSplit()" class="w-full p-2 bg-white border rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 mb-1">عدد الأشخاص:</label>
+                        <input type="number" id="splitPeopleCount" value="4" oninput="calculateBillSplit()" class="w-full p-2 bg-white border rounded-xl">
+                    </div>
+                    <div class="p-2 bg-emerald-50 border border-emerald-200 rounded-xl text-center text-emerald-800 font-extrabold" id="splitResultText">
+                        نصيب الفرد: 50 ج.م
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 15. FILTER MODAL -->
+        <div id="modalFilter" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end justify-center">
+            <div class="bg-brand-cream w-full rounded-t-3xl p-4 space-y-3 max-h-[85vh] overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo">تصفية نتائج البحث</h3>
+                    <button onclick="toggleModal('modalFilter')" class="text-slate-400 text-base"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-3 text-xs font-bold text-slate-700 text-right">
+                    <div>
+                        <label class="block mb-1 text-slate-500">أدنى نسبة هدوء مطلوبة:</label>
+                        <input type="range" id="filterQuietSlider" min="50" max="95" value="70" class="w-full accent-brand-primary">
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="block text-slate-500">المميزات الضرورية:</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-xl border border-slate-200">
+                                <input type="checkbox" id="filterWifi" checked class="accent-brand-primary"> واي فاي سريع
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white rounded-xl border border-slate-200">
+                                <input type="checkbox" id="filterOutlets" checked class="accent-brand-primary"> فيش لكل مقعد
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-2 flex gap-2">
+                    <button onclick="applyFilters()" class="flex-grow py-2.5 bg-brand-primary text-white rounded-2xl font-bold text-xs shadow-md hover:bg-brand-dark">تطبيق الفلتر</button>
+                    <button onclick="toggleModal('modalFilter')" class="px-4 py-2.5 bg-slate-200 text-slate-700 rounded-2xl font-bold text-xs">إلغاء</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 16. ADD NEW PLACE MODAL -->
+        <div id="modalAddPlace" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end justify-center">
+            <div class="bg-brand-cream w-full rounded-t-3xl p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo">إضافة مكان جديد</h3>
+                    <button onclick="toggleModal('modalAddPlace')" class="text-slate-400 text-base"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs font-bold text-right">
+                    <input type="text" id="newPlaceName" placeholder="اسم المكان" class="w-full p-2 bg-white border rounded-xl">
+                    <input type="text" id="newPlaceAddress" placeholder="العنوان أو المنطقة" class="w-full p-2 bg-white border rounded-xl">
+                    <select id="newPlaceCat" class="w-full p-2 bg-white border rounded-xl">
+                        <option value="cafe">كافيه هادئ</option>
+                        <option value="library">مكتبة</option>
+                        <option value="coworking">مساحة عمل</option>
+                    </select>
+                </div>
+                <button onclick="submitNewPlace()" class="w-full py-2.5 bg-brand-primary text-white rounded-2xl font-bold text-xs shadow-md hover:bg-brand-dark">إرسال للإضافة</button>
+            </div>
+        </div>
+
+        <!-- 17. NOTIFICATIONS MODAL -->
+        <div id="modalNotifications" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center p-4 pt-16">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo">مركز الإشعارات</h3>
+                    <button onclick="toggleModal('modalNotifications')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs text-right">
+                    <div class="p-2.5 bg-white rounded-xl border border-slate-200 space-y-0.5">
+                        <div class="flex items-center justify-between font-bold text-brand-primary">
+                            <span><i class="fa-solid fa-bell text-brand-accent"></i> تنبيه زحمة</span>
+                            <span class="text-[9px] text-slate-400">الآن</span>
+                        </div>
+                        <p class="text-slate-600 text-[10px]">مكان Calm Corner زحمته انخفضت لـ 15% الآن!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 18. ADD REVIEW MODAL -->
+        <div id="modalAddReview" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-brand-cream w-full max-w-xs rounded-3xl p-4 space-y-3 text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-star text-amber-500"></i> أضف تقييمك للمكان</h3>
+                    <button onclick="toggleModal('modalAddReview')" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs font-bold">
+                    <div>
+                        <label class="block text-slate-500 mb-1">اسمك:</label>
+                        <input type="text" id="reviewAuthorName" value="أحمد محمد" class="w-full p-2 bg-white border rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 mb-1">التعليق:</label>
+                        <textarea id="reviewCommentText" rows="3" placeholder="اكتب تجربتك مع الهدوء والنت..." class="w-full p-2 bg-white border rounded-xl"></textarea>
+                    </div>
+                </div>
+                <button onclick="submitUserReview()" class="w-full py-2 bg-brand-primary text-white rounded-xl font-bold text-xs shadow-md hover:bg-brand-dark">إرسال التقييم</button>
+            </div>
+        </div>
+
+        <!-- 19. BOOKING ROOM MODAL -->
+        <div id="modalBooking" class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end justify-center">
+            <div class="bg-brand-cream w-full rounded-t-3xl p-4 space-y-3 max-h-[85vh] overflow-y-auto text-right">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <h3 class="font-extrabold text-xs text-brand-primary font-cairo"><i class="fa-solid fa-calendar-check text-brand-accent"></i> حجز غرفة أو طاولة</h3>
+                    <button onclick="toggleModal('modalBooking')" class="text-slate-400 text-base"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs font-bold">
+                    <div>
+                        <label class="block text-slate-500 mb-1">تاريخ الحجز:</label>
+                        <input type="date" id="bookingDateInput" value="2026-08-05" class="w-full p-2 bg-white border rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 mb-1">الوقت:</label>
+                        <select id="bookingTimeInput" class="w-full p-2 bg-white border rounded-xl">
+                            <option>09:00 صباحاً - 12:00 ظهراً</option>
+                            <option>12:00 ظهراً - 03:00 عصراً</option>
+                            <option>03:00 عصراً - 06:00 مساءً</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 mb-1">النوع:</label>
+                        <select id="bookingTypeInput" class="w-full p-2 bg-white border rounded-xl">
+                            <option>طاولة فردية هادئة</option>
+                            <option>غرفة مذاكرة جماعية</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="confirmRoomBookingSubmit()" class="w-full py-2.5 bg-brand-primary text-white rounded-2xl font-bold text-xs shadow-md hover:bg-brand-dark">تأكيد الحجز</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- REACTIVE APPLICATION JAVASCRIPT ENGINE -->
+    <script>
+        // Real-time Data Store State
+        let placesData = [
+            {
+                id: 1,
+                name: "The Study Hub",
+                category: "coworking",
+                categoryLabel: "مساحة عمل وكافيه",
+                address: "الزمالك • القاهرة",
+                rating: 4.6,
+                quietness: 85,
+                crowdedness: 30,
+                wifiSpeed: 110,
+                noiseDb: 35,
+                outlets: true,
+                priceLevel: "$$",
+                image: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=600&q=80",
+                isFav: true,
+                reviews: [
+                    { author: "مريم علي", stars: "★★★★★", text: "مكان هادئ جداً والإنترنت ممتاز والفيش بجوار الطاولات." }
+                ]
+            },
+            {
+                id: 2,
+                name: "Calm Corner",
+                category: "cafe",
+                categoryLabel: "كافيه هادئ",
+                address: "الدقي • الجيزة",
+                rating: 4.7,
+                quietness: 92,
+                crowdedness: 15,
+                wifiSpeed: 85,
+                noiseDb: 32,
+                outlets: true,
+                priceLevel: "$",
+                image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80",
+                isFav: true,
+                reviews: [
+                    { author: "سارة أحمد", stars: "★★★★★", text: "أفضل مكان للمذاكرة بدون إزعاج والإضاءة مريحة جداً." }
+                ]
+            },
+            {
+                id: 3,
+                name: "مكتبة المعرفة",
+                category: "library",
+                categoryLabel: "مكتبة وقراءة",
+                address: "شارع الجامعة • الجيزة",
+                rating: 4.8,
+                quietness: 95,
+                crowdedness: 20,
+                wifiSpeed: 50,
+                noiseDb: 28,
+                outlets: true,
+                priceLevel: "مجاني",
+                image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=600&q=80",
+                isFav: false,
+                reviews: [
+                    { author: "محمد خالد", stars: "★★★★★", text: "هدوء تام ومناسبة جداً للتركيز العالي وقراءة الكتب." }
+                ]
+            }
+        ];
+
+        let bookingsData = [
+            { id: 1, placeName: "The Study Hub", date: "2026-08-05", time: "09:00 صباحاً - 12:00 ظهراً", type: "طاولة فردية" }
+        ];
+
+        let preOrdersData = [
+            { name: "سبانيش لاتيه بارد", price: 65 }
+        ];
+
+        let onboardingSteps = [
+            { title: "Quiet Spot | سكينة", text: "اختر مقعدك المفضل على الخريطة، اعرف سرعة النت ومستوى الهدوء بالديسيبل، واطلب المشروب مسبقاً." },
+            { title: "تقنية IoT والهدوء الحي", text: "شاهد خريطة الضوضاء الحرارية الحية وفحّص الـ QR لتفعيل الفيشة والطاولة على الفور." },
+            { title: "مجتمع المذاكرة والـ AI", text: "احصل على نصائح المذاكرة من مساعد الذكاء الاصطناعي واكسب نقاط التركيز للتبديل بجوائز!" }
+        ];
+        let currentOnboardingIndex = 0;
+
+        let caffeineTotalMg = 150;
+        let activeCategory = 'all';
+        let currentSelectedPlace = placesData[0];
+        let selectedSeatName = '';
+        let isDeepLockEnabled = false;
+        let isVoiceRecording = false;
+
+        // Timer State
+        let timerSeconds = 25 * 60;
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        // Audio Engine
+        let audioCtx = null;
+        let activeNoiseNode = null;
+
+        // Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            renderHomePlaces();
+            updateFavoritesCount();
+            updateBookingsCount();
+            navigateTo('screenSplash');
+        });
+
+        // SPA Navigation Router
+        function navigateTo(screenId) {
+            const screens = document.querySelectorAll('.app-screen');
+            screens.forEach(s => s.classList.add('hidden'));
+
+            const target = document.getElementById(screenId);
+            if (target) target.classList.remove('hidden');
+
+            const header = document.getElementById('mainHeader');
+            const bottomNav = document.getElementById('bottomNav');
+
+            if (screenId === 'screenSplash' || screenId === 'screenAuth') {
+                if (header) header.classList.add('hidden');
+                if (bottomNav) bottomNav.classList.add('hidden');
+            } else {
+                if (header) header.classList.remove('hidden');
+                if (bottomNav) bottomNav.classList.remove('hidden');
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('text-brand-primary'));
+            if (screenId === 'screenHome') document.getElementById('navHome')?.classList.add('text-brand-primary');
+            if (screenId === 'screenMap') document.getElementById('navMap')?.classList.add('text-brand-primary');
+            if (screenId === 'screenFavorites') {
+                document.getElementById('navFavorites')?.classList.add('text-brand-primary');
+                renderFavoritesList();
+                renderBookingsList();
+            }
+            if (screenId === 'screenProfile') document.getElementById('navProfile')?.classList.add('text-brand-primary');
+            if (screenId === 'screenCommunity') document.getElementById('navCommunity')?.classList.add('text-brand-primary');
+        }
+
+        // Deep Lock Mode Toggle
+        function toggleDeepLockMode(toggle) {
+            isDeepLockEnabled = toggle.checked;
+            if (isDeepLockEnabled) {
+                alert('تم تفعيل خاصية Deep Lock! في حال خروجك من التطبيق أو فتح السوشيال ميديا قبل اكتمال وقت بومودورو، ستخسر 50 نقطة تركيز.');
+            }
+        }
+
+        // Voice Recording Simulation
+        function toggleVoiceRecording() {
+            isVoiceRecording = !isVoiceRecording;
+            const btn = document.getElementById('btnRecordVoice');
+            const status = document.getElementById('voiceStatusText');
+            const res = document.getElementById('voiceSummaryResult');
+
+            if (isVoiceRecording) {
+                btn.className = "w-12 h-12 rounded-full bg-rose-600 text-white text-xl mx-auto flex items-center justify-center shadow-lg live-pulse";
+                status.textContent = "جاري التسجيل الصوتي الآن... انقر للإيقاف والتلخيص";
+                res.classList.add('hidden');
+            } else {
+                btn.className = "w-12 h-12 rounded-full bg-emerald-600 text-white text-xl mx-auto flex items-center justify-center shadow-lg";
+                status.textContent = "تم تحويل الصوت بنجاح بواسطة الـ AI! ✓";
+                res.classList.remove('hidden');
+            }
+        }
+
+        function simulateSwapQrScan() {
+            alert('تم مسح QR الكتاب بنجاح! تم تسجيل استعارته من ركن التبادل.');
+            toggleModal('modalSwapCorner');
+        }
+
+        function bookInterviewBooth() {
+            alert('تم حجز كبسولة المكالمات العازلة للصوت لمدة 20 دقيقة بنجاح!');
+            toggleModal('modalInterviewBooth');
+        }
+
+        function setOnboardingStep(stepNum) {
+            currentOnboardingIndex = stepNum - 1;
+            const data = onboardingSteps[currentOnboardingIndex];
+            document.getElementById('onboardingDescText').textContent = data.text;
+
+            document.getElementById('dotStep1').className = stepNum === 1 ? "w-3 h-3 rounded-full bg-brand-primary cursor-pointer" : "w-3 h-3 rounded-full bg-slate-300 cursor-pointer";
+            document.getElementById('dotStep2').className = stepNum === 2 ? "w-3 h-3 rounded-full bg-brand-primary cursor-pointer" : "w-3 h-3 rounded-full bg-slate-300 cursor-pointer";
+            document.getElementById('dotStep3').className = stepNum === 3 ? "w-3 h-3 rounded-full bg-brand-primary cursor-pointer" : "w-3 h-3 rounded-full bg-slate-300 cursor-pointer";
+        }
+
+        function renderHomePlaces() {
+            const container = document.getElementById('homePlacesList');
+            if (!container) return;
+
+            const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            let filtered = placesData.filter(place => {
+                let matchesCat = (activeCategory === 'all' || place.category === activeCategory);
+                let matchesSearch = (place.name.toLowerCase().includes(searchVal) || place.address.toLowerCase().includes(searchVal));
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="p-6 text-center text-xs text-slate-400 font-bold bg-white rounded-2xl">لا توجد أماكن مطابقة لبحثك.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(place => `
+                <div onclick="openPlaceDetails(${place.id})" class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-3 hover:shadow-md transition cursor-pointer">
+                    <img src="${place.image}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0">
+                    <div class="flex-grow space-y-0.5 text-right">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-extrabold text-xs text-brand-primary font-cairo">${place.name}</h4>
+                            <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">★ ${place.rating}</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500">${place.address} • <i class="fa-solid fa-microphone-lines text-emerald-600"></i> ${place.noiseDb}dB</p>
+                        <div class="flex items-center justify-between text-[10px] font-bold pt-1">
+                            <span class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">الهدوء: ${place.quietness}%</span>
+                            <span class="text-slate-400">الزحمة: ${place.crowdedness}%</span>
+                            <button onclick="event.stopPropagation(); toggleFavorite(${place.id});" class="text-sm text-rose-500">
+                                <i class="${place.isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(cat, btn) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-chip').forEach(b => {
+                b.classList.remove('bg-brand-primary', 'text-white');
+                b.classList.add('bg-white', 'text-slate-700');
+            });
+            btn.classList.add('bg-brand-primary', 'text-white');
+            btn.classList.remove('bg-white', 'text-slate-700');
+            renderHomePlaces();
+        }
+
+        function openPlaceDetails(id) {
+            const place = placesData.find(p => p.id === id);
+            if (!place) return;
+
+            currentSelectedPlace = place;
+            document.getElementById('detailsName').textContent = place.name;
+            document.getElementById('detailsAddress').textContent = place.address;
+            document.getElementById('detailsRating').textContent = `★ ${place.rating}`;
+            document.getElementById('detailsQuietness').textContent = `${place.quietness}% (${place.noiseDb}dB)`;
+            document.getElementById('detailsCrowdedness').textContent = `${place.crowdedness}%`;
+            document.getElementById('detailsWifiSpeed').textContent = `${place.wifiSpeed} Mbps`;
+            document.getElementById('detailsImage').src = place.image;
+            document.getElementById('detailsCategoryBadge').textContent = place.categoryLabel;
+
+            const favBtn = document.getElementById('detailsFavBtn');
+            favBtn.innerHTML = `<i class="${place.isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>`;
+            favBtn.onclick = () => { toggleFavorite(place.id); openPlaceDetails(place.id); };
+
+            renderPlaceReviews(place);
+            navigateTo('screenPlaceDetails');
+        }
+
+        function renderPlaceReviews(place) {
+            const container = document.getElementById('placeReviewsContainer');
+            if (!container) return;
+
+            container.innerHTML = place.reviews.map(r => `
+                <div class="p-2.5 bg-slate-50 rounded-xl space-y-1 text-xs">
+                    <div class="flex items-center justify-between font-bold">
+                        <span>${r.author}</span>
+                        <span class="text-amber-500">${r.stars}</span>
+                    </div>
+                    <p class="text-slate-600 text-[11px]">${r.text}</p>
+                </div>
+            `).join('');
+        }
+
+        function sendAiMessage() {
+            const input = document.getElementById('aiInputPrompt');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chat = document.getElementById('aiChatMessages');
+            const userDiv = document.createElement('div');
+            userDiv.className = "p-2 bg-slate-100 rounded-xl text-slate-800 text-left text-[11px] font-bold";
+            userDiv.textContent = text;
+            chat.appendChild(userDiv);
+            input.value = '';
+
+            setTimeout(() => {
+                const aiDiv = document.createElement('div');
+                aiDiv.className = "p-2.5 bg-purple-50 border border-purple-100 rounded-xl text-purple-900 text-[11px] leading-relaxed";
+                aiDiv.innerHTML = `🤖 <strong>نصيحة المساعد:</strong> ننصحك ببدء جلسة بومودورو 25 دقيقة لمذاكرة مادتك، واختيار مكان هادئ مثل <strong>Calm Corner</strong> الدقي!`;
+                chat.appendChild(aiDiv);
+                chat.scrollTop = chat.scrollHeight;
+            }, 600);
+        }
+
+        function addCaffeineIntake(mg, name) {
+            caffeineTotalMg += mg;
+            document.getElementById('caffeineCounter').textContent = `${caffeineTotalMg} mg`;
+            if (caffeineTotalMg > 300) {
+                alert(`تنبيه صحي: استهلكت ${caffeineTotalMg}mg كافيين اليوم. يُنصح بشرب كوب ماء كبير للتوازن واختيار مشروب أعشاب هادئ.`);
+            } else {
+                alert(`تم تسجيل ${name} بنجاح (+${mg}mg كافيين)!`);
+            }
+        }
+
+        function redeemMarketItem(itemName, cost) {
+            let userPointsElem = document.getElementById('marketUserPoints');
+            let profilePointsElem = document.getElementById('userPoints');
+            let currentPts = parseInt(profilePointsElem.textContent.replace(',', ''));
+
+            if (currentPts < cost) {
+                alert('عذراً، رصيد نقاطك غير كافٍ لاستبدال هذا الخيار.');
+                return;
+            }
+
+            currentPts -= cost;
+            profilePointsElem.textContent = currentPts.toLocaleString();
+            userPointsElem.textContent = `${currentPts.toLocaleString()} نقطة`;
+            alert(`مبروك! تم استبدال ${cost} نقطة بنجاح بالحصول على (${itemName}). تم حفظ الكوبون في حسابك.`);
+        }
+
+        function joinExamGroup(groupName) {
+            alert(`تم انضمامك بنجاح لمجموعة مذاكرة (${groupName})! أصبح بإمكانك التواصل مع الطلاب المتواجدين في نفس الكافيه.`);
+            toggleModal('modalExamGroups');
+        }
+
+        function requestCarpoolRide(driverName) {
+            alert(`تم إرسال طلب مشاركة الرحلة إلى ${driverName}! سيصلك إشعار فور الموافقة.`);
+            toggleModal('modalCarpool');
+        }
+
+        function toggleHeatmapOverlay() {
+            const layer = document.getElementById('heatmapLayer');
+            layer.classList.toggle('hidden');
+        }
+
+        function changeUserCity() {
+            const newCity = prompt('ادخل مدينتك الجديدة:', 'الإسكندرية، مصر');
+            if (newCity) {
+                document.getElementById('currentCityText').textContent = newCity;
+                alert(`تم تغيير الموقع الحالي لـ ${newCity}`);
+            }
+        }
+
+        function toggleFavorite(id) {
+            const place = placesData.find(p => p.id === id);
+            if (place) {
+                place.isFav = !place.isFav;
+                renderHomePlaces();
+                updateFavoritesCount();
+            }
+        }
+
+        function updateFavoritesCount() {
+            const favs = placesData.filter(p => p.isFav);
+            document.getElementById('favsCount').textContent = favs.length;
+        }
+
+        function renderFavoritesList() {
+            const favs = placesData.filter(p => p.isFav);
+            const container = document.getElementById('favsTabContent');
+
+            if (favs.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">لا توجد أماكن مفضلة محفوظة.</p>`;
+                return;
+            }
+
+            container.innerHTML = favs.map(place => `
+                <div class="bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <img src="${place.image}" class="w-10 h-10 rounded-xl object-cover">
+                        <div class="text-right">
+                            <h4 class="font-bold text-xs text-brand-primary">${place.name}</h4>
+                            <span class="text-[9px] text-slate-400">${place.address}</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleFavorite(${place.id}); renderFavoritesList();" class="text-rose-500 font-bold text-xs px-2">
+                        حذف
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openSeatSelectorModal(placeId) {
+            if (placeId) currentSelectedPlace = placesData.find(p => p.id === placeId);
+            toggleModal('modalSeatMap');
+        }
+
+        function selectSeat(btn, seatName) {
+            document.querySelectorAll('.seat-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedSeatName = seatName;
+        }
+
+        function confirmSeatBooking() {
+            if (!selectedSeatName) {
+                alert('من فضلك اختر مقعدك أولاً من الخريطة');
+                return;
+            }
+            alert(`تم تأكيد حجز المقعد (${selectedSeatName}) بنجاح في ${currentSelectedPlace.name}!`);
+            toggleModal('modalSeatMap');
+        }
+
+        function addPreOrderItem(itemName, price) {
+            preOrdersData.push({ name: itemName, price: price });
+            alert(`تم إضافة (${itemName}) إلى سلة الطلب المسبق!`);
+            updatePreOrdersSummary();
+        }
+
+        function confirmPreOrder() {
+            if (preOrdersData.length === 0) {
+                alert('سلة الطلبات فارغة!');
+                return;
+            }
+            alert('تم تأكيد الطلب المسبق بنجاح وسيكون جاهزاً فور وصولك المكان!');
+            toggleModal('modalPreOrder');
+        }
+
+        function updatePreOrdersSummary() {
+            const summary = document.getElementById('activePreOrdersSummary');
+            if (summary && preOrdersData.length > 0) {
+                summary.textContent = preOrdersData.map(p => `${p.name} (${p.price}ج.م)`).join(' + ') + ` (${currentSelectedPlace.name})`;
+            }
+        }
+
+        function openBillSplitterModal() { toggleModal('modalBillSplitter'); }
+
+        function calculateBillSplit() {
+            const total = parseFloat(document.getElementById('splitTotalAmount').value) || 0;
+            const count = parseInt(document.getElementById('splitPeopleCount').value) || 1;
+            const perPerson = (total / count).toFixed(1);
+            document.getElementById('splitResultText').textContent = `نصيب الفرد: ${perPerson} ج.م`;
+        }
+
+        function openAddReviewModal() { toggleModal('modalAddReview'); }
+
+        function submitUserReview() {
+            const author = document.getElementById('reviewAuthorName').value.trim() || 'طالب مجتهد';
+            const text = document.getElementById('reviewCommentText').value.trim();
+
+            if (!text) { alert('من فضلك اكتب تعليقك أولاً'); return; }
+
+            if (currentSelectedPlace) {
+                currentSelectedPlace.reviews.unshift({ author: author, stars: '★★★★★', text: text });
+                renderPlaceReviews(currentSelectedPlace);
+            }
+
+            alert('شكراً لك! تم إضافة تقييمك بنجاح.');
+            document.getElementById('reviewCommentText').value = '';
+            toggleModal('modalAddReview');
+        }
+
+        function openBookingModal() { toggleModal('modalBooking'); }
+
+        function confirmRoomBookingSubmit() {
+            const date = document.getElementById('bookingDateInput').value;
+            const time = document.getElementById('bookingTimeInput').value;
+            const type = document.getElementById('bookingTypeInput').value;
+
+            bookingsData.push({
+                id: Date.now(),
+                placeName: currentSelectedPlace ? currentSelectedPlace.name : 'The Study Hub',
+                date: date,
+                time: time,
+                type: type
+            });
+
+            updateBookingsCount();
+            alert('تم تأكيد حجزك وإضافته إلى قائمة الحجوزات القادمة!');
+            toggleModal('modalBooking');
+        }
+
+        function updateBookingsCount() {
+            document.getElementById('bookingsCount').textContent = bookingsData.length;
+        }
+
+        function renderBookingsList() {
+            const container = document.getElementById('bookingsTabContent');
+            if (!container) return;
+
+            if (bookingsData.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">لا توجد حجوزات قادمة.</p>`;
+                return;
+            }
+
+            container.innerHTML = bookingsData.map(b => `
+                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm space-y-1 text-right">
+                    <div class="flex items-center justify-between font-bold text-xs text-brand-primary">
+                        <span>${b.placeName}</span>
+                        <span class="text-[9px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">مؤكد</span>
+                    </div>
+                    <p class="text-[11px] text-slate-600">${b.date} • ${b.time}</p>
+                    <p class="text-[10px] text-slate-400">${b.type}</p>
+                </div>
+            `).join('');
+        }
+
+        function checkInUserLocation() {
+            alert('تم تسجيل وجودك الآن في المكان! أصبح بإمكان الطلاب القريبين رؤيتك ومشاركتك المذاكرة.');
+            const countElem = document.getElementById('activeBuddiesCount');
+            if (countElem) countElem.textContent = '13 طالب نشط';
+        }
+
+        function sendBuddyRequest(btn, name) {
+            btn.textContent = 'تم الإرسال ✓';
+            btn.classList.replace('bg-brand-primary', 'bg-emerald-600');
+            alert(`تم إرسال طلب انضمام لـ ${name}! سيصلك إشعار فور الموافقة.`);
+        }
+
+        function addTodoTask() {
+            const taskText = prompt('ادخل المهمة الجديدة للجلسة:');
+            if (!taskText) return;
+
+            const container = document.getElementById('todoListContainer');
+            const newLabel = document.createElement('label');
+            newLabel.className = "flex items-center justify-between p-2 bg-slate-50 rounded-xl border border-slate-100";
+            newLabel.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" onchange="toggleTaskDone(this)" class="accent-brand-primary w-4 h-4">
+                    <span class="task-text">${taskText}</span>
+                </div>
+            `;
+            container.appendChild(newLabel);
+        }
+
+        function toggleTaskDone(checkbox) {
+            const span = checkbox.parentNode.querySelector('.task-text');
+            if (checkbox.checked) {
+                span.classList.add('line-through', 'text-slate-400');
+            } else {
+                span.classList.remove('line-through', 'text-slate-400');
+            }
+        }
+
+        function startTimer() {
+            if (isTimerRunning) return;
+            isTimerRunning = true;
+            document.getElementById('timerStatusLabel').textContent = "جاري المذاكرة والتركيز...";
+
+            timerInterval = setInterval(() => {
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    isTimerRunning = false;
+                    document.getElementById('timerStatusLabel').textContent = "أحسنت! اكتملت الجلسة وكسبت +50 نقطة!";
+                    let points = parseInt(document.getElementById('userPoints').textContent) + 50;
+                    document.getElementById('userPoints').textContent = points;
+                    alert('مبروك! أنهيت جلسة المذاكرة بنجاح وحصلت على 50 نقطة جديدة.');
+                    return;
+                }
+                timerSeconds--;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('timerStatusLabel').textContent = "الجلسة موقوفة مؤقتاً";
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timerSeconds = 25 * 60;
+            updateTimerDisplay();
+            document.getElementById('timerStatusLabel').textContent = "جاهز للبدء؟";
+        }
+
+        function updateTimerDisplay() {
+            let mins = Math.floor(timerSeconds / 60);
+            let secs = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = `${mins < 10 ? '0':''}${mins}:${secs < 10 ? '0':''}${secs}`;
+        }
+
+        function toggleAmbientSound(soundType, btn) {
+            document.querySelectorAll('.ambient-btn').forEach(b => b.classList.remove('border-brand-primary', 'bg-brand-rose/20'));
+
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+            if (activeNoiseNode) {
+                activeNoiseNode.stop();
+                activeNoiseNode = null;
+                btn.classList.remove('border-brand-primary', 'bg-brand-rose/20');
+                return;
+            }
+
+            btn.classList.add('border-brand-primary', 'bg-brand-rose/20');
+
+            const bufferSize = audioCtx.sampleRate * 2;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
+
+            const whiteNoise = audioCtx.createBufferSource();
+            whiteNoise.buffer = noiseBuffer;
+            whiteNoise.loop = true;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = soundType === 'rain' ? 800 : soundType === 'cafe' ? 400 : 1200;
+
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.value = 0.05;
+
+            whiteNoise.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            whiteNoise.start();
+            activeNoiseNode = whiteNoise;
+        }
+
+        function redeemStampReward() {
+            alert('مبروك! اكتملت أختامك الخمسة وحصلت على الختم السادس المكمل. تم إضافة كوبون مشروب مجاني لحسابك!');
+            document.getElementById('stampProgressText').textContent = '6 / 6 أختام (تم الاستبدال 🎉)';
+        }
+
+        function showMapPopup(id) {
+            const place = placesData.find(p => p.id === id);
+            if (!place) return;
+
+            document.getElementById('mapPopupImg').src = place.image;
+            document.getElementById('mapPopupTitle').textContent = place.name;
+            document.getElementById('mapPopupAddress').textContent = place.address;
+            document.getElementById('mapPopupQuiet').textContent = `هدوء ${place.quietness}%`;
+            document.getElementById('mapPopupPrice').textContent = place.priceLevel;
+            document.getElementById('mapPopupBtn').onclick = () => openPlaceDetails(place.id);
+
+            document.getElementById('mapPopupCard').classList.remove('hidden');
+        }
+
+        function switchFavTab(tab) {
+            if (tab === 'favs') {
+                document.getElementById('favsTabContent').classList.remove('hidden');
+                document.getElementById('bookingsTabContent').classList.add('hidden');
+                document.getElementById('ordersTabContent').classList.add('hidden');
+                document.getElementById('tabFavs').className = 'pb-2 px-3 border-b-2 border-brand-primary text-brand-primary';
+                document.getElementById('tabBookings').className = 'pb-2 px-3 text-slate-400';
+                document.getElementById('tabOrders').className = 'pb-2 px-3 text-slate-400';
+            } else if (tab === 'bookings') {
+                document.getElementById('favsTabContent').classList.add('hidden');
+                document.getElementById('bookingsTabContent').classList.remove('hidden');
+                document.getElementById('ordersTabContent').classList.add('hidden');
+                document.getElementById('tabFavs').className = 'pb-2 px-3 text-slate-400';
+                document.getElementById('tabBookings').className = 'pb-2 px-3 border-b-2 border-brand-primary text-brand-primary';
+                document.getElementById('tabOrders').className = 'pb-2 px-3 text-slate-400';
+                renderBookingsList();
+            } else {
+                document.getElementById('favsTabContent').classList.add('hidden');
+                document.getElementById('bookingsTabContent').classList.add('hidden');
+                document.getElementById('ordersTabContent').classList.remove('hidden');
+                document.getElementById('tabFavs').className = 'pb-2 px-3 text-slate-400';
+                document.getElementById('tabBookings').className = 'pb-2 px-3 text-slate-400';
+                document.getElementById('tabOrders').className = 'pb-2 px-3 border-b-2 border-brand-primary text-brand-primary';
+            }
+        }
+
+        function applyFilters() {
+            renderHomePlaces();
+            toggleModal('modalFilter');
+        }
+
+        function toggleModal(id) {
+            document.getElementById(id)?.classList.toggle('hidden');
+        }
+
+        function setAppMode(mode) {
+            const container = document.getElementById('appContainer');
+            const notch = document.getElementById('phoneNotch');
+
+            if (mode === 'mobile') {
+                container.className = "app-container mobile-mode bg-brand-cream w-full flex flex-col relative overflow-hidden text-slate-800";
+                notch.style.display = "flex";
+            } else {
+                container.className = "app-container desktop-mode bg-brand-cream flex flex-col relative overflow-hidden text-slate-800 shadow-2xl rounded-3xl my-6";
+                notch.style.display = "none";
+            }
+        }
+
+        function loginUser(provider) {
+            document.getElementById('userNameDisplay').textContent = "أحمد محمد (" + provider + ")";
+            document.getElementById('homeWelcomeName').textContent = "أحمد محمد (" + provider + ")";
+            navigateTo('screenHome');
+        }
+
+        function logoutUser() { navigateTo('screenAuth'); }
+
+        function editUserProfilePrompt() {
+            const newName = prompt('ادخل اسمك الجديد:', 'أحمد محمد');
+            if (newName) {
+                document.getElementById('userNameDisplay').textContent = newName;
+                document.getElementById('homeWelcomeName').textContent = newName;
+                alert('تم تحديث بيانات الحساب بنجاح!');
+            }
+        }
+
+        function activateStudentPass() {
+            alert('تم تفعيل اشتراك Student Pass بنجاح! تم تطبيق الخصم على جميع المشفوعات والحجوزات القادمة.');
+            toggleModal('modalStudentPass');
+        }
+
+        function submitNewPlace() {
+            const name = document.getElementById('newPlaceName').value.trim();
+            const address = document.getElementById('newPlaceAddress').value.trim();
+            const cat = document.getElementById('newPlaceCat').value;
+
+            if (!name || !address) {
+                alert('من فضلك ادخل اسم المكان والعنوان');
+                return;
+            }
+
+            const newPlace = {
+                id: Date.now(),
+                name: name,
+                category: cat,
+                categoryLabel: cat === 'cafe' ? 'كافيه هادئ' : cat === 'library' ? 'مكتبة وقراءة' : 'مساحة عمل',
+                address: address,
+                rating: 5.0,
+                quietness: 90,
+                crowdedness: 20,
+                wifiSpeed: 100,
+                noiseDb: 30,
+                outlets: true,
+                priceLevel: "$$",
+                image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80",
+                isFav: false,
+                reviews: []
+            };
+
+            placesData.unshift(newPlace);
+            renderHomePlaces();
+            alert('تم إشهار المكان بنجاح وإضافته إلى قائمة الأماكن المتاحة فوراً!');
+            document.getElementById('newPlaceName').value = '';
+            document.getElementById('newPlaceAddress').value = '';
+            toggleModal('modalAddPlace');
+        }
+
+        function resetAppData() { location.reload(); }
+    </script>
+</body>
+</html>
+```eof
+
+تم تجهيز التطبيق التفاعلي الشامل بنجاح! يمكنك استعراض الملف وتجربة جميع الشاشات والخصائص الفورية الآن.
+
+```
